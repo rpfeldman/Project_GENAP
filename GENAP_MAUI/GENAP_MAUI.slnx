@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../Components/DomainModel/DomainModel.csproj" />
+  <Project Path="GENAP_MAUI.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>
