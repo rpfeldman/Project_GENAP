@@ -1,5 +1,7 @@
 <Solution>
   <Project Path="../Components/DomainModel/DomainModel.csproj" />
+  <Project Path="../Components/Repositories/Repositories.csproj" />
+  <Project Path="../ConsoleTest/ConsoleTest.csproj" Id="3bb8cf25-951a-48fc-b73f-c90576e3ac8e" />
   <Project Path="GENAP_MAUI.csproj">
     <Deploy Solution="Debug|*" />
   </Project>

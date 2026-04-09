@@ -1,7 +1,14 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3BB8CF25-951A-48FC-B73F-C90576E3AC8E}|..\\ConsoleTest\\ConsoleTest.csproj|c:\\users\\ramga\\source\\repos\\genap\\consoletest\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E2A7910-6D3F-1A1A-FE44-4FE8B6E349AA}|..\\Components\\DomainModel\\DomainModel.csproj|c:\\users\\ramga\\source\\repos\\genap\\components\\domainmodel\\transactiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +16,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +29,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TransactionDto.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DomainModel\\TransactionDto.cs",
+              "RelativeDocumentMoniker": "..\\Components\\DomainModel\\TransactionDto.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DomainModel\\TransactionDto.cs",
+              "RelativeToolTip": "..\\Components\\DomainModel\\TransactionDto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T21:16:30.877Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
+              "RelativeDocumentMoniker": "..\\ConsoleTest\\Program.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
+              "RelativeToolTip": "..\\ConsoleTest\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T21:06:53.824Z",
+              "EditorCaption": ""
             }
           ]
         }
