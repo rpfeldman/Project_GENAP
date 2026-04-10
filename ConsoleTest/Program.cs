@@ -17,7 +17,7 @@ namespace ConsoleTest
             decimal Expenses = 0m;
             decimal Income = 0m;
 
-            repo.Save(68.250m, DateOnly.FromDayNumber(120), "Programacion", false);
+            repo.Update(17, NewCategory: "                              ");
 
             foreach (var item in repo.GetAll())
             {

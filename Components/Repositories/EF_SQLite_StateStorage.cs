@@ -19,8 +19,8 @@ namespace Repositories
         }
         public void ClearStorage()
         {
-            Context.TransactionsTable.RemoveRange(Context.TransactionsTable);
-            Context.SaveChanges();
+           Context.TransactionsTable.RemoveRange(Context.TransactionsTable);
+           Context.SaveChanges();
         }
 
         public List<TransactionDto> GetAll()
@@ -61,8 +61,9 @@ namespace Repositories
         public void Update(int TransactionId, decimal? NewValue = null, string? NewCategory = null, bool? NewDepletion = null, bool? NewFixed = null)
         {
             var Transaction = Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefault() ?? throw new Exception("Unexistent transaction");
-            Transaction.Value = NewValue ?? Transaction.Value;
-            Transaction.Category = NewCategory ?? Transaction.Category;
+
+            Transaction.Value = (decimal)(NewValue == null || NewValue < 0 ? Transaction.Value : NewValue);
+            Transaction.Category = string.IsNullOrWhiteSpace(NewCategory) ? Transaction.Category : NewCategory;
             Transaction.Depletion = NewDepletion ?? Transaction.Depletion;
             Transaction.Fixed = NewFixed ?? Transaction.Fixed;
 
