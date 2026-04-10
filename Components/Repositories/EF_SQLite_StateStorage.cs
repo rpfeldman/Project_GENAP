@@ -11,10 +11,10 @@ namespace Repositories
     public sealed class EF_SQLite_StateStorage : IStateStorage
     {
         private StateStorageDbContext Context;
-        public EF_SQLite_StateStorage(string StorageFilePath)
+        public EF_SQLite_StateStorage(string StorageFilePath, int[] DecimalValuePrecision)
         {
             var options = new DbContextOptionsBuilder().UseSqlite($"Data source={StorageFilePath}").LogTo(Console.WriteLine).Options;
-            Context = new(options, [14, 2]);
+            Context = new(options, DecimalValuePrecision);
             Context.Database.EnsureCreated();
         }
         public void ClearStorage()
@@ -69,17 +69,6 @@ namespace Repositories
 
             Context.TransactionsTable.Update(Transaction);
             Context.SaveChanges();
-        }
-    }
-
-    internal class StateStorageDbContext(DbContextOptions options, int[] DecimalValuePrecision) : DbContext(options)
-    {
-        public DbSet<TransactionDto> TransactionsTable { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<TransactionDto>().HasKey(p => p.TransactionId);
-            modelBuilder.Entity<TransactionDto>().Property(p => p.Value).HasPrecision(DecimalValuePrecision[0], DecimalValuePrecision[1]);
         }
     }
 }

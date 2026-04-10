@@ -12,12 +12,13 @@ namespace ConsoleTest
 
             var path = "test.db";
 
-            var repo = new EF_SQLite_StateStorage(path);
+            var repo = new EF_SQLite_StateStorage(path, [14, 2]);
 
             decimal Expenses = 0m;
             decimal Income = 0m;
 
-            repo.Update(17, NewCategory: "                              ");
+            repo.ClearStorage();
+            repo.Save(1000000000000000000, DateOnly.FromDateTime(DateTime.Today), "Loteria", false);
 
             foreach (var item in repo.GetAll())
             {
