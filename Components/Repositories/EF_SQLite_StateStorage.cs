@@ -14,7 +14,7 @@ namespace Repositories
         public EF_SQLite_StateStorage(string StorageFilePath)
         {
             var options = new DbContextOptionsBuilder().UseSqlite($"Data source={StorageFilePath}").LogTo(Console.WriteLine).Options;
-            Context = new(options);
+            Context = new(options, [14, 2]);
             Context.Database.EnsureCreated();
         }
         public void ClearStorage()
@@ -46,15 +46,19 @@ namespace Repositories
             Context.SaveChanges();
         }
 
-        public void Save(int value, DateOnly date, string category, bool depletion, bool isfixed = false)
+        public void Save(decimal value, DateOnly date, string category, bool depletion, bool isfixed = false)
         {
+            value = value < 0 ? throw new Exception($"{nameof(value)} must be a positive number") : value;
+
+            category = string.IsNullOrWhiteSpace(category) ? throw new ArgumentException($"{nameof(category)} must contain a value") : category;
+
             var Transaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
 
             Context.Add(Transaction);
             Context.SaveChanges();
         }
 
-        public void Update(int TransactionId, int? NewValue = null, string? NewCategory = null, bool? NewDepletion = null, bool? NewFixed = null)
+        public void Update(int TransactionId, decimal? NewValue = null, string? NewCategory = null, bool? NewDepletion = null, bool? NewFixed = null)
         {
             var Transaction = Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefault() ?? throw new Exception("Unexistent transaction");
             Transaction.Value = NewValue ?? Transaction.Value;
@@ -63,17 +67,18 @@ namespace Repositories
             Transaction.Fixed = NewFixed ?? Transaction.Fixed;
 
             Context.TransactionsTable.Update(Transaction);
+            Context.SaveChanges();
         }
     }
 
-    internal class StateStorageDbContext(DbContextOptions options) : DbContext(options)
+    internal class StateStorageDbContext(DbContextOptions options, int[] DecimalValuePrecision) : DbContext(options)
     {
         public DbSet<TransactionDto> TransactionsTable { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<TransactionDto>().HasKey(p => p.TransactionId);
-            modelBuilder.Entity<TransactionDto>().Property(p => p.Value).HasPrecision(14, 2);
+            modelBuilder.Entity<TransactionDto>().Property(p => p.Value).HasPrecision(DecimalValuePrecision[0], DecimalValuePrecision[1]);
         }
     }
 }
