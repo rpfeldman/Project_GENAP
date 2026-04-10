@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Repositories
 {
-    internal class StateStorageDbContext(DbContextOptions options, int[] DecimalValuePrecision) : DbContext(options)
+    internal sealed class StateStorageDbContext(DbContextOptions options, int[] DecimalValuePrecision) : DbContext(options)
     {
         public DbSet<TransactionDto> TransactionsTable { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -2,10 +2,11 @@
 using DomainModel;
 using System.IO;
 using Microsoft.VisualBasic;
+using DataServices;
 
-namespace ConsoleTest
+namespace ConsoleTest 
 {
-    internal class Program
+    internal class Program // TEMP
     {
         static void Main(string[] args)
         {
@@ -13,28 +14,12 @@ namespace ConsoleTest
 
             var path = "test.db";
             var repo = new EF_SQLite_StateStorage(path, [14, 2]);
+            var DPS = new DataProjectionService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            decimal Expenses = 0m;
-            decimal Income = 0m;
-
-            repo.ClearStorage();
-            repo.Save(1000, today, "🤡😭🦁", true);
-
-            foreach (var item in repo.GetAll())
-            {
-                Console.Write($"[{item.TransactionId}] ");
-                Console.Write(item.Depletion ? "Se gasto " : "se gano ");
-                Console.Write($"{item.Value.ToString("N2")}$ en {item.Category} el {item.Date}\n\n");
-
-                Expenses += item.Depletion ? item.Value : 0;
-                Income += item.Depletion ? 0 : item.Value;
-            }
-
-            var FinalResult = Income - Expenses;
-            Console.WriteLine($"Se gasto: {Expenses.ToString("N2")}$\n");
-            Console.WriteLine($"Se Gano: {Income.ToString("N2")}$\n");
-            Console.WriteLine($"Blance final: {FinalResult.ToString("N2")}$");
+            Console.WriteLine($"Total expenses: {DPS.Expenses():N2}");
+            Console.WriteLine($"Total income: {DPS.Income():N2}");
+            Console.WriteLine($"Final net: {DPS.Net:N2}\n ¿you are losing more that you are ganing? {DPS.Deficit}");
         }
     }
 }
