@@ -1,6 +1,7 @@
 ﻿using Repositories;
 using DomainModel;
 using System.IO;
+using Microsoft.VisualBasic;
 
 namespace ConsoleTest
 {
@@ -11,14 +12,14 @@ namespace ConsoleTest
             Console.WriteLine("Hello, World!");
 
             var path = "test.db";
-
             var repo = new EF_SQLite_StateStorage(path, [14, 2]);
+            var today = DateOnly.FromDateTime(DateTime.Today);
 
             decimal Expenses = 0m;
             decimal Income = 0m;
 
             repo.ClearStorage();
-            repo.Save(1000000000000000000, DateOnly.FromDateTime(DateTime.Today), "Loteria", false);
+            repo.Save(1000, today, "🤡😭🦁", true);
 
             foreach (var item in repo.GetAll())
             {

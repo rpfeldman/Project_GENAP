@@ -14,7 +14,7 @@ namespace Repositories
         public EF_SQLite_StateStorage(string StorageFilePath, int[] DecimalValuePrecision)
         {
             var options = new DbContextOptionsBuilder().UseSqlite($"Data source={StorageFilePath}").LogTo(Console.WriteLine).Options;
-            Context = new(options, DecimalValuePrecision);
+            Context = new(options, DecimalValuePrecision); // As SQLite save decimal data type as TEXT, 'DecimalValuePrecision' it's irrelevant in this case
             Context.Database.EnsureCreated();
         }
         public void ClearStorage()
