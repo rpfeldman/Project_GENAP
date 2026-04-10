@@ -46,7 +46,7 @@ namespace Repositories
             Context.SaveChanges();
         }
 
-        public void Save(int value, DateOnly date, Category category, bool depletion, bool isfixed = false)
+        public void Save(int value, DateOnly date, string category, bool depletion, bool isfixed = false)
         {
             var Transaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
 
@@ -54,7 +54,7 @@ namespace Repositories
             Context.SaveChanges();
         }
 
-        public void Update(int TransactionId, int? NewValue = null, Category? NewCategory = null, bool? NewDepletion = null, bool? NewFixed = null)
+        public void Update(int TransactionId, int? NewValue = null, string? NewCategory = null, bool? NewDepletion = null, bool? NewFixed = null)
         {
             var Transaction = Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefault() ?? throw new Exception("Unexistent transaction");
             Transaction.Value = NewValue ?? Transaction.Value;
@@ -73,7 +73,6 @@ namespace Repositories
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<TransactionDto>().HasKey(p => p.TransactionId);
-            modelBuilder.Entity<TransactionDto>().Property(p => p.Category).HasConversion<string>();
             modelBuilder.Entity<TransactionDto>().Property(p => p.Value).HasPrecision(14, 2);
         }
     }

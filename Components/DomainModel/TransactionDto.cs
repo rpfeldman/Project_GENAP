@@ -11,13 +11,8 @@ namespace DomainModel
         public int TransactionId {  get; set; }
         public decimal Value { get; set; }
         public DateOnly Date { get; set;  }
-        public Category Category { get; set; }
+        public string Category { get; set; } = string.Empty;
         public bool Fixed { get; set; }
         public bool Depletion { get; set; }
-    }
-
-    public enum Category
-    {
-        Clothes, Social, Girlfriend, Food, PropFirm, Trades
     }
 }
