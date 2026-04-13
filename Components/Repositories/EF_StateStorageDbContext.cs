@@ -14,6 +14,8 @@ namespace Repositories
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<TransactionDto>().HasKey(p => p.TransactionId);
             modelBuilder.Entity<TransactionDto>().Property(p => p.Value).HasPrecision(DecimalValuePrecision[0], DecimalValuePrecision[1]);
+            modelBuilder.Entity<FixedTransactionDto>().HasBaseType<TransactionDto>();
+            modelBuilder.Entity<FixedTransactionDto>().Property(p => p.Duration).HasColumnType("Duration");
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using DomainModel;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore.Sqlite;
-using Microsoft.EntityFrameworkCore;
 using System.Net.WebSockets;
+using System.Text;
+using static System.Net.WebRequestMethods;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Repositories
 {
@@ -46,13 +48,18 @@ namespace Repositories
             Context.SaveChanges();
         }
 
-        public void Save(decimal value, DateOnly date, string category, bool depletion, bool isfixed = false)
+        public void Save(decimal value, DateOnly date, string category, bool depletion, bool isfixed = false, int? duration = null)
         {
+            if(isfixed && duration == null)
+            {
+                throw new ArgumentException($"{nameof(duration)} must contain a value if {nameof(isfixed)} is true");
+            }
+
             value = value < 0 ? throw new Exception($"{nameof(value)} must be a positive number") : value;
 
             category = string.IsNullOrWhiteSpace(category) ? throw new ArgumentException($"{nameof(category)} must contain a value") : category;
 
-            var Transaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
+            var Transaction = isfixed ? new FixedTransactionDto{ Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed, Duration = (int)duration! } : new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
 
             Context.Add(Transaction);
             Context.SaveChanges();

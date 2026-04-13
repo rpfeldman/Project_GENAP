@@ -3,6 +3,7 @@ using DomainModel;
 using System.IO;
 using Microsoft.VisualBasic;
 using DataServices;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace ConsoleTest 
 {
@@ -16,6 +17,11 @@ namespace ConsoleTest
             var repo = new EF_SQLite_StateStorage(path, [14, 2]);
             var DPS = new DataProjectionService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
+
+            foreach (var item in DPS.GetAll()) 
+            {
+                Console.WriteLine($"[{item.TransactionId}]: {item.Value.ToString():N2} en {item.Category} el {item.Date} en {item.Category}");
+            }
 
             Console.WriteLine($"Total expenses: {DPS.Expenses():N2}");
             Console.WriteLine($"Total income: {DPS.Income():N2}");

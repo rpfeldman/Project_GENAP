@@ -7,7 +7,7 @@ namespace Repositories
 {
     public interface IStateStorage
     {
-        public void Save(decimal value, DateOnly date, string category, bool depletion, bool isfixed);
+        public void Save(decimal value, DateOnly date, string category, bool depletion, bool isfixed, int? duration);
         public void Remove(int TransactionId);
         public void Update(int TransactionId, decimal? NewValue, string? NewCategory, bool? NewDepletion, bool? NewFixed);
         public void ClearStorage();

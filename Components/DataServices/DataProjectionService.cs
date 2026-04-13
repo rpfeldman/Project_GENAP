@@ -13,6 +13,11 @@ namespace DataServices
 
         public decimal Net { get { return Income() - Expenses(); } }
         public bool Deficit { get { return Net < 0; } }
+
+        public List<TransactionDto> GetAll()
+        {
+            return _StateStorage.GetAll();
+        }
         public List<TransactionDto> GetExpenses()
         {
             return _StateStorage.GetTransaction(t => t.Depletion == true);

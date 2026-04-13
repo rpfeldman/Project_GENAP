@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DomainModel
 {
-    public sealed class TransactionDto
+    public class TransactionDto
     {
         [Key]
         public int TransactionId {  get; set; }
@@ -14,5 +14,14 @@ namespace DomainModel
         public string Category { get; set; } = string.Empty;
         public bool Fixed { get; set; }
         public bool Depletion { get; set; }
+    }
+
+    public sealed class FixedTransactionDto : TransactionDto
+    {
+        public FixedTransactionDto()
+        {
+            Fixed = true;
+        }
+        public int Duration { get; set; }
     }
 }
