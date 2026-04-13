@@ -24,6 +24,19 @@ namespace DataServices
                 throw;
             }
         }
+        public int RegistExpense(int value, DateOnly date, int duration, string category = "Uncategorized")
+        {
+            try
+            {
+                _StateStorage.Save(value, date, category, true, true, duration);
+                return 0;
+            }
+            catch (Exception)
+            {
+                return 1;
+                throw;
+            }
+        }
 
         public int RegistIncome(int value, DateOnly date, string category = "Uncategorized")
         {
@@ -31,6 +44,19 @@ namespace DataServices
             {
                 _StateStorage.Save(value, date, category, false, false, null);
                 return 0; 
+            }
+            catch (Exception)
+            {
+                return 1;
+                throw;
+            }
+        }
+        public int RegistIncome(int value, DateOnly date, int duration, string category = "Uncategorized")
+        {
+            try
+            {
+                _StateStorage.Save(value, date, category, false, true, duration);
+                return 0;
             }
             catch (Exception)
             {
