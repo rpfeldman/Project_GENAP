@@ -21,7 +21,6 @@ namespace DataServices
             catch (Exception)
             {
                 return 1;
-                throw;
             }
         }
         public int RegistExpense(int value, DateOnly date, int duration, string category = "Uncategorized")
@@ -34,7 +33,6 @@ namespace DataServices
             catch (Exception)
             {
                 return 1;
-                throw;
             }
         }
 
@@ -48,7 +46,6 @@ namespace DataServices
             catch (Exception)
             {
                 return 1;
-                throw;
             }
         }
         public int RegistIncome(int value, DateOnly date, int duration, string category = "Uncategorized")
@@ -61,7 +58,6 @@ namespace DataServices
             catch (Exception)
             {
                 return 1;
-                throw;
             }
         }
     }

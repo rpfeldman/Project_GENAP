@@ -65,7 +65,7 @@ namespace Repositories
             Context.SaveChanges();
         }
 
-        public void Update(int TransactionId, decimal? NewValue = null, string? NewCategory = null, bool? NewDepletion = null, bool? NewFixed = null)
+        public void Update(int TransactionId, decimal? NewValue = null, DateOnly? NewDate = null, string? NewCategory = null, bool? NewDepletion = null, bool? NewFixed = null, int? NewDuration = null)
         {
             var Transaction = Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefault() ?? throw new Exception("Unexistent transaction");
 
@@ -73,6 +73,7 @@ namespace Repositories
             Transaction.Category = string.IsNullOrWhiteSpace(NewCategory) ? Transaction.Category : NewCategory;
             Transaction.Depletion = NewDepletion ?? Transaction.Depletion;
             Transaction.Fixed = NewFixed ?? Transaction.Fixed;
+            Transaction.Date = NewDate ?? Transaction.Date;
 
             Context.TransactionsTable.Update(Transaction);
             Context.SaveChanges();

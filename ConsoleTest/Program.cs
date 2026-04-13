@@ -17,9 +17,10 @@ namespace ConsoleTest
             var repo = new EF_SQLite_StateStorage(path, [14, 2]);
             var DPS = new DataProjectionService(repo);
             var DRS = new DataRegistrationService(repo);
+            var DMS = new DataManagementService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            DRS.RegistIncome(5000, today, 12, "SocialWelfare");
+            DMS.UpdateTransaction(6, 2000, today,"SocialWelfare", true, 24);
 
             foreach (var item in DPS.GetAll()) 
             {
