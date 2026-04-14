@@ -11,35 +11,74 @@ namespace DataServices
     {
         private IStateStorage _StateStorage = StateStorage;
 
-        public decimal Net { get { return Income() - Expenses(); } }
-        public bool Deficit { get { return Net < 0; } }
+        public decimal GlobalNet { get { return Income() - Expenses(); } } 
+        public bool GlobalDeficit { get { return GlobalNet < 0; } }
 
+        // A lot of lines of code but extremely easy usage of this service
+
+        // All transaction data projection
         public List<TransactionDto> GetAll()
         {
             return _StateStorage.GetAll();
         }
-        public List<TransactionDto> GetByDate(DateOnly date)
+        public List<TransactionDto> GetAllByDate(DateOnly date)
         {
             return _StateStorage.GetTransaction(t => t.Date == date);
         }
+        public List<TransactionDto> GetAllByMonth(int month)
+        {
+            return _StateStorage.GetTransaction(t => t.Date.Month == month);
+        }
+        public List<TransactionDto> GetAllByYear(int year)
+        {
+            return _StateStorage.GetTransaction(t => t.Date.Year == year);
+        }
+
+        // Expenses data projection
         public List<TransactionDto> GetExpenses()
         {
             return _StateStorage.GetTransaction(t => t.Depletion == true);
         }
-        public List<TransactionDto> GetExpenses(string category)
+        public List<TransactionDto> GetExpensesByCategory(string category)
         {
-            return _StateStorage.GetTransaction(t => t.Depletion == true && t.Category == category);
+            return _StateStorage.GetTransaction(t => t.Category == category && t.Depletion == true);
+        }
+        public List<TransactionDto> GetExpensesByDate(DateOnly date)
+        {
+            return _StateStorage.GetTransaction(t => t.Date == date && t.Depletion == true);
+        }
+        public List<TransactionDto> GetExpensesByMonth(int month)
+        {
+            return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Depletion == true);
+        }
+        public List<TransactionDto> GetExpensesByYear(int year)
+        {
+            return _StateStorage.GetTransaction(t => t.Date.Year == year && t.Depletion == true);
         }
 
+        // Income data projection
         public List<TransactionDto> GetIncome()
         {
             return _StateStorage.GetTransaction(t => t.Depletion == false);
         }
-        public List<TransactionDto> GetIncome(string category)
+        public List<TransactionDto> GetIncomeByCategory(string category)
         {
             return _StateStorage.GetTransaction(t => t.Depletion == false && t.Category == category);
         }
+        public List<TransactionDto> GetIncomeByDate(DateOnly date)
+        {
+            return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date == date);
+        }
+        public List<TransactionDto> GetIncomeByMonth(int month)
+        {
+            return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date.Month == month);
+        }
+        public List<TransactionDto> GetIncomeByYear(int year)
+        {
+            return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date.Year == year);
+        }
 
+        // Expenses financial results
         public decimal Expenses()
         {
             decimal expenses = 0m;
@@ -51,11 +90,44 @@ namespace DataServices
 
             return expenses;
         }
-        public decimal Expenses(string category)
+        public decimal ExpensesByCategory(string category)
         {
             decimal expenses = 0m;
 
-            foreach (var item in GetExpenses(category))
+            foreach (var item in GetExpensesByCategory(category))
+            {
+                expenses += item.Value;
+            }
+
+            return expenses;
+        }
+        public decimal ExpensesByDate(DateOnly date)
+        {
+            decimal expenses = 0m;
+
+            foreach (var item in GetExpensesByDate(date))
+            {
+                expenses += item.Value;
+            }
+
+            return expenses;
+        }
+        public decimal ExpensesByMonth(int month)
+        {
+            decimal expenses = 0m;
+
+            foreach (var item in GetExpensesByMonth(month))
+            {
+                expenses += item.Value;
+            }
+
+            return expenses;
+        }
+        public decimal ExpensesByYear(int year)
+        {
+            decimal expenses = 0m;
+
+            foreach (var item in GetExpensesByYear(year))
             {
                 expenses += item.Value;
             }
@@ -63,6 +135,7 @@ namespace DataServices
             return expenses;
         }
 
+        // Income financial results
         public decimal Income()
         {
             decimal income = 0m;
@@ -74,11 +147,11 @@ namespace DataServices
 
             return income;
         }
-        public decimal Income(string category)
+        public decimal IncomeByCategory(string category)
         {
             decimal income = 0m;
 
-            foreach (var item in GetIncome(category))
+            foreach (var item in GetIncomeByCategory(category))
             {
                 income += item.Value;
             }
