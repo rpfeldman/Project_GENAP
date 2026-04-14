@@ -11,7 +11,7 @@ namespace DataServices
     {
         private IStateStorage _StateStorage = StateStorage;
 
-        public int RegistExpense(int value, DateOnly date, string category = "Uncategorized")
+        public int RegistExpense(decimal value, DateOnly date, string category = "Uncategorized")
         {
             try
             {
@@ -23,7 +23,7 @@ namespace DataServices
                 return 1;
             }
         }
-        public int RegistExpense(int value, DateOnly date, int duration, string category = "Uncategorized")
+        public int RegistExpense(decimal value, DateOnly date, int duration, string category = "Uncategorized")
         {
             try
             {
@@ -36,7 +36,7 @@ namespace DataServices
             }
         }
 
-        public int RegistIncome(int value, DateOnly date, string category = "Uncategorized")
+        public int RegistIncome(decimal value, DateOnly date, string category = "Uncategorized")
         {
             try
             {
@@ -48,7 +48,7 @@ namespace DataServices
                 return 1;
             }
         }
-        public int RegistIncome(int value, DateOnly date, int duration, string category = "Uncategorized")
+        public int RegistIncome(decimal value, DateOnly date, int duration, string category = "Uncategorized")
         {
             try
             {

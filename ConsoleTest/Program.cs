@@ -20,9 +20,7 @@ namespace ConsoleTest
             var DMS = new DataManagementService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            DMS.UpdateTransaction(6, 2000, today,"SocialWelfare", true, 24);
-
-            foreach (var item in DPS.GetAll()) 
+            foreach (var item in DPS.GetByDate(new DateOnly(0, 4, 0))) 
             {
                 Console.WriteLine($"[{item.TransactionId}]: {item.Value.ToString():N2} en {item.Category} el {item.Date} en {item.Category}");
             }

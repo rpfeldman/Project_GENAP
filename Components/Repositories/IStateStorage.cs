@@ -8,8 +8,8 @@ namespace Repositories
     public interface IStateStorage
     {
         public void Save(decimal value, DateOnly date, string category, bool depletion, bool isfixed, int? duration);
-        public void Remove(int TransactionId);
-        public void Update(int TransactionId, decimal? NewValue, DateOnly? NewDate, string? NewCategory, bool? NewDepletion, bool? NewFixed);
+        public void Delete(int TransactionId);
+        public void Update(int TransactionId, decimal? value, DateOnly? date, string? category, bool? depletion, int? duration);
         public void ClearStorage();
         public TransactionDto? GetTransaction(int TransactionId);
         public List<TransactionDto> GetTransaction(Func<TransactionDto, bool> predicate);

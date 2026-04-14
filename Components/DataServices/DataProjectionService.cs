@@ -18,6 +18,10 @@ namespace DataServices
         {
             return _StateStorage.GetAll();
         }
+        public List<TransactionDto> GetByDate(DateOnly date)
+        {
+            return _StateStorage.GetTransaction(t => t.Date == date);
+        }
         public List<TransactionDto> GetExpenses()
         {
             return _StateStorage.GetTransaction(t => t.Depletion == true);
