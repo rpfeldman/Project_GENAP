@@ -20,6 +20,18 @@ namespace Repositories
             Context = new(options, DecimalValuePrecision); // As SQLite save decimal data type as TEXT, 'DecimalValuePrecision' it's irrelevant in this case
             Context.Database.EnsureCreated();
         }
+
+        /// <summary>
+        /// Generates and ID for fixed transactions collections
+        /// </summary>
+        /// <returns></returns>
+        private int IdSetterForFixedTransactions() // As EF core can't generate values for non-keys properties and multiple instances will have the same ID, I decided make this method
+        {
+            FixedTransactionDto? Last = (FixedTransactionDto?)Context.TransactionsTable.Where(t => t is FixedTransactionDto).OrderBy(t => (t as FixedTransactionDto)!.FixedTransactionId).LastOrDefault();
+
+            return Last != null ? (Last.FixedTransactionId + 1) : 1;
+        }
+
         public void ClearStorage()
         {
             Context.TransactionsTable.RemoveRange(Context.TransactionsTable);
@@ -56,7 +68,7 @@ namespace Repositories
                 throw new ArgumentException($"{nameof(duration)} must contain a value if {nameof(isfixed)} is true");
             }
 
-            var Transaction = isfixed ? new FixedTransactionDto { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed, Duration = (int)duration! } : new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
+            var Transaction = isfixed ? new FixedTransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed, Duration = (int)duration!, FixedTransactionId = IdSetterForFixedTransactions() } : new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
 
             Context.Add(Transaction);
             Context.SaveChanges();

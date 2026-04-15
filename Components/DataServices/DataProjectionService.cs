@@ -158,5 +158,72 @@ namespace DataServices
 
             return income;
         }
+        public decimal IncomeByDate(DateOnly date)
+        {
+            decimal income = 0m;
+
+            foreach (var item in GetIncomeByDate(date))
+            {
+                income += item.Value;
+            }
+
+            return income;
+        }
+        public decimal IncomeByMonth(int month)
+        {
+            decimal income = 0m;
+
+            foreach (var item in GetIncomeByMonth(month))
+            {
+                income += item.Value;
+            }
+
+            return income;
+        }
+        public decimal IncomeByYear(int year)
+        {
+            decimal income = 0m;
+
+            foreach (var item in GetIncomeByYear(year))
+            {
+                income += item.Value;
+            }
+
+            return income;
+        }
+
+        // General financial results
+        public decimal NetByCategory(string category) 
+        {
+            return IncomeByCategory(category) - ExpensesByCategory(category);
+        }
+        public bool DeficitByCategory(string category)
+        {
+            return NetByCategory(category) < 0;
+        }
+        public decimal NetByDate(DateOnly date)
+        {
+            return IncomeByDate(date) - ExpensesByDate(date);
+        }
+        public bool DeficitByDate(DateOnly date)
+        {
+            return NetByDate(date) < 0;
+        }
+        public decimal NetByMonth(int month)
+        {
+            return IncomeByMonth(month) - ExpensesByMonth(month);
+        }
+        public bool DeficitByMonth(int month)
+        {
+            return NetByMonth(month) < 0;
+        }
+        public decimal NetByYear(int year)
+        {
+            return IncomeByYear(year) - ExpensesByYear(year);
+        }
+        public bool DeficitByYear(int year)
+        {
+            return NetByYear(year) < 0;
+        }
     }
 }
