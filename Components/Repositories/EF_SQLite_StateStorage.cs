@@ -63,12 +63,25 @@ namespace Repositories
 
         public void Save(decimal value, DateOnly date, string category, bool depletion, bool isfixed = false, int? duration = null)
         {
-            if (isfixed && duration == null)
+            TransactionDto Transaction;
+
+            if (isfixed && duration != null)
             {
-                throw new ArgumentException($"{nameof(duration)} must contain a value if {nameof(isfixed)} is true");
+                int CollectionId = IdSetterForFixedTransactions();
+             
+                for (int i = 0; i < duration; i++)
+                {
+                    Transaction = new FixedTransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed, Duration = ((int)duration - i), FixedTransactionId = CollectionId };
+                    date = date.AddMonths(1);
+
+                    Context.Add(Transaction);
+                    Context.SaveChanges();
+                }
+
+                return;
             }
 
-            var Transaction = isfixed ? new FixedTransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed, Duration = (int)duration!, FixedTransactionId = IdSetterForFixedTransactions() } : new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
+            Transaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
 
             Context.Add(Transaction);
             Context.SaveChanges();
