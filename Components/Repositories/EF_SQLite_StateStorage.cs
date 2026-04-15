@@ -61,6 +61,12 @@ namespace Repositories
             Context.SaveChanges();
         }
 
+        public void DeleteFromRange(Func<TransactionDto, bool> predicate)
+        {
+            Context.RemoveRange(Context.TransactionsTable.Where(predicate));
+            Context.SaveChanges();
+        }
+
         public void Save(decimal value, DateOnly date, string category, bool depletion, bool isfixed = false, int? duration = null)
         {
             TransactionDto Transaction;

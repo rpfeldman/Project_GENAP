@@ -20,8 +20,7 @@ namespace ConsoleTest
             var DMS = new DataManagementService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            DMS.RestartData();
-            Test_Registrations();
+            DMS.RemoveFixedTransaction(4);
 
             void Test_Registrations()
             {

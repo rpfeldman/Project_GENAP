@@ -38,14 +38,24 @@ namespace DataServices
             }
         }
 
+        public int RemoveFixedTransaction(int CollectionId)
+        {
+            try
+            {
+                _StateStorage.DeleteFromRange(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId);
+                return 0;
+            }
+            catch (Exception)
+            {
+                return 1;
+            }
+        }
+
         public int RemoveExpenses()
         {
             try
             {
-                foreach (var item in _StateStorage.GetTransaction(t => t.Depletion == true))
-                {
-                    RemoveTransaction(item.TransactionId);
-                }
+                _StateStorage.DeleteFromRange(t => t.Depletion == true);
                 return 0;
             }
             catch (Exception)
@@ -58,10 +68,7 @@ namespace DataServices
         {
             try
             {
-                foreach (var item in _StateStorage.GetTransaction(t => t.Depletion == false))
-                {
-                    RemoveTransaction(item.TransactionId);
-                }
+                _StateStorage.DeleteFromRange(t => t.Depletion == false);
                 return 0;
             }
             catch (Exception)
@@ -74,10 +81,7 @@ namespace DataServices
         {
             try
             {
-                foreach (var item in _StateStorage.GetTransaction(t => t.Category == category))
-                {
-                    RemoveTransaction(item.TransactionId);
-                }
+                _StateStorage.DeleteFromRange(t => t.Category == category);
                 return 0;
             }
             catch (Exception)
