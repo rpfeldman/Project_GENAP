@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DomainModel
 {
-    public class TransactionDto
+    public class TransactionDto : EventArgs
     {
         private decimal _Value;
         private string _Category = string.Empty;

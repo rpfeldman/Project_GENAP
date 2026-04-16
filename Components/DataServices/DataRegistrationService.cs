@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+﻿using DomainModel;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Repositories;
 using System;
 using System.Collections.Generic;

@@ -81,9 +81,8 @@ namespace Repositories
                     date = date.AddMonths(1);
 
                     Context.Add(Transaction);
-                    Context.SaveChanges();
                 }
-
+                Context.SaveChanges();
                 return;
             }
 
