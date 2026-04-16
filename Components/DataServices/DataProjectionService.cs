@@ -1,81 +1,198 @@
-﻿using Repositories;
+﻿using DomainModel;
+using Repositories;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using DomainModel;
 using System.Runtime.CompilerServices;
+using System.Text;
+using static DataServices.DataProjectionService;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DataServices
 {
     public sealed class DataProjectionService(IStateStorage StateStorage)
     {
         private IStateStorage _StateStorage = StateStorage;
-
+        public enum Order
+        {
+            OrderByDate, OrderByValue
+        }
         public decimal GlobalNet { get { return Income() - Expenses(); } } 
         public bool GlobalDeficit { get { return GlobalNet < 0; } }
 
         // A lot of lines of code but extremely easy usage of this service
 
         // All transaction data projection
-        public List<TransactionDto> GetAll()
+        public List<TransactionDto> GetAll(Order order = Order.OrderByDate)
         {
-            return _StateStorage.GetAll();
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetAll().OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetAll().OrderBy(t => t.Value).ToList();
+
+                default:
+                    return _StateStorage.GetAll();
+            }
         }
         public List<TransactionDto> GetAllByDate(DateOnly date)
         {
             return _StateStorage.GetTransaction(t => t.Date == date);
         }
-        public List<TransactionDto> GetAllByMonth(int month, int year)
+        public List<TransactionDto> GetAllByMonth(int month, int year, Order order = Order.OrderByDate)
         {
-            return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year).OrderBy(t => t.Value).ToList();
+
+                default:
+                    return new List<TransactionDto>();
+            }
         }
-        public List<TransactionDto> GetAllByYear(int year)
+        public List<TransactionDto> GetAllByYear(int year, Order order = Order.OrderByDate)
         {
-            return _StateStorage.GetTransaction(t => t.Date.Year == year);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Date.Year == year).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Date.Year == year).OrderBy(t => t.Value).ToList();
+
+                default: return _StateStorage.GetTransaction(t => t.Date.Year == year);
+            }
         }
 
         // Expenses data projection
-        public List<TransactionDto> GetExpenses()
+        public List<TransactionDto> GetExpenses(Order order = Order.OrderByDate)
         {
-            return _StateStorage.GetTransaction(t => t.Depletion == true);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Depletion == true).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Depletion == true).OrderBy(t => t.Value).ToList();
+                    break;
+
+                default: return _StateStorage.GetTransaction(t => t.Depletion == true);
+            }
         }
-        public List<TransactionDto> GetExpensesByCategory(string category)
+        public List<TransactionDto> GetExpensesByCategory(string category, Order order = Order.OrderByDate)
         {
-            return _StateStorage.GetTransaction(t => t.Category == category && t.Depletion == true);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Category == category && t.Depletion == true).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Category == category && t.Depletion == true).OrderBy(t => t.Value).ToList();
+
+                default: return _StateStorage.GetTransaction(t => t.Category == category && t.Depletion == true);
+            }
         }
         public List<TransactionDto> GetExpensesByDate(DateOnly date)
         {
             return _StateStorage.GetTransaction(t => t.Date == date && t.Depletion == true);
         }
-        public List<TransactionDto> GetExpensesByMonth(int month, int year)
+        public List<TransactionDto> GetExpensesByMonth(int month, int year, Order order = Order.OrderByDate)
         {
-            return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == true);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == true).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == true).OrderBy(t => t.Value).ToList();
+
+                default:
+                    return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == true);
+            }
         }
-        public List<TransactionDto> GetExpensesByYear(int year)
+        public List<TransactionDto> GetExpensesByYear(int year, Order order = Order.OrderByDate)
         {
-            return _StateStorage.GetTransaction(t => t.Date.Year == year && t.Depletion == true);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Date.Year == year && t.Depletion == true).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Date.Year == year && t.Depletion == true).OrderBy(t => t.Value).ToList();
+
+                default: return _StateStorage.GetTransaction(t => t.Date.Year == year && t.Depletion == true);
+            }
         }
 
         // Income data projection
-        public List<TransactionDto> GetIncome()
+        public List<TransactionDto> GetIncome(Order order = Order.OrderByDate)
         {
-            return _StateStorage.GetTransaction(t => t.Depletion == false);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Depletion == false).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Depletion == false).OrderBy(t => t.Value).ToList();
+
+                default: return _StateStorage.GetTransaction(t => t.Depletion == false);
+            }
         }
-        public List<TransactionDto> GetIncomeByCategory(string category)
+        public List<TransactionDto> GetIncomeByCategory(string category, Order order)
         {
-            return _StateStorage.GetTransaction(t => t.Depletion == false && t.Category == category);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Depletion == false && t.Category == category).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Depletion == false && t.Category == category).OrderBy(t => t.Date).ToList();
+
+                default: return _StateStorage.GetTransaction(t => t.Depletion == false && t.Category == category);
+            }
         }
-        public List<TransactionDto> GetIncomeByDate(DateOnly date)
+        public List<TransactionDto> GetIncomeByDate(DateOnly date, Order order)
         {
-            return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date == date);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date == date).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date == date).OrderBy(t => t.Value).ToList();
+
+                default: return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date == date);
+            }
         }
-        public List<TransactionDto> GetIncomeByMonth(int month, int year)
+        public List<TransactionDto> GetIncomeByMonth(int month, int year, Order order)
         {
-            return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == false);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == false).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == false).OrderBy(t => t.Value).ToList();
+
+                default: return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == false);
+            }
         }
-        public List<TransactionDto> GetIncomeByYear(int year)
+        public List<TransactionDto> GetIncomeByYear(int year, Order order = Order.OrderByDate)
         {
-            return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date.Year == year);
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date.Year == year).OrderBy(t => t.Date).ToList();
+
+                case Order.OrderByValue:
+                    return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date.Year == year).OrderBy(t => t.Value).ToList();
+
+                default: return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date.Year == year);
+            }
         }
 
         // Expenses financial results

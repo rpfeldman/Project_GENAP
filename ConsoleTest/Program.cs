@@ -24,7 +24,7 @@ namespace ConsoleTest
             {
                 Console.WriteLine($"mes {i}: ");
 
-                foreach (var item in DPS.GetAllByMonth(i, 2026))
+                foreach (var item in DPS.GetAllByMonth(i, 2026, DataProjectionService.Order.OrderByValue))
                 {
                     var depletion = item.Depletion ? "Se gasto " : "Se gano ";
                     Console.WriteLine(depletion + $"{item.Value:N2}$ en {item.Category} el {item.Date}");
