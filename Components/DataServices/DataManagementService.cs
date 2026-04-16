@@ -16,7 +16,7 @@ namespace DataServices
         {
             try
             {
-                _StateStorage.Update(TransactionId, value, date, category, depletion, duration);
+                _StateStorage.Update(TransactionId, value, date, category, depletion);
                 return 0;
             }
             catch (Exception)
@@ -38,11 +38,17 @@ namespace DataServices
             }
         }
 
-        public int RemoveFixedTransaction(int CollectionId)
+        public int RemoveFixedTransaction(int CollectionId, int FromMonth, bool Retroactive = false)
         {
             try
             {
-                _StateStorage.DeleteFromRange(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId);
+                if (Retroactive)
+                {
+                    _StateStorage.DeleteFromRange(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId);
+                    return 0;
+                }
+
+                _StateStorage.DeleteFromRange(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId && t.Date.Month > FromMonth);
                 return 0;
             }
             catch (Exception)

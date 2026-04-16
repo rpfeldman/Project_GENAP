@@ -78,7 +78,6 @@ namespace DataServices
 
                 case Order.OrderByValue:
                     return _StateStorage.GetTransaction(t => t.Depletion == true).OrderBy(t => t.Value).ToList();
-                    break;
 
                 default: return _StateStorage.GetTransaction(t => t.Depletion == true);
             }
@@ -142,7 +141,7 @@ namespace DataServices
                 default: return _StateStorage.GetTransaction(t => t.Depletion == false);
             }
         }
-        public List<TransactionDto> GetIncomeByCategory(string category, Order order)
+        public List<TransactionDto> GetIncomeByCategory(string category, Order order = Order.OrderByDate)
         {
             switch (order)
             {
@@ -150,12 +149,12 @@ namespace DataServices
                     return _StateStorage.GetTransaction(t => t.Depletion == false && t.Category == category).OrderBy(t => t.Date).ToList();
 
                 case Order.OrderByValue:
-                    return _StateStorage.GetTransaction(t => t.Depletion == false && t.Category == category).OrderBy(t => t.Date).ToList();
+                    return _StateStorage.GetTransaction(t => t.Depletion == false && t.Category == category).OrderBy(t => t.Value).ToList();
 
                 default: return _StateStorage.GetTransaction(t => t.Depletion == false && t.Category == category);
             }
         }
-        public List<TransactionDto> GetIncomeByDate(DateOnly date, Order order)
+        public List<TransactionDto> GetIncomeByDate(DateOnly date, Order order = Order.OrderByDate)
         {
             switch (order)
             {
@@ -168,7 +167,7 @@ namespace DataServices
                 default: return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date == date);
             }
         }
-        public List<TransactionDto> GetIncomeByMonth(int month, int year, Order order)
+        public List<TransactionDto> GetIncomeByMonth(int month, int year, Order order = Order.OrderByDate)
         {
             switch (order)
             {

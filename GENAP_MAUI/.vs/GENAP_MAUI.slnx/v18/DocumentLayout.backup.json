@@ -3,10 +3,13 @@
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{740F01AE-8212-438F-9EC4-B08AF83A3E48}|..\\Components\\DataServices\\DataServices.csproj|c:\\users\\ramga\\source\\repos\\genap\\components\\dataservices\\dataprojectionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3BB8CF25-951A-48FC-B73F-C90576E3AC8E}|..\\ConsoleTest\\ConsoleTest.csproj|c:\\users\\ramga\\source\\repos\\genap\\consoletest\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BB8CF25-951A-48FC-B73F-C90576E3AC8E}|..\\ConsoleTest\\ConsoleTest.csproj|c:\\users\\ramga\\source\\repos\\genap\\consoletest\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{740F01AE-8212-438F-9EC4-B08AF83A3E48}|..\\Components\\DataServices\\DataServices.csproj|c:\\users\\ramga\\source\\repos\\genap\\components\\dataservices\\datamanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCDC75DB-0116-9FCC-5B7F-79AACF97E8C5}|..\\Components\\Repositories\\Repositories.csproj|c:\\users\\ramga\\source\\repos\\genap\\components\\repositories\\ef_sqlite_statestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -16,7 +19,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -33,27 +36,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
-              "RelativeDocumentMoniker": "..\\ConsoleTest\\Program.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
-              "RelativeToolTip": "..\\ConsoleTest\\Program.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwBEAAAA2AAAAAAAAAA==",
+              "Title": "DataManagementService.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataManagementService.cs",
+              "RelativeDocumentMoniker": "..\\Components\\DataServices\\DataManagementService.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataManagementService.cs",
+              "RelativeToolTip": "..\\Components\\DataServices\\DataManagementService.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAIwDIAAACpAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T16:21:43.251Z",
+              "WhenOpened": "2026-04-16T16:28:41.964Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EF_SQLite_StateStorage.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
+              "RelativeDocumentMoniker": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
+              "RelativeToolTip": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAmwFcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T16:23:25.453Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DataProjectionService.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataProjectionService.cs",
-              "RelativeDocumentMoniker": "..\\Components\\DataServices\\DataProjectionService.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\Components\\DataServices\\DataProjectionService.cs",
-              "RelativeToolTip": "..\\Components\\DataServices\\DataProjectionService.cs",
-              "ViewState": "AgIAAKcAAAAAAAAAAAAgwL8AAAB+AAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
+              "RelativeDocumentMoniker": "..\\ConsoleTest\\Program.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\ConsoleTest\\Program.cs",
+              "RelativeToolTip": "..\\ConsoleTest\\Program.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAABgAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T14:56:21.404Z",
+              "WhenOpened": "2026-04-15T16:21:43.251Z",
               "EditorCaption": ""
             }
           ]

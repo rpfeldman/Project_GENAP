@@ -92,13 +92,9 @@ namespace Repositories
             Context.SaveChanges();
         }
 
-        public void Update(int TransactionId, decimal? value=null, DateOnly? date=null, string? category=null, bool? depletion=null, int? duration=null)
+        public void Update(int TransactionId, decimal? value=null, DateOnly? date=null, string? category=null, bool? depletion=null)
         {
             var Transaction = GetTransaction(TransactionId) ?? throw new Exception("Unexistent transaction");
-            if(Transaction is FixedTransactionDto)
-            {
-                (Transaction as FixedTransactionDto)!.Duration = duration ?? (Transaction as FixedTransactionDto)!.Duration;
-            }
 
             Transaction.Value = value ?? Transaction.Value;
             Transaction.Date = date ?? Transaction.Date;
