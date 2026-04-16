@@ -25,9 +25,9 @@ namespace DataServices
         {
             return _StateStorage.GetTransaction(t => t.Date == date);
         }
-        public List<TransactionDto> GetAllByMonth(int month)
+        public List<TransactionDto> GetAllByMonth(int month, int year)
         {
-            return _StateStorage.GetTransaction(t => t.Date.Month == month);
+            return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year);
         }
         public List<TransactionDto> GetAllByYear(int year)
         {
@@ -47,9 +47,9 @@ namespace DataServices
         {
             return _StateStorage.GetTransaction(t => t.Date == date && t.Depletion == true);
         }
-        public List<TransactionDto> GetExpensesByMonth(int month)
+        public List<TransactionDto> GetExpensesByMonth(int month, int year)
         {
-            return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Depletion == true);
+            return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == true);
         }
         public List<TransactionDto> GetExpensesByYear(int year)
         {
@@ -69,9 +69,9 @@ namespace DataServices
         {
             return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date == date);
         }
-        public List<TransactionDto> GetIncomeByMonth(int month)
+        public List<TransactionDto> GetIncomeByMonth(int month, int year)
         {
-            return _StateStorage.GetTransaction(t => t.Depletion == false && t.Date.Month == month);
+            return _StateStorage.GetTransaction(t => t.Date.Month == month && t.Date.Year == year && t.Depletion == false);
         }
         public List<TransactionDto> GetIncomeByYear(int year)
         {
@@ -112,11 +112,11 @@ namespace DataServices
 
             return expenses;
         }
-        public decimal ExpensesByMonth(int month)
+        public decimal ExpensesByMonth(int month, int year)
         {
             decimal expenses = 0m;
 
-            foreach (var item in GetExpensesByMonth(month))
+            foreach (var item in GetExpensesByMonth(month, year))
             {
                 expenses += item.Value;
             }
@@ -169,11 +169,11 @@ namespace DataServices
 
             return income;
         }
-        public decimal IncomeByMonth(int month)
+        public decimal IncomeByMonth(int month, int year)
         {
             decimal income = 0m;
 
-            foreach (var item in GetIncomeByMonth(month))
+            foreach (var item in GetIncomeByMonth(month, year))
             {
                 income += item.Value;
             }
@@ -209,13 +209,13 @@ namespace DataServices
         {
             return NetByDate(date) < 0;
         }
-        public decimal NetByMonth(int month)
+        public decimal NetByMonth(int month, int year)
         {
-            return IncomeByMonth(month) - ExpensesByMonth(month);
+            return IncomeByMonth(month, year) - ExpensesByMonth(month, year);
         }
-        public bool DeficitByMonth(int month)
+        public bool DeficitByMonth(int month, int year)
         {
-            return NetByMonth(month) < 0;
+            return NetByMonth(month, year) < 0;
         }
         public decimal NetByYear(int year)
         {

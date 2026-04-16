@@ -20,8 +20,24 @@ namespace ConsoleTest
             var DMS = new DataManagementService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            DMS.RestartData();
-            Test_Registrations();
+            for (int i = 1; i <= 12; i++) 
+            {
+                Console.WriteLine($"mes {i}: ");
+
+                foreach (var item in DPS.GetAllByMonth(i, 2026))
+                {
+                    var depletion = item.Depletion ? "Se gasto " : "Se gano ";
+                    Console.WriteLine(depletion + $"{item.Value:N2}$ en {item.Category} el {item.Date}");
+                }
+
+                Console.WriteLine($"\nResumen del mes {i}:\n");
+                Console.WriteLine($"Gastos: {DPS.ExpensesByMonth(i, 2026):N2}$\nIngresos: {DPS.IncomeByMonth(i, 2026):N2}$\nBalance final: {DPS.NetByMonth(i, 2026):N2}$\n");
+            }
+
+            Console.WriteLine("\nResumen general:\n");
+            Console.WriteLine($"Gastos: {DPS.Expenses():N2}$\nIngresos: {DPS.Income():N2}$\nBalance final: {DPS.GlobalNet:N2}$\n");
+
+
 
             void Test_Registrations()
             {
