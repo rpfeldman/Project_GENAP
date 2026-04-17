@@ -20,7 +20,11 @@ namespace ConsoleTest
             var DMS = new DataManagementService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            DMS.RemoveFixedTransaction(8);
+            //DMS.RestartData();
+            //Test_Registrations();
+
+            DMS.RemoveFixedTransaction(6, 20);
+            DRS.RegistExpense(300000m, new DateOnly(2027, 10, 14), 20);
 
             for (int i = 1; i <= 12; i++) 
             {
@@ -28,7 +32,10 @@ namespace ConsoleTest
 
                 foreach (var item in DPS.GetAllByMonth(i, 2026, DataProjectionService.Order.OrderByDate))
                 {
-                    var depletion = item.Depletion ? $"[{item.TransactionId}] " + "Se gasto " : "Se gano ";
+                    var depletion = item.Depletion ? "Se gasto " : "Se gano ";
+
+                    depletion = $"[{item.TransactionId}] " + depletion;
+
                     Console.WriteLine(depletion + $"{item.Value:N2}$ en {item.Category} el {item.Date}");
                 }
 
@@ -49,6 +56,7 @@ namespace ConsoleTest
                     DRS.RegistExpense(8000m, new DateOnly(2026, 1, 5), 12, "Streaming");
                     DRS.RegistExpense(45000m, new DateOnly(2026, 1, 10), 6, "Gym");
                     DRS.RegistExpense(12000m, new DateOnly(2026, 2, 1), 12, "Phone insurance");
+                    DRS.RegistExpense(400000m, new DateOnly(2026, 2, 14), 40, "Car payments");
 
                     // Fixed incomes (with duration)
                     DRS.RegistIncome(120000m, new DateOnly(2026, 1, 1), 12, "Welfare");

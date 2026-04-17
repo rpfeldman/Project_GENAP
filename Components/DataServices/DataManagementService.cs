@@ -38,11 +38,11 @@ namespace DataServices
             }
         }
 
-        public int RemoveFixedTransaction(int CollectionId, int FromMonth)
+        public int RemoveFixedTransaction(int CollectionId, int FromDuration)
         {
             try
             {
-                _StateStorage.DeleteFromRange(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId && t.Date.Month > FromMonth);
+                _StateStorage.DeleteFromRange(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId && (t as FixedTransactionDto)!.Duration < FromDuration);
                 return 0;
             }
             catch (Exception)
