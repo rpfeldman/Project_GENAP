@@ -20,11 +20,6 @@ namespace ConsoleTest
             var DMS = new DataManagementService(repo);
             var today = DateOnly.FromDateTime(DateTime.Today);
 
-            //DMS.RestartData();
-            //Test_Registrations();
-
-            DMS.RemoveFixedTransaction(6, 20);
-            DRS.RegistExpense(300000m, new DateOnly(2027, 10, 14), 20);
 
             for (int i = 1; i <= 12; i++) 
             {

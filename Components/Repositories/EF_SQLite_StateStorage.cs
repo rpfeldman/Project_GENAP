@@ -48,7 +48,7 @@ namespace Repositories
             return Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefault();
         }
 
-        public List<TransactionDto> GetTransaction(Func<TransactionDto, bool> predicate)
+        public List<TransactionDto> GetTransactions(Func<TransactionDto, bool> predicate)
         {
             return Context.TransactionsTable.Where(predicate).ToList();
         }
@@ -63,7 +63,7 @@ namespace Repositories
 
         public void DeleteFromRange(Func<TransactionDto, bool> predicate)
         {
-            Context.RemoveRange(Context.TransactionsTable.Where(predicate));
+            Context.RemoveRange(GetTransactions(predicate));
             Context.SaveChanges();
         }
 

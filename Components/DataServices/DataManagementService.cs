@@ -12,7 +12,7 @@ namespace DataServices
     {
         private IStateStorage _StateStorage = StateStorage;
 
-        public int UpdateTransaction(int TransactionId, decimal? value = null, DateOnly? date = null, string? category = null, bool? depletion = null, int? duration = null)
+        public int UpdateTransaction(int TransactionId, decimal? value = null, DateOnly? date = null, string? category = null, bool? depletion = null)
         {
             try
             {
@@ -24,6 +24,8 @@ namespace DataServices
                 return 1;
             }
         }
+       
+       
 
         public int RemoveTransaction(int TransactionId)
         {
