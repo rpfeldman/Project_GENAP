@@ -12,53 +12,52 @@ namespace DataServices
     {
         private IStateStorage _StateStorage = StateStorage;
 
-        public int RegistExpense(decimal value, DateOnly date, string category = "Uncategorized")
+        public async Task<bool> RegistExpense(decimal value, DateOnly date, string category = "Uncategorized")
         {
             try
             {
-                _StateStorage.Save(value, date, category, true, false, null);
-                return 0;
+                return await _StateStorage.SaveAsync(value, date, category, true, false, null);
             }
             catch (Exception)
             {
-                return 1;
+                return false;
             }
-        }
-        public int RegistExpense(decimal value, DateOnly date, int duration, string category = "Uncategorized")
-        {
-            try
-            {
-                _StateStorage.Save(value, date, category, true, true, duration);
-                return 0;
-            }
-            catch (Exception)
-            {
-                return 1;
-            }
+         
         }
 
-        public int RegistIncome(decimal value, DateOnly date, string category = "Uncategorized")
+        public async Task<bool> RegistExpense(decimal value, DateOnly date, int duration, string category = "Uncategorized")
         {
             try
             {
-                _StateStorage.Save(value, date, category, false, false, null);
-                return 0; 
+                return await _StateStorage.SaveAsync(value, date, category, true, true, duration);
             }
             catch (Exception)
             {
-                return 1;
+                return false;
+            }
+         
+        }
+
+        public async Task<bool> RegistIncome(decimal value, DateOnly date, string category = "Uncategorized")
+        {
+            try
+            {
+                return await _StateStorage.SaveAsync(value, date, category, false, false, null);
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
-        public int RegistIncome(decimal value, DateOnly date, int duration, string category = "Uncategorized")
+        public async Task<bool> RegistIncome(decimal value, DateOnly date, int duration, string category = "Uncategorized")
         {
             try
             {
-                _StateStorage.Save(value, date, category, false, true, duration);
-                return 0;
+                return await _StateStorage.SaveAsync(value, date, category, false, true, duration);
             }
             catch (Exception)
             {
-                return 1;
+                return false;
             }
         }
     }

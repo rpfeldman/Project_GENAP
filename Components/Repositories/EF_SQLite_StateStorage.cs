@@ -54,7 +54,7 @@ namespace Repositories
             return await Context.TransactionsTable.Where(predicate).ToListAsync();
         }
 
-        public async Task<bool> Delete(int TransactionId)
+        public async Task<bool> DeleteAsync(int TransactionId)
         {
             var Transaction = await GetTransactionAsync(TransactionId) ?? throw new Exception("Unexistent transaction");
 
@@ -86,26 +86,24 @@ namespace Repositories
                     Context.Add(Transaction);
                 }
                 
-                return await Context.SaveChangesAsync() > 0;
+              
             }
 
             Transaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
 
             Context.Add(Transaction);
-            Context.SaveChanges();
+            return await Context.SaveChangesAsync() > 0;
         }
 
-        public void Update(int TransactionId, decimal? value=null, DateOnly? date=null, string? category=null, bool? depletion=null)
+        public async Task<bool> UpdateAsync(int TransactionId, TransactionDto NewTransaction)
         {
-            var Transaction = GetTransaction(TransactionId) ?? throw new Exception("Unexistent transaction");
+            var Transaction = await GetTransactionAsync(TransactionId) ?? throw new Exception("Unexistent transaction");
 
-            Transaction.Value = value ?? Transaction.Value;
-            Transaction.Date = date ?? Transaction.Date;
-            Transaction.Category = category ?? Transaction.Category;
-            Transaction.Depletion = depletion ?? Transaction.Depletion;
+            NewTransaction.TransactionId = TransactionId;
+            Transaction = NewTransaction;
 
             Context.Update(Transaction);
-            Context.SaveChanges();
+            return await Context.SaveChangesAsync() > 0;
         }
     }
 }

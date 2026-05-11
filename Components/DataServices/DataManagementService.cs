@@ -12,108 +12,103 @@ namespace DataServices
     {
         private IStateStorage _StateStorage = StateStorage;
 
-        public int UpdateTransaction(int TransactionId, decimal? value = null, DateOnly? date = null, string? category = null, bool? depletion = null)
+        public async Task<bool> UpdateTransaction(int TransactionId, decimal? value = null, DateOnly? date = null, string? category = null, bool? depletion = null)
         {
             try
             {
-                _StateStorage.Update(TransactionId, value, date, category, depletion);
-                return 0;
+                var OldTransaction = await _StateStorage.GetTransactionAsync(TransactionId);
+                var NewTransaction = new TransactionDto() { TransactionId = TransactionId, Value = value ?? OldTransaction!.Value, Date = date ?? OldTransaction!.Date, Category = category ?? OldTransaction!.Category, Depletion = depletion ?? OldTransaction!.Depletion };
+
+                return await _StateStorage.UpdateAsync(TransactionId, NewTransaction);
             }
             catch (Exception)
             {
-                return 1;
+                return false;
             }
         }
        
        
 
-        public int RemoveTransaction(int TransactionId)
+        public async Task<bool> RemoveTransaction(int TransactionId)
         {
             try
             {
-                _StateStorage.Delete(TransactionId);
-                return 0;
+                return await _StateStorage.DeleteAsync(TransactionId);
             }
             catch (Exception)
             {
-                return 1;
+                return false;
             }
         }
 
-        public int RemoveFixedTransaction(int CollectionId, int FromDuration)
+        public async Task<bool> RemoveFixedTransaction(int CollectionId, int FromDuration)
         {
             try
             {
-                _StateStorage.DeleteFromRange(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId && (t as FixedTransactionDto)!.Duration < FromDuration);
-                return 0;
+                return await _StateStorage.DeleteFromRangeAsync(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId && (t as FixedTransactionDto)!.Duration < FromDuration);
             }
             catch (Exception)
             {
-                return 1;
+                return false;
             }
         }
-        public int RemoveFixedTransaction(int CollectionId)
+        public async Task<bool> RemoveFixedTransaction(int CollectionId)
         {
             try
             {
-                _StateStorage.DeleteFromRange(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId);
-                return 0;
+                return await _StateStorage.DeleteFromRangeAsync(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId);
             }
             catch (Exception)
             {
-                return 1;
+                return false;
             }
         }
 
-        public int RemoveExpenses()
+        public async Task<bool> RemoveExpenses()
         {
             try
             {
-                _StateStorage.DeleteFromRange(t => t.Depletion == true);
-                return 0;
+                return await _StateStorage.DeleteFromRangeAsync(t => t.Depletion == true);
             }
             catch (Exception)
             {
-                return 1;
+                return false;
             }
         }
 
-        public int RemoveIncome()
+        public async Task<bool> RemoveIncome()
         {
             try
             {
-                _StateStorage.DeleteFromRange(t => t.Depletion == false);
-                return 0;
+                return await _StateStorage.DeleteFromRangeAsync(t => t.Depletion == false);
             }
             catch (Exception)
             {
-                return 1;
+                return false;
             }
         }
 
-        public int RemoveFromCategory(string category)
+        public async Task<bool> RemoveFromCategory(string category)
         {
             try
             {
-                _StateStorage.DeleteFromRange(t => t.Category == category);
-                return 0;
+                return await _StateStorage.DeleteFromRangeAsync(t => t.Category == category);
             }
             catch (Exception)
             { 
-                return 1;
+                return false;
             }
         }
 
-        public int RestartData()
+        public async Task<bool> RestartData()
         {
             try
             {
-                _StateStorage.ClearStorage();
-                return 0;
+                return await _StateStorage.ClearStorageAsync();
             }
             catch (Exception)
             {
-                return 1;
+                return false;
             }
         }
     }
