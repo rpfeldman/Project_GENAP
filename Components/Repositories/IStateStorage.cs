@@ -8,13 +8,13 @@ namespace Repositories
 {
     public interface IStateStorage
     {
-        public void Save(decimal value, DateOnly date, string category, bool depletion, bool isfixed, int? duration);
-        public void Delete(int TransactionId);
-        public void DeleteFromRange(Expression<Func<TransactionDto, bool>> predicate);
-        public void Update(int TransactionId, decimal? value, DateOnly? date, string? category, bool? depletion);
-        public void ClearStorage();
-        public TransactionDto? GetTransaction(int TransactionId);
-        public List<TransactionDto> GetTransactions(Expression<Func<TransactionDto, bool>> predicate);
-        public List<TransactionDto> GetAll();
+        public Task<bool> SaveAsync(TransactionDto transaction);
+        public Task<bool> DeleteAsync(int TransactionId);
+        public Task<bool> DeleteFromRangeAsync(Expression<Func<TransactionDto, bool>> predicate);
+        public Task<bool> UpdateAsync(int TransactionId, TransactionDto NewTransaction);
+        public Task<bool> ClearStorage();
+        public Task<TransactionDto?> GetTransactionAsync(int TransactionId);
+        public Task<List<TransactionDto>> GetTransactions(Expression<Func<TransactionDto, bool>> predicate);
+        public Task<List<TransactionDto>> GetAllAsync();
     }
 }
