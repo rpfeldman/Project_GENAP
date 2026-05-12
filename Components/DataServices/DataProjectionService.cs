@@ -55,9 +55,21 @@ namespace DataServices
     
         // All transaction data projection
 
-        public async Task<List<TransactionDto>> GetAll()
+        public async Task<List<TransactionDto>> GetAll(Order? order = null)
         {
-            return await _StateStorage.GetAllAsync();
+            var Transactions = await _StateStorage.GetAllAsync();
+
+            switch (order)
+            {
+                case Order.OrderByDate:
+                    return [.. Transactions.OrderBy(t => t.Date)];
+
+                case Order.OrderByValue:
+                    return [.. Transactions.OrderBy(t => t.Value)];
+
+
+                default: return Transactions;
+            }
         }
         public async Task<List<TransactionDto>> GetAllByDate(DateOnly date, Order order = Order.OrderByDate)
         {
@@ -104,18 +116,17 @@ namespace DataServices
         }
 
         // General financial results
-        public async Task<decimal> GetGlobalNet()
+        public async Task<decimal> GetNet()
         {
             decimal expenses = await GetTotalAmmount(true);
             decimal income = await GetTotalAmmount(false);
 
             return income - expenses;
         }
-        public async Task<bool> GetGlobalDeficit()
+        public async Task<bool> GetDeficit()
         {
-            return await GetGlobalNet() > 0;
+            return await GetNet() < 0;
         }
-
 
         public async Task<decimal> GetTotalAmmount(bool IsExpense)
         {

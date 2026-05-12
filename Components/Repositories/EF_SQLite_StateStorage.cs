@@ -85,8 +85,8 @@ namespace Repositories
 
                     Context.Add(Transaction);
                 }
-                
-              
+
+                return await Context.SaveChangesAsync() > 0;
             }
 
             Transaction = new TransactionDto() { Value = value, Date = date, Category = category, Depletion = depletion, Fixed = isfixed };
