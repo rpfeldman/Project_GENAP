@@ -25,6 +25,7 @@ namespace GENAP_MAUI
             // ViewModels
             builder.Services.AddTransient<MainDashboardPageViewModel>();
             builder.Services.AddTransient<RegistTransactionPageViewModel>();
+            builder.Services.AddTransient<RegistTradeTransactionPageViewModel>();
 
             // Data services & the repository
             builder.Services.AddSingleton<IStateStorage, EF_SQLite_StateStorage>(sp => { return new EF_SQLite_StateStorage("TermporalTest.db", [14, 2]); });
