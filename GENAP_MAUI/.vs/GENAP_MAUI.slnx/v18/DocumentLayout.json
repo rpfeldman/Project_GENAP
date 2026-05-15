@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\pages\\mainnavigationbarpages\\registtradetransactionpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:pages\\mainnavigationbarpages\\registtradetransactionpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\pages\\mainnavigationbarpages\\transactioncategoriespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:pages\\mainnavigationbarpages\\transactioncategoriespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\viewmodels\\registtradetransactionpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:viewmodels\\registtradetransactionpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\viewmodels\\transactioncategoriespageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:viewmodels\\transactioncategoriespageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\viewmodels\\registtransactionpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:viewmodels\\registtransactionpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\pages\\mainnavigationbarpages\\transactioncategoriespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:pages\\mainnavigationbarpages\\transactioncategoriespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,41 +38,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "RegistTransactionPageViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\RegistTransactionPageViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\RegistTransactionPageViewModel.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\RegistTransactionPageViewModel.cs",
-              "RelativeToolTip": "ViewModels\\RegistTransactionPageViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABXAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "TransactionCategoriesPageViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\TransactionCategoriesPageViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\TransactionCategoriesPageViewModel.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\TransactionCategoriesPageViewModel.cs",
+              "RelativeToolTip": "ViewModels\\TransactionCategoriesPageViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T16:25:52.058Z",
+              "WhenOpened": "2026-05-15T16:41:43.745Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "RegistTradeTransactionPage.xaml",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\RegistTradeTransactionPage.xaml",
-              "RelativeDocumentMoniker": "Pages\\MainNavigationBarPages\\RegistTradeTransactionPage.xaml",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\RegistTradeTransactionPage.xaml",
-              "RelativeToolTip": "Pages\\MainNavigationBarPages\\RegistTradeTransactionPage.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-15T16:21:06.249Z",
+              "Title": "TransactionCategoriesPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml.cs",
+              "RelativeDocumentMoniker": "Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml.cs",
+              "RelativeToolTip": "Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-15T16:41:15.002Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RegistTradeTransactionPageViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\RegistTradeTransactionPageViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\RegistTradeTransactionPageViewModel.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\RegistTradeTransactionPageViewModel.cs",
-              "RelativeToolTip": "ViewModels\\RegistTradeTransactionPageViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T16:19:17.133Z",
+              "DocumentIndex": 2,
+              "Title": "TransactionCategoriesPage.xaml",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
+              "RelativeDocumentMoniker": "Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
+              "RelativeToolTip": "Pages\\MainNavigationBarPages\\TransactionCategoriesPage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-15T16:41:14.508Z",
               "EditorCaption": ""
             }
           ]
