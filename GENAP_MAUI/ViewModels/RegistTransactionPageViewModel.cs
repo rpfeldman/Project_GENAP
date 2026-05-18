@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
+using GENAP_MAUI.InnerComponents;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,7 +25,7 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
-        public partial string Category { get; set; } = string.Empty;
+        public partial CategoryDto Category { get; set; } = new(string.Empty);
 
         [ObservableProperty]
         public partial DateTime PickedDate { get; set; } = DateTime.Today;
@@ -49,14 +50,14 @@ namespace GENAP_MAUI.ViewModels
 
             if (Depletion)
             {
-                var ExpenseRegistrationTask = IsFixed ? await _RegistrationService.RegistExpense(Value, DateOnly.FromDateTime(PickedDate), FixedTransactionDuration, Category) : await _RegistrationService.RegistExpense(Value, DateOnly.FromDateTime(PickedDate), Category);
+                var ExpenseRegistrationTask = IsFixed ? await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), FixedTransactionDuration, Category.CategoryName) : await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.CategoryName);
 
                 await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask ? "Gasto registrado con exito" : "Ocurrio un error al registrar el gasto\nGasto no registrado", DisplayAlertButton);
 
                 return;
             }
 
-            var IncomeRegistrationTask = IsFixed ? await _RegistrationService.RegistIncome(Value, DateOnly.FromDateTime(PickedDate), FixedTransactionDuration, Category) : await _RegistrationService.RegistIncome(Value, DateOnly.FromDateTime(PickedDate), Category);
+            var IncomeRegistrationTask = IsFixed ? await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), FixedTransactionDuration, Category.CategoryName) : await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.CategoryName);
 
             await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask ? "Ingreso registrado con exito" : "Ocurrio un error al registrar el Ingreso\nIngreso no registrado", DisplayAlertButton);
 
@@ -64,6 +65,6 @@ namespace GENAP_MAUI.ViewModels
         }
 
 
-        private bool RegistTransactionCanExecute() => !string.IsNullOrWhiteSpace(Category) && Value > 0m && FixedTransactionDuration >= 1;
+        private bool RegistTransactionCanExecute() => !string.IsNullOrWhiteSpace(Category.CategoryName) && Value > 0m && FixedTransactionDuration >= 1;
     }
 }

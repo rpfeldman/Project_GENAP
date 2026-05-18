@@ -1,6 +1,7 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GENAP_MAUI.InnerComponents;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,12 +14,12 @@ namespace GENAP_MAUI.ViewModels
         private GlobalResources _GR;
 
         [ObservableProperty]
-        public partial ObservableCollection<string> Categories { get; set; }
+        public partial ObservableCollection<CategoryDto> Categories { get; set; }
 
         public TransactionCategoriesPageViewModel(GlobalResources globalResources)
         {
             _GR = globalResources;
-            Categories = _GR.GlobalCategories;
+            Categories = new(_GR.GlobalCategories);
         }
 
         [ObservableProperty]
@@ -26,24 +27,30 @@ namespace GENAP_MAUI.ViewModels
         public partial string NewCategory { get; set; } = string.Empty;
 
         [RelayCommand]
-        public async Task DeleteCategory(string Category)
+        public async Task DeleteCategory(CategoryDto Category)
         {
             Categories.Remove(Category);
+            SaveCommand.NotifyCanExecuteChanged();
         }
 
         [RelayCommand(CanExecute = nameof(AddCategoryCanExecute))]
         public async Task AddCategory()
         {
-            Categories.Add(NewCategory);
+            Categories.Add(new CategoryDto(NewCategory));
+            SaveCommand.NotifyCanExecuteChanged();
+            NewCategory = string.Empty;
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
         {
-            _GR.GlobalCategories = Categories;
+            _GR.GlobalCategories = new(Categories);
+            NewCategory = string.Empty;
             await Shell.Current.DisplayAlertAsync("Categorias", "Se guardaron las categorias","Aceptar");
         }
 
         private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory);
+
+        private bool SaveCanExecute() => Categories.Count > 0;
     }
 }

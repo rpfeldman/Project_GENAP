@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
+             xmlns:ic="clr-namespace:GENAP_MAUI.InnerComponents"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.RegistTransactionPage"
              x:DataType="vm:RegistTransactionPageViewModel">
 
@@ -19,6 +20,7 @@
             <Picker
             Title="Seleccionar categoria"
             ItemsSource="{Binding GR.GlobalCategories}"
+            ItemDisplayBinding="{Binding CategoryName, x:DataType=ic:Category}"
                 SelectedItem="{Binding Category}"/>
 
             <DatePicker

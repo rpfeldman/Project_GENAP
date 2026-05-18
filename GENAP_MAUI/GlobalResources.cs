@@ -1,4 +1,5 @@
 ﻿
+using GENAP_MAUI.InnerComponents;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,18 +9,18 @@ namespace GENAP_MAUI
 {
     public sealed class GlobalResources
     {
-        public ObservableCollection<string> GlobalCategories { get; set; } = new();
+        public ObservableCollection<CategoryDto> GlobalCategories { get; set; } = new();
 
         public GlobalResources()
         {
             // This is temporary, GlobalCategories should get the categories from a JSON file
             GlobalCategories =
             [
-                "Indumentaria",
-                "Comida",
-                "Social",
-                "Gaming",
-                "Suscripciones",
+                new CategoryDto("Indumentaria"),
+                new CategoryDto("Comida"),
+                new CategoryDto("Social"),
+                new CategoryDto("Gaming"),
+                new CategoryDto("Suscripciones"),
             ];
         }
     }
