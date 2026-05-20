@@ -11,4 +11,5 @@ public partial class GraphsPage : ContentPage
 
 		BindingContext = vm;
 	}
+
 }

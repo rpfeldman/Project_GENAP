@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using GENAP_MAUI.ViewModels;
 using DataServices;
 using Repositories;
-using Microcharts.Maui;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using LiveChartsCore.SkiaSharpView.Maui;
 

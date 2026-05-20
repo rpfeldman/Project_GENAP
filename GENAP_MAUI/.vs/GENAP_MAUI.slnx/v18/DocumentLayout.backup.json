@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\viewmodels\\graphspageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:viewmodels\\graphspageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\contentviews\\graphs\\balancedoughnutchart\\balancedoughnutchart.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:contentviews\\graphs\\balancedoughnutchart\\balancedoughnutchart.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\pages\\mainnavigationbarpages\\graphspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:pages\\mainnavigationbarpages\\graphspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\contentviews\\graphs\\balancedoughnutchart\\balancedoughnutchartviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:contentviews\\graphs\\balancedoughnutchart\\balancedoughnutchartviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\genap\\genap_maui\\pages\\mainnavigationbarpages\\graphspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:pages\\mainnavigationbarpages\\graphspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,28 +38,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GraphsPageViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\GraphsPageViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\GraphsPageViewModel.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ViewModels\\GraphsPageViewModel.cs*",
-              "RelativeToolTip": "ViewModels\\GraphsPageViewModel.cs*",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAIwBwAAAA9AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "GraphsPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\GraphsPage.xaml.cs",
+              "RelativeDocumentMoniker": "Pages\\MainNavigationBarPages\\GraphsPage.xaml.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\GraphsPage.xaml.cs",
+              "RelativeToolTip": "Pages\\MainNavigationBarPages\\GraphsPage.xaml.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAIAwwA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-19T19:49:50.712Z",
+              "WhenOpened": "2026-05-20T16:27:00.401Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "GraphsPage.xaml",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\GraphsPage.xaml",
-              "RelativeDocumentMoniker": "Pages\\MainNavigationBarPages\\GraphsPage.xaml",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\GraphsPage.xaml*",
-              "RelativeToolTip": "Pages\\MainNavigationBarPages\\GraphsPage.xaml*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAIAAAAAAAAAA==",
+              "Title": "BalanceDoughnutChartViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ContentViews\\Graphs\\BalanceDoughnutChart\\BalanceDoughnutChartViewModel.cs",
+              "RelativeDocumentMoniker": "ContentViews\\Graphs\\BalanceDoughnutChart\\BalanceDoughnutChartViewModel.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ContentViews\\Graphs\\BalanceDoughnutChart\\BalanceDoughnutChartViewModel.cs",
+              "RelativeToolTip": "ContentViews\\Graphs\\BalanceDoughnutChart\\BalanceDoughnutChartViewModel.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAYwCMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T16:21:22.533Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BalanceDoughnutChart.xaml",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ContentViews\\Graphs\\BalanceDoughnutChart\\BalanceDoughnutChart.xaml",
+              "RelativeDocumentMoniker": "ContentViews\\Graphs\\BalanceDoughnutChart\\BalanceDoughnutChart.xaml",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\GENAP\\GENAP_MAUI\\ContentViews\\Graphs\\BalanceDoughnutChart\\BalanceDoughnutChart.xaml",
+              "RelativeToolTip": "ContentViews\\Graphs\\BalanceDoughnutChart\\BalanceDoughnutChart.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-19T19:49:46.692Z",
+              "WhenOpened": "2026-05-20T16:21:03.496Z",
               "EditorCaption": ""
             }
           ]
