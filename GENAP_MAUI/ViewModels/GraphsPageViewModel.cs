@@ -20,5 +20,8 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         public partial decimal TestExpense { get; set; } = 10953.90m;
+
+        [ObservableProperty]
+        public partial decimal[] TestBalanceEvolve { get; set; } = { 0, 100m, 200m, 30000m, -50000m };
     }
 }

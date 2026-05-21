@@ -85,6 +85,9 @@
 	  <MauiXaml Update="ContentViews\Graphs\BalanceDoughnutChart.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="ContentViews\Graphs\BalanceLineChart.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\MainNavigationBarPages\GraphsPage.xaml" Inflator="Runtime">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
