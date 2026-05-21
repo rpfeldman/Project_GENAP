@@ -1,4 +1,5 @@
 using LiveChartsCore;
+using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Drawing;
@@ -11,8 +12,12 @@ namespace GENAP_MAUI.ContentViews.Graphs;
 
 public partial class BalanceLineChart : ContentView
 {
-    private static readonly SKColor PositiveColor = SKColor.Parse("#1EFF03");
-    private static readonly SKColor NegativeColor = SKColor.Parse("#FF0303");
+    private static readonly SKColor PositiveColor = SKColor.Parse("#16C784");
+    private static readonly SKColor NegativeColor = SKColor.Parse("#EA3943");
+
+    private static readonly SKColor AxisTextColor = SKColor.Parse("#94A3B8");
+    private static readonly SKColor GridLineColor = SKColor.Parse("#263241");
+    private static readonly SKColor ZeroLineColor = SKColor.Parse("#CBD5E1");
 
     public static readonly BindableProperty BalanceHistoryProperty = BindableProperty.Create(
         nameof(BalanceHistory),
@@ -27,32 +32,19 @@ public partial class BalanceLineChart : ContentView
         set => SetValue(BalanceHistoryProperty, value);
     }
 
-    public ISeries[] LineSeriesCollection { get; }
+    public ISeries[] LineSeriesCollection { get; private set; }
     public ICartesianAxis[] XAxes { get; }
     public ICartesianAxis[] YAxes { get; }
     public RectangularSection[] ZeroSection { get; }
 
-    private readonly LineSeries<double> _balanceSeries;
     public BalanceLineChart()
-	{
-        _balanceSeries = new LineSeries<double>
-        {
-            Values = new double[] { 0 },
-            GeometrySize = 0,
-            LineSmoothness = 0.5,
-            Stroke = new SolidColorPaint(PositiveColor) { StrokeThickness = 3 },
-            Fill = new LiveChartsCore.SkiaSharpView.Painting.LinearGradientPaint(
-                    new[]
-                    {
-                    PositiveColor.WithAlpha(90),
-                    PositiveColor.WithAlpha(0)
-                    },
-                    new SKPoint(0.5f, 0),
-                    new SKPoint(0.5f, 1)),
-            YToolTipLabelFormatter = point => $"{point.Coordinate.PrimaryValue:N2}$"
-        };
-
-        LineSeriesCollection = [_balanceSeries];
+    {
+        LineSeriesCollection =
+        [
+            CreateSegmentSeries(
+                [new ObservablePoint(0, 0)],
+                PositiveColor)
+        ];
 
         XAxes =
         [
@@ -67,9 +59,9 @@ public partial class BalanceLineChart : ContentView
             new Axis
             {
                 Labeler = value => $"{value:N0}$",
-                TextSize = 12,
-                LabelsPaint = new SolidColorPaint(SKColors.White),
-                SeparatorsPaint = new SolidColorPaint(SKColors.White.WithAlpha(30))
+                TextSize = 11,
+                LabelsPaint = new SolidColorPaint(AxisTextColor),
+                SeparatorsPaint = new SolidColorPaint(GridLineColor.WithAlpha(90))
                 {
                     StrokeThickness = 1
                 }
@@ -82,16 +74,16 @@ public partial class BalanceLineChart : ContentView
             {
                 Yi = 0,
                 Yj = 0,
-                Stroke = new SolidColorPaint(SKColors.White.WithAlpha(120))
+                Stroke = new SolidColorPaint(ZeroLineColor.WithAlpha(120))
                 {
                     StrokeThickness = 1,
-                    PathEffect = new DashEffect([4, 4])
+                    PathEffect = new DashEffect([6, 6])
                 }
             }
         ];
 
         InitializeComponent();
-	}
+    }
 
     private static void OnDataChanged(BindableObject bindable, object oldValue, object newValue)
     {
@@ -103,29 +95,111 @@ public partial class BalanceLineChart : ContentView
     {
         if (BalanceHistory is null || BalanceHistory.Length == 0)
         {
-            _balanceSeries.Values = new double[] { 0 };
+            LineSeriesCollection =
+            [
+                CreateSegmentSeries(
+                    [new ObservablePoint(0, 0)],
+                    PositiveColor)
+            ];
+
+            OnPropertyChanged(nameof(LineSeriesCollection));
             return;
         }
 
-        var doubleValues = new double[BalanceHistory.Length];
+        var values = new double[BalanceHistory.Length];
+
         for (var i = 0; i < BalanceHistory.Length; i++)
         {
-            doubleValues[i] = (double)BalanceHistory[i];
+            values[i] = (double)BalanceHistory[i];
         }
 
-        _balanceSeries.Values = doubleValues;
+        LineSeriesCollection = BuildColoredSegments(values).ToArray();
 
-        var lastValue = BalanceHistory[^1];
-        var color = lastValue >= 0 ? PositiveColor : NegativeColor;
+        OnPropertyChanged(nameof(LineSeriesCollection));
+    }
 
-        _balanceSeries.Stroke = new SolidColorPaint(color) { StrokeThickness = 3 };
-        _balanceSeries.Fill = new LiveChartsCore.SkiaSharpView.Painting.LinearGradientPaint(
-            new[]
+    private static List<ISeries> BuildColoredSegments(double[] values)
+    {
+        var result = new List<ISeries>();
+
+        if (values.Length == 1)
+        {
+            var color = values[0] >= 0 ? PositiveColor : NegativeColor;
+
+            result.Add(CreateSegmentSeries(
+                [new ObservablePoint(0, values[0])],
+                color));
+
+            return result;
+        }
+
+        var currentPoints = new List<ObservablePoint>
+        {
+            new(0, values[0])
+        };
+
+        var currentColor = values[0] >= 0 ? PositiveColor : NegativeColor;
+
+        for (var i = 1; i < values.Length; i++)
+        {
+            var previousValue = values[i - 1];
+            var currentValue = values[i];
+
+            var previousIsPositive = previousValue >= 0;
+            var currentIsPositive = currentValue >= 0;
+
+            if (previousIsPositive == currentIsPositive)
             {
-                color.WithAlpha(90),
-                color.WithAlpha(0)
+                currentPoints.Add(new ObservablePoint(i, currentValue));
+                continue;
+            }
+
+            var crossingX = (i - 1) + ((0 - previousValue) / (currentValue - previousValue));
+            var zeroPoint = new ObservablePoint(crossingX, 0);
+
+            currentPoints.Add(zeroPoint);
+
+            result.Add(CreateSegmentSeries(currentPoints, currentColor));
+
+            currentColor = currentIsPositive ? PositiveColor : NegativeColor;
+
+            currentPoints =
+            [
+                zeroPoint,
+                new ObservablePoint(i, currentValue)
+            ];
+        }
+
+        result.Add(CreateSegmentSeries(currentPoints, currentColor));
+
+        return result;
+    }
+
+    private static LineSeries<ObservablePoint> CreateSegmentSeries(
+        IEnumerable<ObservablePoint> values,
+        SKColor color)
+    {
+        return new LineSeries<ObservablePoint>
+        {
+            Values = values.ToArray(),
+            GeometrySize = 0,
+            LineSmoothness = 0.35,
+            Stroke = new SolidColorPaint(color)
+            {
+                StrokeThickness = 3
             },
-            new SKPoint(0.5f, 0),
-            new SKPoint(0.5f, 1));
+            Fill = new LiveChartsCore.SkiaSharpView.Painting.LinearGradientPaint(
+                new[]
+                {
+                    color.WithAlpha(70),
+                    color.WithAlpha(18),
+                    color.WithAlpha(0)
+                },
+                new SKPoint(0.5f, 0),
+                new SKPoint(0.5f, 1)),
+            GeometryFill = null,
+            GeometryStroke = null,
+            YToolTipLabelFormatter = point => $"{point.Coordinate.PrimaryValue:N2}$"
+        };
     }
 }

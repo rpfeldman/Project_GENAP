@@ -7,8 +7,8 @@
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.GraphsPage"
              x:DataType="vm:GraphsPageViewModel">
 
-
-    <VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
 
         <chart:BalanceDoughnutChart Income="{Binding TestIncome}" Expenses="{Binding TestExpense}"></chart:BalanceDoughnutChart>
 
@@ -22,4 +22,5 @@
         <Label Text="Evolucion del ingreso"></Label>
 
     </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
