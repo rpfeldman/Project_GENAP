@@ -10,15 +10,16 @@
     <ScrollView>
         <VerticalStackLayout>
 
-        <chart:BalanceDoughnutChart Income="{Binding TestIncome}" Expenses="{Binding TestExpense}"></chart:BalanceDoughnutChart>
+            <chart:BalanceDoughnutChart Income="{Binding TestIncome}" Expenses="{Binding TestExpense}"></chart:BalanceDoughnutChart>
 
-        <charts:BalanceLineChart Transactions="{Binding TestBalanceEvolve}"></charts:BalanceLineChart>
+        
 
-        <Label Text="Proporcion gastos por categoria"></Label>
-        <Label Text="Proporcion ingresos por categoria"></Label>
+            <Label Text="Proporcion gastos por categoria"></Label>
+            <Label Text="Proporcion ingresos por categoria"></Label>
 
+			<charts:BalanceLineChart Transactions="{Binding TestBalanceEvolve}"></charts:BalanceLineChart>
 
-            <VerticalStackLayout>
+			<VerticalStackLayout>
                 <Label Text="Gastos vs ingresos"></Label>
                 <charts:DoubleComparisonLineChart Transactions1="{Binding Income}" Transactions2="{Binding Expenses}" Color1="Green" Color2="Red"></charts:DoubleComparisonLineChart>
             </VerticalStackLayout>

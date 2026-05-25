@@ -36,8 +36,9 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(AddCategoryCanExecute))]
         public async Task AddCategory()
         {
-            Categories.Add(new CategoryDto(NewCategory));
-            SaveCommand.NotifyCanExecuteChanged();
+            Categories.Add(new CategoryDto(NewCategory, "EBAD28"));
+
+			SaveCommand.NotifyCanExecuteChanged();
             NewCategory = string.Empty;
         }
 

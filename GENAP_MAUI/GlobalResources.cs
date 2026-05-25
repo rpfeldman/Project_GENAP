@@ -16,11 +16,16 @@ namespace GENAP_MAUI
             // This is temporary, GlobalCategories should get the categories from a JSON file
             GlobalCategories =
             [
-                new CategoryDto("Indumentaria"),
-                new CategoryDto("Comida"),
-                new CategoryDto("Social"),
-                new CategoryDto("Gaming"),
-                new CategoryDto("Suscripciones"),
+                new CategoryDto("Indumentaria", "466C87"),
+
+
+				new CategoryDto("Comida", "F5E727"),
+
+				new CategoryDto("Social", "43EB28"),
+
+                new CategoryDto("Gaming", "9028EB"),
+
+                new CategoryDto("Suscripciones", "28EBB7"),
             ];
         }
     }

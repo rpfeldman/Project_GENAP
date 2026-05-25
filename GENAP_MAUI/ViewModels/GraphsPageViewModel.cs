@@ -14,9 +14,11 @@ using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
-    public sealed partial class GraphsPageViewModel(DataProjectionService dataProjectionService) : BaseViewModel
+    public sealed partial class GraphsPageViewModel(DataProjectionService dataProjectionService, GlobalResources globalResources) : BaseViewModel
     {
         private DataProjectionService _dataProjectionService = dataProjectionService;
+
+        public GlobalResources GlobalResources = globalResources;
 
         [ObservableProperty]
         public partial decimal TestIncome { get; set; } = 0m;
