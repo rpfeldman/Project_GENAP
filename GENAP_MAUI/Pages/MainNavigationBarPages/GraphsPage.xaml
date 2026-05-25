@@ -25,13 +25,13 @@
 
             <VerticalStackLayout>
                 <Label Text="Ingresos"></Label>
-                <charts:BasicLineChart LineColor="Green" Values="{Binding Income}"></charts:BasicLineChart>
+                <charts:BasicLineChart LineColor="Green" Transactions="{Binding Income}"></charts:BasicLineChart>
             </VerticalStackLayout>
 
 
             <VerticalStackLayout>
                 <Label Text="Gastos"></Label>
-                <charts:BasicLineChart LineColor="Red" Values="{Binding Expenses}"></charts:BasicLineChart>
+                <charts:BasicLineChart LineColor="Red" Transactions="{Binding Expenses}"></charts:BasicLineChart>
             </VerticalStackLayout>
 
         </VerticalStackLayout>
