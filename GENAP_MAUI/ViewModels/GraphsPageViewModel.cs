@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using DomainModel;
+using GENAP_MAUI.InnerComponents;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
@@ -10,17 +11,27 @@ using Microcharts;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
-    public sealed partial class GraphsPageViewModel(DataProjectionService dataProjectionService, GlobalResources globalResources) : BaseViewModel
+    public sealed partial class GraphsPageViewModel : BaseViewModel
     {
-        private DataProjectionService _dataProjectionService = dataProjectionService;
+        private DataProjectionService _dataProjectionService;
+        private GlobalResources _globalResources;
 
-        public GlobalResources GlobalResources = globalResources;
+		public GraphsPageViewModel(DataProjectionService dataProjectionService, GlobalResources globalResources)
+        {   
+		    _dataProjectionService = dataProjectionService;
+		    _globalResources = globalResources;
+		    Categories = new(_globalResources.GlobalCategories);
+		}
 
-        [ObservableProperty]
+		[ObservableProperty]
+		public partial ObservableCollection<CategoryDto> Categories { get; set; }
+
+		[ObservableProperty]
         public partial decimal TestIncome { get; set; } = 0m;
 
         [ObservableProperty]

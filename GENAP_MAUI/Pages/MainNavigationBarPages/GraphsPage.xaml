@@ -14,8 +14,8 @@
 
 
 
-			<charts:ProportionDoughnutChart Transactions="{Binding Expenses}" Categories="{Binding GlobalResources.GlobalCategories}"></charts:ProportionDoughnutChart>
-			<charts:ProportionDoughnutChart Transactions="{Binding Income}" Categories="{Binding GlobalResources.GlobalCategories}"></charts:ProportionDoughnutChart>
+			<charts:ProportionDoughnutChart Transactions="{Binding Expenses}" Categories="{Binding Categories}"></charts:ProportionDoughnutChart>
+			<charts:ProportionDoughnutChart Transactions="{Binding Income}" Categories="{Binding Categories}"></charts:ProportionDoughnutChart>
 
 			<charts:BalanceLineChart Transactions="{Binding TestBalanceEvolve}"></charts:BalanceLineChart>
 
