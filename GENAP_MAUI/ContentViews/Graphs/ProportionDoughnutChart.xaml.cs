@@ -110,7 +110,7 @@ public partial class ProportionDoughnutChart : ContentView
 
 			try
 			{
-				var hex = cat.Color.StartsWith("#") ? cat.Color : $"#{cat.Color}";
+				var hex = cat.Color;
 				result[cat.CategoryName] = SKColor.Parse(hex);
 			}
 			catch

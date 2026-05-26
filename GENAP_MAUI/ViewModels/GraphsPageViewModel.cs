@@ -16,58 +16,63 @@ using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
-    public sealed partial class GraphsPageViewModel : BaseViewModel
-    {
-        private DataProjectionService _dataProjectionService;
-        private GlobalResources _globalResources;
+	public sealed partial class GraphsPageViewModel : BaseViewModel
+	{
+		private DataProjectionService _dataProjectionService;
+		private GlobalResources _globalResources;
 
 		public GraphsPageViewModel(DataProjectionService dataProjectionService, GlobalResources globalResources)
-        {   
-		    _dataProjectionService = dataProjectionService;
-		    _globalResources = globalResources;
-		    Categories = new(_globalResources.GlobalCategories);
+		{
+			_dataProjectionService = dataProjectionService;
+			_globalResources = globalResources;
+
+			Categories = new(_globalResources.GlobalCategories);
+
+			Period = TimePeriods.Keys.First();
 		}
+
+		public enum TimePeriodsEnum {Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year };
+		public Dictionary<TimePeriodsEnum, string> TimePeriods { get; } = new()
+		{
+			{TimePeriodsEnum.Historical, "Historico"},
+			{TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
+			{TimePeriodsEnum.Month, "Este mes"},
+			{TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
+			{TimePeriodsEnum.ThreeMonths, "Ultimos 3 meses"},
+			{TimePeriodsEnum.Semester, "Ultimo semestre"},
+			{TimePeriodsEnum.Year, "Ultimo año"}
+		};
+
+		[ObservableProperty]
+		public partial TimePeriodsEnum Period { get; set; }
 
 		[ObservableProperty]
 		public partial ObservableCollection<CategoryDto> Categories { get; set; }
 
+        [ObservableProperty]
+        public partial List<TransactionDto> ExpensesLog { get; set; } = [];
+
 		[ObservableProperty]
-        public partial decimal TestIncome { get; set; } = 0m;
+		public partial List<TransactionDto> IncomeLog { get; set; } = [];
 
-        [ObservableProperty]
-        public partial decimal TestExpense { get; set; } = 0m;
-
-        [ObservableProperty]
-        public partial List<TransactionDto> TestBalanceEvolve { get; set; } = [];
-
-        [ObservableProperty]
-        public partial List<TransactionDto> Expenses { get; set; } = [];
+		[ObservableProperty]
+		public partial List<TransactionDto> TransactionsLog { get; set; } = [];
 
 
-        [ObservableProperty]
-        public partial List<TransactionDto> Income { get; set; } = [];
-
-
-        [RelayCommand]
+		[RelayCommand]
         public async Task FillGraphs()
         {
-            var expensesTask = _dataProjectionService.GetGlobalResultAsync(true);
-            var incomeTask = _dataProjectionService.GetGlobalResultAsync(false);
+			var GetExpensesTask = _dataProjectionService.GetAllAsync(true);
+			var GetIncomeTask = _dataProjectionService.GetAllAsync(false);
+			var GetTransactionsTask = _dataProjectionService.GetAllAsync();
 
-            var result = await Task.WhenAll(expensesTask, incomeTask);
+			var TaskResults = await Task.WhenAll(GetExpensesTask, GetIncomeTask, GetTransactionsTask);
 
-            TestExpense = result[0];
-            TestIncome = result[1];
+			ExpensesLog = new (TaskResults[0]);
+			IncomeLog = new(TaskResults[1]);
+			TransactionsLog = new(TaskResults[2]);
 
-            TestBalanceEvolve = await _dataProjectionService.GetAllAsync();
-
-            var getExpensesLineTask = _dataProjectionService.GetAllAsync(true);
-			var getIncomeLineTask = _dataProjectionService.GetAllAsync(false);
-
-			var ComparisonValues = await Task.WhenAll(getExpensesLineTask, getIncomeLineTask);
-
-            Expenses = ComparisonValues[0];
-            Income = ComparisonValues[1];
-        }
+			return;
+		}
     }
 }

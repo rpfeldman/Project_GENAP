@@ -2,39 +2,55 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
-             xmlns:chart="clr-namespace:GENAP_MAUI.ContentViews.Graphs.BalanceDoughnutChart"
              xmlns:charts="clr-namespace:GENAP_MAUI.ContentViews.Graphs"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.GraphsPage"
              x:DataType="vm:GraphsPageViewModel">
 
-    <ScrollView>
-        <VerticalStackLayout>
+	<ScrollView>
+		<VerticalStackLayout>
+			<Picker
+				Title="Seleccionar periodo de tiempo"
+				ItemsSource="{Binding TimePeriods}"
+				ItemDisplayBinding="{Binding Value}"
+				SelectedItem="{Binding Period}"/>
 
-            <chart:BalanceDoughnutChart Income="{Binding TestIncome}" Expenses="{Binding TestExpense}"></chart:BalanceDoughnutChart>
-
-
-
-			<charts:ProportionDoughnutChart Transactions="{Binding Expenses}" Categories="{Binding Categories}"></charts:ProportionDoughnutChart>
-			<charts:ProportionDoughnutChart Transactions="{Binding Income}" Categories="{Binding Categories}"></charts:ProportionDoughnutChart>
-
-			<charts:BalanceLineChart Transactions="{Binding TestBalanceEvolve}"></charts:BalanceLineChart>
+			<Label Text="{Binding Period}"></Label>
+			
+			<charts:BalanceDoughnutChart></charts:BalanceDoughnutChart>
 
 			<VerticalStackLayout>
-                <Label Text="Gastos vs ingresos"></Label>
-                <charts:DoubleComparisonLineChart Transactions1="{Binding Income}" Transactions2="{Binding Expenses}" Color1="Green" Color2="Red"></charts:DoubleComparisonLineChart>
-            </VerticalStackLayout>
+				<Label Text="Proporcion gastos"></Label>
+				<charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding ExpensesLog}"></charts:ProportionDoughnutChart>
+			</VerticalStackLayout>
 
-            <VerticalStackLayout>
-                <Label Text="Ingresos"></Label>
-                <charts:BasicLineChart LineColor="Green" Transactions="{Binding Income}"></charts:BasicLineChart>
-            </VerticalStackLayout>
+			<VerticalStackLayout>
+				<Label Text="Proporcion ingresos"></Label>
+				<charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding IncomeLog}"></charts:ProportionDoughnutChart>
+			</VerticalStackLayout>
+
+			<VerticalStackLayout>
+				<Label Text="Proporcion global"></Label>
+				<charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding TransactionsLog}"></charts:ProportionDoughnutChart>
+			</VerticalStackLayout>
+
+			<charts:BalanceLineChart Transactions="{Binding TransactionsLog}"></charts:BalanceLineChart>
+
+			<VerticalStackLayout>
+				<Label Text="Ingresos vs gastos"></Label>
+				<charts:DoubleComparisonLineChart Transactions1="{Binding IncomeLog}" Color1="Green" Transactions2="{Binding ExpensesLog}" Color2="Red"></charts:DoubleComparisonLineChart>
+			</VerticalStackLayout>
+
+			<VerticalStackLayout>
+				<Label Text="Evolucion ingresos"></Label>
+				<charts:BasicLineChart Transactions="{Binding IncomeLog}" LineColor="Green"></charts:BasicLineChart>
+			</VerticalStackLayout>
+
+			<VerticalStackLayout>
+				<Label Text="Evolucion gastos"></Label>
+				<charts:BasicLineChart Transactions="{Binding ExpensesLog}" LineColor="Red"></charts:BasicLineChart>
+			</VerticalStackLayout>
 
 
-            <VerticalStackLayout>
-                <Label Text="Gastos"></Label>
-                <charts:BasicLineChart LineColor="Red" Transactions="{Binding Expenses}"></charts:BasicLineChart>
-            </VerticalStackLayout>
-
-        </VerticalStackLayout>
+		</VerticalStackLayout>
     </ScrollView>
 </ContentPage>

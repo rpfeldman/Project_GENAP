@@ -5,7 +5,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 
-namespace GENAP_MAUI.ContentViews.Graphs.BalanceDoughnutChart;
+namespace GENAP_MAUI.ContentViews.Graphs;
 
 public partial class BalanceDoughnutChart : ContentView
 {

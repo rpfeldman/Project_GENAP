@@ -5,17 +5,6 @@
              x:Class="GENAP_MAUI.ContentViews.Graphs.ProportionDoughnutChart"
              x:Name="Root">
 
-	<Border
-        Margin="8"
-        Padding="16"
-        BackgroundColor="#12171F"
-        Stroke="#1F2937"
-        StrokeThickness="1">
-
-		<Border.StrokeShape>
-			<RoundRectangle CornerRadius="18"/>
-		</Border.StrokeShape>
-
 		<Grid HeightRequest="340">
 			<Label 
                 Text="{Binding CenterText, Source={x:Reference Root}}"
@@ -33,6 +22,5 @@
                 LegendPosition="Bottom"
                 BackgroundColor="Transparent" />
 		</Grid>
-	</Border>
 
 </ContentView>

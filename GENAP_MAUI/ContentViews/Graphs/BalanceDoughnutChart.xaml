@@ -2,13 +2,13 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
-             x:Class="GENAP_MAUI.ContentViews.Graphs.BalanceDoughnutChart.BalanceDoughnutChart"
+             x:Class="GENAP_MAUI.ContentViews.Graphs.BalanceDoughnutChart"
              x:Name="Root">
 
     <VerticalStackLayout>
         <Label Text="Proporción Ingresos vs Gastos" FontSize="18" FontAttributes="Bold" Margin="10,0"/>
 
-        <Grid HeightRequest="300">
+        <Grid HeightRequest="340">
             <Label 
                 x:Name="BalanceLabel"
                 Text="Balance:&#10;0.00$"

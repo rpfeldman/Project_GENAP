@@ -18,14 +18,15 @@ namespace GENAP_MAUI
             [
                 new CategoryDto("Indumentaria", "#466C87"),
 
-				new CategoryDto("Comida", "#F5E727"),
+                new CategoryDto("Comida", "#F5E727"),
 
-				new CategoryDto("Social", "#43EB28"),
+                new CategoryDto("Social", "#43EB28"),
 
                 new CategoryDto("Gaming", "#9028EB"),
 
                 new CategoryDto("Suscripciones", "#28EBB7"),
             ];
-        }
+
+		}
     }
 }
