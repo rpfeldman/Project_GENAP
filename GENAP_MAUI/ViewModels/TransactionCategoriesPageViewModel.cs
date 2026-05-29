@@ -71,7 +71,7 @@ namespace GENAP_MAUI.ViewModels
             await Shell.Current.DisplayAlertAsync("Categorias", "Se guardaron las categorias","Aceptar");
         }
 
-        private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory);
+        private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && _GR.GlobalCategories.Where(c => c.CategoryName == NewCategory).Count() == 0;
         private bool SaveCanExecute() => Categories.Count > 0;
     }
 }
