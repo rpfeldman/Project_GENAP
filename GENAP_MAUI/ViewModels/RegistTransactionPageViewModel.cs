@@ -26,7 +26,7 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
-        public partial CategoryDto Category { get; set; } = new(string.Empty, "#94A3B8");
+        public partial CategoryDto Category { get; set; } = new(string.Empty, "#94A3B8", 0);
 
         [ObservableProperty]
         public partial DateTime PickedDate { get; set; } = DateTime.Today;

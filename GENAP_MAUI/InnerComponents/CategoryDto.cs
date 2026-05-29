@@ -5,8 +5,10 @@ using System.Text;
 
 namespace GENAP_MAUI.InnerComponents
 {
-    public sealed partial class CategoryDto(string name, string Color) : ObservableObject
+    public sealed partial class CategoryDto(string name, string Color, int id) : ObservableObject
     {
+        public readonly int CategoryId = id;
+
         [ObservableProperty]
         public partial string CategoryName { get; set; } = name;
 
