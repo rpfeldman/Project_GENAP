@@ -2,11 +2,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
+             xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionsCollectionPage"
              x:DataType="vm:TransactionsCollectionPageViewModel">
-    <VerticalStackLayout>
 
-        
-        
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <CollectionView ItemsSource="{Binding Transactions}">
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:TransactionDto">
+                        <HorizontalStackLayout Padding="5" Spacing="10">
+                            <Label Text="{Binding Value, StringFormat='{0:N2}$'}"></Label>
+                            <Label Text="{Binding Depletion}"></Label>
+                            <Label Text="{Binding Category}"></Label>
+                            <Label Text="{Binding Date, StringFormat='{0:d}'}"></Label>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
