@@ -93,16 +93,7 @@ namespace GENAP_MAUI.ViewModels
 
         private async Task UpdateTransactionsCategories(string OldName, string NewName)
         {
-            var transactions = await _dataProjectionService.GetAllByCategoryAsync(OldName);
-
-            Task<bool>[] TaskPointers = new Task<bool>[transactions.Count];
-
-            for (int i = 0; i < transactions.Count; i++)
-            {
-                TaskPointers[i] = _dataManagementService.UpdateTransactionAsync(transactions[i].TransactionId, category: NewName);
-            }
-
-            await Task.WhenAll(TaskPointers);
+            await _dataManagementService.RenameCategory(OldName, NewName);
         }
 
         private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && Categories.Where(c => c.CategoryName == NewCategory).Count() == 0;
