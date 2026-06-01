@@ -50,8 +50,7 @@
               "RelativeToolTip": "Pages\\TransactionRelatedPages\\TransactionsCollectionPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T16:59:35.875Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T16:59:35.875Z"
             },
             {
               "$type": "Document",
@@ -63,8 +62,7 @@
               "RelativeToolTip": "Pages\\MainNavigationBarPages\\GraphsPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T16:59:25.841Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T16:59:25.841Z"
             },
             {
               "$type": "Document",
@@ -76,8 +74,7 @@
               "RelativeToolTip": "ViewModels\\TransactionsCollectionPageViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAIwA8AAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T16:55:51.666Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T16:55:51.666Z"
             },
             {
               "$type": "Document",
@@ -87,7 +84,7 @@
               "RelativeDocumentMoniker": "Pages\\TransactionRelatedPages\\TransactionsCollectionPage.xaml",
               "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Pages\\TransactionRelatedPages\\TransactionsCollectionPage.xaml",
               "RelativeToolTip": "Pages\\TransactionRelatedPages\\TransactionsCollectionPage.xaml",
-              "ViewState": "AgIAAAEAAAAAAAAAAADwvxgAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAUwBMAAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-06-01T16:53:17.185Z",
               "EditorCaption": ""
