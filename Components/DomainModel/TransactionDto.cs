@@ -6,10 +6,10 @@ using System.Text;
 
 namespace DomainModel
 {
-    public class TransactionDto : EventArgs
+    public class TransactionDto 
     {
         private decimal _Value;
-        private string _Category = string.Empty;
+        private string _Category = string.Empty;git 
 
         [Key]
         public int TransactionId {  get; set; }
