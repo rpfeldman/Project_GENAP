@@ -1,4 +1,5 @@
 ﻿
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
@@ -94,10 +95,14 @@ namespace GENAP_MAUI.ViewModels
         {
             var transactions = await _dataProjectionService.GetAllByCategoryAsync(OldName);
 
-            foreach (var item in transactions)
+            Task<bool>[] TaskPointers = new Task<bool>[transactions.Count];
+
+            for (int i = 0; i < transactions.Count; i++)
             {
-                await _dataManagementService.UpdateTransactionAsync(item.TransactionId, category: NewName);
+                TaskPointers[i] = _dataManagementService.UpdateTransactionAsync(transactions[i].TransactionId, category: NewName);
             }
+
+            await Task.WhenAll(TaskPointers);
         }
 
         private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && Categories.Where(c => c.CategoryName == NewCategory).Count() == 0;

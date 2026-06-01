@@ -27,7 +27,17 @@ namespace DataServices
             }
         }
 
-       
+       public async Task<bool> RenameCategory(string OldName, string NewName)
+       {
+            try
+            {
+                return await _StateStorage.UpdateRangeByCategory(OldName, NewName);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+       }
 
         public async Task<bool> RemoveTransactionAsync(int TransactionId)
         {

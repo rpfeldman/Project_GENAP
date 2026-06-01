@@ -12,6 +12,7 @@ namespace Repositories
         public Task<bool> DeleteAsync(int TransactionId);
         public Task<bool> DeleteFromRangeAsync(Expression<Func<TransactionDto, bool>> predicate);
         public Task<bool> UpdateAsync(int TransactionId, TransactionDto NewTransaction);
+        public Task<bool> UpdateRangeByCategory(string OldName, string NewName);
         public Task<bool> ClearStorageAsync();
         public Task<TransactionDto?> GetTransactionAsync(int TransactionId);
         public Task<List<TransactionDto>> GetTransactionsAsync(Expression<Func<TransactionDto, bool>> predicate);

@@ -103,5 +103,10 @@ namespace Repositories
 
             return await Context.SaveChangesAsync() > 0;
         }
+
+        public async Task<bool> UpdateRangeByCategory(string OldName, string NewName)
+        {
+            return await Context.TransactionsTable.Where(t => t.Category == OldName).ExecuteUpdateAsync(s => s.SetProperty(t => t.Category, NewName)) > 0;
+        }
     }
 }
