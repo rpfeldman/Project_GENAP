@@ -57,7 +57,7 @@ namespace GENAP_MAUI.ViewModels
         public async Task DeleteFixedTransaction()
         {
             var transaction = Transaction as FixedTransactionDto;
-            var DeleteCollectionSuccess = await _dataManagementService.RemoveFixedTransaction(transaction!.FixedTransactionId, transaction.Duration);
+            var DeleteCollectionSuccess = await _dataManagementService.RemoveFixedTransaction(transaction!.FixedTransactionId);
 
             await Shell.Current.DisplayAlertAsync("Eliminar", DeleteCollectionSuccess ? "Movimientos eliminado correctamente" : "No se ha podido eliminar los movimientos", "Aceptar");
 

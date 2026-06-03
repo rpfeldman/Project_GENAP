@@ -27,7 +27,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task FillTransactions()
         {
-            Transactions = new(await _dataProjectionService.GetAllAsync());
+            Transactions = new(await _dataProjectionService.GetAllAsync(order: DataProjectionService.Order.OrderByDate));
         }
 
         [RelayCommand]
