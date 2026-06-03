@@ -44,7 +44,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task RestartData()
         {
-            var RestartDataSuccess = await _dataManagementService.RestartData();
+            var RestartDataSuccess = await _dataManagementService.RestartDataAsync();
 
             await Shell.Current.DisplayAlertAsync("Eliminar", RestartDataSuccess ? "Se han reiniciado los datos" : "No se ha podido reiniciar los datos", "Aceptar");
 

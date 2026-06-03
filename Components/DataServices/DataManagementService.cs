@@ -27,7 +27,7 @@ namespace DataServices
             }
         }
 
-       public async Task<bool> RenameCategory(string OldName, string NewName)
+       public async Task<bool> RenameCategoryAsync(string OldName, string NewName)
        {
             try
             {
@@ -51,7 +51,7 @@ namespace DataServices
             }
         }
 
-        public async Task<bool> RemoveFixedTransaction(int CollectionId, int FromDuration)
+        public async Task<bool> RemoveFixedTransactionAsync(int CollectionId, int FromDuration)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace DataServices
                 return false;
             }
         }
-        public async Task<bool> RemoveFixedTransaction(int CollectionId)
+        public async Task<bool> RemoveFixedTransactionAsync(int CollectionId)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace DataServices
             }
         }
 
-        public async Task<bool> RemoveExpenses()
+        public async Task<bool> RemoveExpensesAsync()
         {
             try
             {
@@ -86,7 +86,7 @@ namespace DataServices
             }
         }
 
-        public async Task<bool> RemoveIncome()
+        public async Task<bool> RemoveIncomeAsync()
         {
             try
             {
@@ -98,7 +98,7 @@ namespace DataServices
             }
         }
 
-        public async Task<bool> RemoveFromCategory(string category)
+        public async Task<bool> RemoveFromCategoryAsync(string category)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace DataServices
             }
         }
 
-        public async Task<bool> RestartData()
+        public async Task<bool> RestartDataAsync()
         {
             try
             {

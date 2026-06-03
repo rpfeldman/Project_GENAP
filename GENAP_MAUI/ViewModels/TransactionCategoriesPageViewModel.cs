@@ -93,7 +93,7 @@ namespace GENAP_MAUI.ViewModels
 
         private async Task UpdateTransactionsCategories(string OldName, string NewName)
         {
-            await _dataManagementService.RenameCategory(OldName, NewName);
+            await _dataManagementService.RenameCategoryAsync(OldName, NewName);
         }
 
         private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && Categories.Where(c => c.CategoryName == NewCategory).Count() == 0;
