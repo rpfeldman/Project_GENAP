@@ -1,4 +1,5 @@
 ﻿
+using CommunityToolkit.Mvvm.ComponentModel;
 using GENAP_MAUI.InnerComponents;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,14 @@ namespace GENAP_MAUI
     public sealed class GlobalResources
     {
         public ObservableCollection<CategoryDto> GlobalCategories { get; set; } = new();
+
+
+        // TimePeriod is split in 3: the enum (type-safe id), the display name (what the user sees), and the logic (per consumption point)
+        // To add one: extend the enum, map its display name, handle its logic where consumed.
+        public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year };
+        public Dictionary<TimePeriodsEnum, string> TimePeriods { get; }
+
+        public List<KeyValuePair<TimePeriodsEnum, string>> TimePeriodsList { get; }
 
         public GlobalResources()
         {
@@ -27,6 +36,19 @@ namespace GENAP_MAUI
                 new CategoryDto("Suscripciones", "#28EBB7", 4),
             ];
 
-		}
+
+            TimePeriods = new()
+            {
+                {TimePeriodsEnum.Historical, "Historico"},
+                {TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
+                {TimePeriodsEnum.Month, "Este mes"},
+                {TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
+                {TimePeriodsEnum.ThreeMonths, "Ultimos 3 meses"},
+                {TimePeriodsEnum.Semester, "Ultimo semestre"},
+                {TimePeriodsEnum.Year, "Ultimo año"},
+            };
+
+            TimePeriodsList = [.. TimePeriods];
+        }
     }
 }

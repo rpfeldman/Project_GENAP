@@ -20,38 +20,20 @@ namespace GENAP_MAUI.ViewModels
 	public sealed partial class GraphsPageViewModel : BaseViewModel
 	{
 		private DataProjectionService _dataProjectionService;
-		private GlobalResources _globalResources;
+		public GlobalResources GlobalResources { get; }
 
 		public GraphsPageViewModel(DataProjectionService dataProjectionService, GlobalResources globalResources)
 		{
 			_dataProjectionService = dataProjectionService;
-			_globalResources = globalResources;
+			GlobalResources = globalResources;
 
-			Categories = new(_globalResources.GlobalCategories);
+			Categories = new(GlobalResources.GlobalCategories);
 
-			PickedTimePeriod = TimePeriods.First();
-			Period = TimePeriods.Keys.First();
+			PickedTimePeriod = GlobalResources.TimePeriods.First();
 		}
 
-		public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year };
-		public Dictionary<TimePeriodsEnum, string> TimePeriods { get; } = new()
-		{
-			{TimePeriodsEnum.Historical, "Historico"},
-			{TimePeriodsEnum.HistoricalToday, "Historico hasta hoy"},
-			{TimePeriodsEnum.Month, "Este mes"},
-			{TimePeriodsEnum.ThirtyDays, "Ultimos 30 dias"},
-			{TimePeriodsEnum.ThreeMonths, "Ultimos 3 meses"},
-			{TimePeriodsEnum.Semester, "Ultimo semestre"},
-			{TimePeriodsEnum.Year, "Ultimo año"},
-		};
-
-		public List<KeyValuePair<TimePeriodsEnum, string>> TimePeriodsList => [.. TimePeriods];
-
 		[ObservableProperty]
-		public partial TimePeriodsEnum Period { get; set; }
-
-		[ObservableProperty]
-		public partial KeyValuePair<TimePeriodsEnum, string> PickedTimePeriod { get; set;  }
+		public partial KeyValuePair<GlobalResources.TimePeriodsEnum, string> PickedTimePeriod { get; set;  }
 
 		[ObservableProperty]
 		public partial ObservableCollection<CategoryDto> Categories { get; set; }
@@ -72,13 +54,11 @@ namespace GENAP_MAUI.ViewModels
         public partial decimal Income { get; set; }
 
 
-        async partial void OnPickedTimePeriodChanged(KeyValuePair<TimePeriodsEnum, string> value)
+        async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
-			Period = value.Key;
-
 			try
 			{
-				await ReFillGraphs(Period);
+				await ReFillGraphs(value.Key);
 			}
 			catch (Exception x)
 			{
@@ -107,7 +87,7 @@ namespace GENAP_MAUI.ViewModels
             return;
 		}
 
-		public async Task ReFillGraphs(TimePeriodsEnum timePeriod)
+		public async Task ReFillGraphs(GlobalResources.TimePeriodsEnum timePeriod)
 		{
 			Task<List<TransactionDto>>? GetExpensesTask = null;
 			Task<List<TransactionDto>>? GetIncomeTask = null;
@@ -125,7 +105,7 @@ namespace GENAP_MAUI.ViewModels
 
 			switch (timePeriod)
 			{
-				case TimePeriodsEnum.Historical:
+				case GlobalResources.TimePeriodsEnum.Historical:
 					Predicates =
 					[
 						_dataProjectionService.GetAllAsync(true),
@@ -135,7 +115,7 @@ namespace GENAP_MAUI.ViewModels
 
 					break;
 
-				case TimePeriodsEnum.HistoricalToday:
+				case GlobalResources.TimePeriodsEnum.HistoricalToday:
 					Predicates =
 					[
 						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == true && t.Date <= today),
@@ -145,7 +125,7 @@ namespace GENAP_MAUI.ViewModels
 
 					break;
 
-				case TimePeriodsEnum.Month:
+				case GlobalResources.TimePeriodsEnum.Month:
 					Predicates =
 					[
 						_dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, true),
@@ -155,7 +135,7 @@ namespace GENAP_MAUI.ViewModels
 
 					break;
 
-				case TimePeriodsEnum.ThirtyDays:
+				case GlobalResources.TimePeriodsEnum.ThirtyDays:
 					Predicates =
 					[
 						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == true && t.Date.DayOfYear >= (today.DayOfYear - 30) && t.Date <= today && t.Date.Year == today.Year),
@@ -165,7 +145,7 @@ namespace GENAP_MAUI.ViewModels
 
 					break;
 
-				case TimePeriodsEnum.ThreeMonths:
+				case GlobalResources.TimePeriodsEnum.ThreeMonths:
 					Predicates =
 					[
 						_dataProjectionService.GetAllByPredicateAsync(t => t.Depletion == true && t.Date.Month >= (today.Month-3) && t.Date.Month <= today.Month && t.Date.Year == today.Year),
@@ -175,7 +155,7 @@ namespace GENAP_MAUI.ViewModels
 
 					break;
 
-				case TimePeriodsEnum.Semester:
+				case GlobalResources.TimePeriodsEnum.Semester:
 					int MinBound;
 					int MaxBound;
 
@@ -192,7 +172,7 @@ namespace GENAP_MAUI.ViewModels
 
 					break;
 
-				case TimePeriodsEnum.Year:
+				case GlobalResources.TimePeriodsEnum.Year:
 					Predicates =
 					[
 						_dataProjectionService.GetAllByYearAsync(today.Year, true),
