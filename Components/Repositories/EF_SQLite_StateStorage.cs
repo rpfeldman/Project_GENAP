@@ -97,6 +97,7 @@ namespace Repositories
         {
             var Transaction = await Context.TransactionsTable.Where(t => t.TransactionId == TransactionId).FirstOrDefaultAsync() ?? throw new Exception("Unexistent transaction");
 
+            Transaction.Value = NewTransaction.Value;
             Transaction.Category = NewTransaction.Category;
             Transaction.Date = NewTransaction.Date;
             Transaction.Depletion = NewTransaction.Depletion;

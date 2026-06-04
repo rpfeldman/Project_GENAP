@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -31,6 +32,7 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(DeleteFixedTransactionCommand))]
+        [NotifyCanExecuteChangedFor(nameof(UpdateTransactionCommand))]
         public partial TransactionDto Transaction { get; set; } = new();
 
         [ObservableProperty]
@@ -64,6 +66,16 @@ namespace GENAP_MAUI.ViewModels
             await Navigate(Routes.TransactionsList);
         }
 
+        [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
+        public async Task UpdateTransaction()
+        {
+            var UpdateTransactionSuccess = await _dataManagementService.UpdateTransactionAsync(TransactionId, Transaction.Value, Transaction.Date, PickedCategory.CategoryName, Transaction.Depletion);
+
+            await Shell.Current.DisplayAlertAsync("Editar", UpdateTransactionSuccess ? "Se ha guardado el movimiento correctamente" : "No se ha podido guardar el movimiento", "Aceptar");
+        }
+
         private bool DeleteFixedTransactionCanExecute => Transaction is FixedTransactionDto;
+
+        private bool UpdateTransactionCanExecute => Transaction.Value > 0; 
     }
 }
