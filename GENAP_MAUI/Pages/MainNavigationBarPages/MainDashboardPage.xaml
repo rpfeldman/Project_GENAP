@@ -3,17 +3,52 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:local="clr-namespace:GENAP_MAUI"
+             xmlns:chart="clr-namespace:GENAP_MAUI.ContentViews.Graphs"
+             xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.MainDashboardPage"
              x:DataType="vm:MainDashboardPageViewModel">
 
     <ScrollView>
         <VerticalStackLayout>
-            <Label Text="Temporal navigation center"></Label>
-            <Button Text="Registrar transaccion" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.DefaultTransaction}"></Button>
-            <Button Text="Registrar transaccion de trading" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.TradingTransactions}"></Button>
-            <Button Text="Ir a la lista de categorias" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.Categories}"></Button>
-            <Button Text="Ir a la seccion de graficos" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.Graphs}"></Button>
-            <Button Text="Ir a la lista de movimientos" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.TransactionsList}"></Button>
+
+
+            <VerticalStackLayout>
+                <Label Text="Bienvenido, [usuario]"></Label>
+
+                <VerticalStackLayout>
+                    <Label Text="Grafico de balance del mes"></Label>
+                    <chart:BalanceDoughnutChart Expenses="{Binding MonthExpenses}" Income="{Binding MonthIncome}"></chart:BalanceDoughnutChart>
+                </VerticalStackLayout>
+
+
+                <CollectionView ItemsSource="{Binding MonthTransactions}">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:TransactionDto">
+
+                            <HorizontalStackLayout Padding="5" Spacing="10">
+                                <Label Text="{Binding Value, StringFormat='{0:N2}$'}"></Label>
+                                <Label Text="{Binding Depletion}"></Label>
+                                <Label Text="{Binding Category}"></Label>
+                                <Label Text="{Binding Date, StringFormat='{0:d}'}"></Label>
+                            </HorizontalStackLayout>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+            </VerticalStackLayout>
+            
+            
+            <VerticalStackLayout>
+                <Label Text="Temporal navigation center"></Label>
+                <Button Text="Registrar transaccion" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.DefaultTransaction}"></Button>
+                <Button Text="Registrar transaccion de trading" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.TradingTransactions}"></Button>
+                <Button Text="Ir a la lista de categorias" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.Categories}"></Button>
+                <Button Text="Ir a la seccion de graficos" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.Graphs}"></Button>
+                <Button Text="Ir a la lista de movimientos" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.TransactionsList}"></Button>
+            </VerticalStackLayout>
+           
         </VerticalStackLayout>
     </ScrollView>
     

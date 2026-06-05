@@ -10,4 +10,14 @@ public partial class MainDashboardPage : ContentPage
 
 		BindingContext = vm;
 	}
+
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is MainDashboardPageViewModel vm)
+        {
+            await vm.FillResultsCommand.ExecuteAsync(false);
+        }
+    }
 }
