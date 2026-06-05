@@ -8,7 +8,7 @@
 
     <VerticalStackLayout Padding="5" Spacing="20" VerticalOptions="Center">
 
-        <Entry Text="{Binding Transaction.Value}"></Entry>
+        <Entry Text="{Binding PickedValue}"></Entry>
 
         <Picker
             ItemsSource="{Binding GlobalResources.GlobalCategories}"

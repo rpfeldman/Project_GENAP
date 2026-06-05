@@ -115,7 +115,7 @@ public partial class ProportionDoughnutChart : ContentView
 			}
 			catch
 			{
-				// Color inválido, ignoramos y usa el fallback
+
 			}
 		}
 

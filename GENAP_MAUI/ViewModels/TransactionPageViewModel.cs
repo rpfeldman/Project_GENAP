@@ -32,7 +32,6 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(DeleteFixedTransactionCommand))]
-        [NotifyCanExecuteChangedFor(nameof(UpdateTransactionCommand))]
         public partial TransactionDto Transaction { get; set; } = new();
 
         [ObservableProperty]
@@ -41,12 +40,17 @@ namespace GENAP_MAUI.ViewModels
         [ObservableProperty]
         public partial CategoryDto PickedCategory { get; set; }
 
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(UpdateTransactionCommand))]
+        public partial decimal PickedValue { get; set; }
+
         async partial void OnTransactionIdChanged(int value)
         {
             Transaction = await _dataProjectionService.GetTransactionAsync(value) ?? Transaction;
 
             PickedCategory = GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).Count() > 0 ? GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).First() : new CategoryDto(Transaction.Category, "", default);
             PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
+            PickedValue = Transaction.Value;
         }
 
         [RelayCommand]
@@ -73,13 +77,13 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
         public async Task UpdateTransaction()
         {
-            var UpdateTransactionSuccess = await _dataManagementService.UpdateTransactionAsync(TransactionId, Transaction.Value, DateOnly.FromDateTime(PickedDate), PickedCategory.CategoryName, Transaction.Depletion);
+            var UpdateTransactionSuccess = await _dataManagementService.UpdateTransactionAsync(TransactionId, PickedValue, DateOnly.FromDateTime(PickedDate), PickedCategory.CategoryName, Transaction.Depletion);
 
             await Shell.Current.DisplayAlertAsync("Editar", UpdateTransactionSuccess ? "Se ha guardado el movimiento correctamente" : "No se ha podido guardar el movimiento", "Aceptar");
         }
 
         private bool DeleteFixedTransactionCanExecute => Transaction is FixedTransactionDto;
 
-        private bool UpdateTransactionCanExecute => Transaction.Value > 0; 
+        private bool UpdateTransactionCanExecute => PickedValue > 0; 
     }
 }
