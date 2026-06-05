@@ -11,35 +11,53 @@
     <ScrollView>
         <VerticalStackLayout>
 
+            <VerticalStackLayout Spacing="15" Padding="15">
 
-            <VerticalStackLayout>
-                <Label Text="Bienvenido, [usuario]"></Label>
+                <Label Text="Bienvenido, [usuario]" />
 
-                <VerticalStackLayout>
-                    <Label Text="Grafico de balance del mes"></Label>
-                    <chart:BalanceDoughnutChart Expenses="{Binding MonthExpenses}" Income="{Binding MonthIncome}"></chart:BalanceDoughnutChart>
-                </VerticalStackLayout>
+                <Border Padding="20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout>
+                        <Label Text="Grafico de balance del mes" />
+                        <chart:BalanceDoughnutChart Expenses="{Binding MonthExpenses}" Income="{Binding MonthIncome}" />
+                    </VerticalStackLayout>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.Graphs}"/>
+                    </Border.GestureRecognizers>
+                </Border>
 
 
-                <CollectionView ItemsSource="{Binding MonthTransactions}">
+                <Border Padding="20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout>
+                        <Label Text="Movimientos del mes" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding MonthTransactions}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="model:TransactionDto">
+                                    <HorizontalStackLayout Padding="5" Spacing="10">
+                                        <Label Text="{Binding Value, StringFormat='{0:N2}$'}" />
+                                        <Label Text="{Binding Depletion}" />
+                                        <Label Text="{Binding Category}" />
+                                        <Label Text="{Binding Date, StringFormat='{0:d}'}" />
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:TransactionDto">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.TransactionsList}"/>
+                    </Border.GestureRecognizers>
+                </Border>
 
-                            <HorizontalStackLayout Padding="5" Spacing="10">
-                                <Label Text="{Binding Value, StringFormat='{0:N2}$'}"></Label>
-                                <Label Text="{Binding Depletion}"></Label>
-                                <Label Text="{Binding Category}"></Label>
-                                <Label Text="{Binding Date, StringFormat='{0:d}'}"></Label>
-                            </HorizontalStackLayout>
-
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-
-                </CollectionView>
             </VerticalStackLayout>
-            
-            
+
+
             <VerticalStackLayout>
                 <Label Text="Temporal navigation center"></Label>
                 <Button Text="Registrar transaccion" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.DefaultTransaction}"></Button>
