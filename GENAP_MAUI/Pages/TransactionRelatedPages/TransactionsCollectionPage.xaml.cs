@@ -10,14 +10,4 @@ public partial class TransactionsCollectionPage : ContentPage
 
 		BindingContext = vm;
 	}
-
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-
-        if (BindingContext is TransactionsCollectionPageViewModel vm)
-        {
-            await vm.FillTransactionsCommand.ExecuteAsync(false);
-        }
-    }
 }

@@ -33,12 +33,6 @@ namespace GENAP_MAUI.ViewModels
         [ObservableProperty]
         public partial KeyValuePair<GlobalResources.TimePeriodsEnum, string> PickedTimePeriod { get; set; }
 
-        [RelayCommand]
-        public async Task FillTransactions()
-        {
-            Transactions = new(await _dataProjectionService.GetAllAsync(order: DataProjectionService.Order.OrderByDate));
-        }
-
         async partial void OnPickedTimePeriodChanged(KeyValuePair<GlobalResources.TimePeriodsEnum, string> value)
         {
             try
