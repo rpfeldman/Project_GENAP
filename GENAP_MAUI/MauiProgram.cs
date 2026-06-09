@@ -36,7 +36,9 @@ namespace GENAP_MAUI
             builder.Services.AddTransient<TransactionPageViewModel>();
 
             // Data services & the repository
-            builder.Services.AddSingleton<IStateStorage, EF_SQLite_StateStorage>(sp => { return new EF_SQLite_StateStorage("TermporalTest.db", [14, 2]); });
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "TemporalTest.db");
+            builder.Services.AddSingleton<IStateStorage, EF_SQLite_StateStorage>(sp => { return new EF_SQLite_StateStorage(dbPath, [14, 2]); });
+
             builder.Services.AddSingleton<DataRegistrationService>();
             builder.Services.AddSingleton<DataProjectionService>();
             builder.Services.AddSingleton<DataManagementService>();
