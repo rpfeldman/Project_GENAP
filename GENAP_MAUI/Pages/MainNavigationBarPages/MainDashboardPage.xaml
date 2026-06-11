@@ -66,7 +66,9 @@
                 <Button Text="Ir a la seccion de graficos" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.Graphs}" ></Button>
                 <Button Text="Ir a la lista de movimientos" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:Routes.TransactionsList}"></Button>
             </VerticalStackLayout>
-           
+            
+            <Button Text="Cambiar tema" Command="{Binding ChangeThemeCommand}"></Button>
+            
         </VerticalStackLayout>
     </ScrollView>
     

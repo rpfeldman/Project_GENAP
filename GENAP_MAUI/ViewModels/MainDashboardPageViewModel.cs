@@ -15,6 +15,7 @@ namespace GENAP_MAUI.ViewModels
         public MainDashboardPageViewModel(DataProjectionService dataProjectionService)
         {
             _dataProjectionService = dataProjectionService;
+            MonthTransactions = [];
         }
 
         [ObservableProperty]
@@ -26,6 +27,14 @@ namespace GENAP_MAUI.ViewModels
         [ObservableProperty]
         public partial List<TransactionDto> MonthTransactions { get; set; }
 
+        // TEMPORAL, just for testing
+
+        [RelayCommand]
+        public void ChangeTheme()
+        {
+            Application.Current.UserAppTheme = Application.Current.UserAppTheme == AppTheme.Dark ? AppTheme.Light : AppTheme.Dark;
+        }
+        
         [RelayCommand]
         public async Task FillResults()
         {

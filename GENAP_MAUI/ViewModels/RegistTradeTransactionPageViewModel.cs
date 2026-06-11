@@ -21,11 +21,13 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         public partial bool Depletion { get; set; } = true;
+        public bool IsIncomeSelected => !Depletion;
+        public bool IsExpenseSelected => Depletion;
 
-        [RelayCommand]
-        public void ChangeDepletion()
+        partial void OnDepletionChanged(bool value)
         {
-            Depletion = Depletion ? false : true;
+            OnPropertyChanged(nameof(IsIncomeSelected));
+            OnPropertyChanged(nameof(IsExpenseSelected));
         }
 
         [RelayCommand(CanExecute = nameof(RegistTransactionCanExecute))]
@@ -49,6 +51,9 @@ namespace GENAP_MAUI.ViewModels
 
             return;
         }
+
+        [RelayCommand] void SetIncome() => Depletion = false;
+        [RelayCommand] void SetExpense() => Depletion = true;
 
         private bool RegistTransactionCanExecute() => Value > 0m;
     }

@@ -3,30 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.RegistTradeTransactionPage"
-             x:DataType="vm:RegistTradeTransactionPageViewModel">
-   
+             x:DataType="vm:RegistTradeTransactionPageViewModel"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
+
     <ScrollView>
-        <VerticalStackLayout>
-            <Label Text="instrucciones y reglas*"></Label>
+        <VerticalStackLayout Style="{StaticResource FormContainer}">
 
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Nuevo trade" Style="{StaticResource SubHeadlineBrand}" />
+                <Label Style="{StaticResource Caption}"
+                       HorizontalTextAlignment="Center"
+                       Text="Cada operación es un ladrillo. Construí tu disciplina, no tu suerte." />
+            </VerticalStackLayout>
 
-            <HorizontalStackLayout Spacing="3">
-                <Label Text="Valor del movimiento:"></Label>
-                <Entry Text="{Binding Value}" Placeholder="$" Keyboard="Numeric"></Entry>
-                <Label Text="$"></Label>
-            </HorizontalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="Resultado del trade" Style="{StaticResource FieldLabel}" />
+                <Border Style="{StaticResource InputFieldBrand}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                        <Label Grid.Column="0" Text="$"
+                               Style="{StaticResource CurrencyPrefix}"
+                               VerticalOptions="Center" />
+                        <Entry Grid.Column="1"
+                               Style="{StaticResource AmountEntry}"
+                               Placeholder="0" Keyboard="Numeric"
+                               Text="{Binding Value}" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
 
-            <DatePicker
-                Date="{Binding PickedDate}"
-                Format="d/mmm/yyy"
-            />
+            <VerticalStackLayout>
+                <Label Text="Fecha" Style="{StaticResource FieldLabel}" />
+                <Border Style="{StaticResource InputField}">
+                    <DatePicker Date="{Binding PickedDate}" />
+                </Border>
+            </VerticalStackLayout>
 
-            <Label Text="{Binding Depletion}"></Label>
-            <Button Command="{Binding ChangeDepletionCommand}" Text="Cambiar"></Button>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Grid.Column="0"
+                        Text="Ganancia"
+                        Style="{StaticResource IncomeChoice}"
+                        Command="{Binding SetIncomeCommand}"
+                        IsEnabled="{Binding IsExpenseSelected}" />
 
-            <Button Command="{Binding RegistTransactionCommand}" Text="Registrar movimiento"></Button>
+                <Button Grid.Column="1"
+                        Text="Pérdida"
+                        Style="{StaticResource ExpenseChoice}"
+                        Command="{Binding SetExpenseCommand}"
+                        IsEnabled="{Binding IsIncomeSelected}" />
+            </Grid>
+
+            <Button Text="Registrar trade"
+                    Command="{Binding RegistTransactionCommand}"
+                    Style="{StaticResource ButtonPrimary}" />
 
         </VerticalStackLayout>
     </ScrollView>
-  
+
+
 </ContentPage>

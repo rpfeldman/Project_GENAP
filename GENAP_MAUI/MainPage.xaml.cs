@@ -21,6 +21,8 @@
                 _alreadyNavigated = true;
 
                 await Shell.Current.GoToAsync(Routes.Dashboard);
+
+                Application.Current.UserAppTheme = AppTheme.Dark;
             }
             catch (Exception x)
             {
