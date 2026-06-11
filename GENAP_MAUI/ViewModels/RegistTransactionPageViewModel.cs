@@ -2,8 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using DataServices;
 using GENAP_MAUI.InnerComponents;
+using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Net;
 using System.Text;
 
@@ -32,14 +34,16 @@ namespace GENAP_MAUI.ViewModels
 
         [ObservableProperty]
         public partial bool Depletion { get; set; } = true;
+        public bool IsIncomeSelected => !Depletion;
+        public bool IsExpenseSelected => Depletion;
 
         [ObservableProperty]
         public partial bool IsFixed { get; set; } = false;
 
-        [RelayCommand]
-        public void ChangeDepletion()
+        partial void OnDepletionChanged(bool value)
         {
-            Depletion = Depletion ? false : true;
+            OnPropertyChanged(nameof(IsIncomeSelected));
+            OnPropertyChanged(nameof(IsExpenseSelected));
         }
 
         [RelayCommand(CanExecute = nameof(RegistTransactionCanExecute))]
@@ -64,6 +68,8 @@ namespace GENAP_MAUI.ViewModels
 			return;
         }
 
+        [RelayCommand] void SetIncome() => Depletion = false;
+        [RelayCommand] void SetExpense() => Depletion = true;
 
         private bool RegistTransactionCanExecute() => !string.IsNullOrWhiteSpace(Category.CategoryName) && Value > 0m && FixedTransactionDuration >= 1;
     }

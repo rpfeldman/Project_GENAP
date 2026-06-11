@@ -11,7 +11,6 @@
     <ScrollView>
         <VerticalStackLayout Style="{StaticResource FormContainer}">
 
-            <!-- Encabezado -->
             <VerticalStackLayout Spacing="4">
                 <Label Text="Nuevo movimiento" Style="{StaticResource SubHeadline}" />
                 <Label Style="{StaticResource Caption}"
@@ -19,7 +18,6 @@
                        Text="Registrá un gasto o ingreso de tu día a día. Los movimientos de trading van en su propia sección." />
             </VerticalStackLayout>
 
-            <!-- Monto -->
             <VerticalStackLayout>
                 <Label Text="Valor del movimiento" Style="{StaticResource FieldLabel}" />
                 <Border Style="{StaticResource InputField}">
@@ -35,7 +33,6 @@
                 </Border>
             </VerticalStackLayout>
 
-            <!-- Categoría -->
             <VerticalStackLayout>
                 <Label Text="Categoría" Style="{StaticResource FieldLabel}" />
                 <Border Style="{StaticResource InputField}">
@@ -46,7 +43,6 @@
                 </Border>
             </VerticalStackLayout>
 
-            <!-- Fecha -->
             <VerticalStackLayout>
                 <Label Text="Fecha" Style="{StaticResource FieldLabel}" />
                 <Border Style="{StaticResource InputField}">
@@ -54,14 +50,20 @@
                 </Border>
             </VerticalStackLayout>
 
-            <!-- ================================================================ -->
-            <!--  DEPLETION — ZONA RESERVADA. NO TOCAR (rediseño aparte a futuro). -->
-            <!--  Queda tal cual la dejaste; se va a ver crudo y eso está OK.     -->
-            <!-- ================================================================ -->
-            <Label Text="{Binding Depletion}"></Label>
-            <Button Text="Cambiar" Command="{Binding ChangeDepletionCommand}"></Button>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Grid.Column="0"
+                Text="Ganancia"
+                Style="{StaticResource IncomeChoice}"
+                Command="{Binding SetIncomeCommand}"
+                IsEnabled="{Binding IsExpenseSelected}" />
 
-            <!-- ¿Es fijo? -->
+                <Button Grid.Column="1"
+                Text="Pérdida"
+                Style="{StaticResource ExpenseChoice}"
+                Command="{Binding SetExpenseCommand}"
+                IsEnabled="{Binding IsIncomeSelected}" />
+            </Grid>
+            
             <Border Style="{StaticResource InputField}">
                 <Grid ColumnDefinitions="*,Auto">
                     <Label Grid.Column="0" Text="¿Es un movimiento fijo?"
@@ -72,8 +74,7 @@
                             VerticalOptions="Center" />
                 </Grid>
             </Border>
-
-            <!-- Duración (solo si es fijo) -->
+            
             <VerticalStackLayout IsVisible="{Binding IsFixed}">
                 <Label Text="Duración" Style="{StaticResource FieldLabel}" />
                 <Border Style="{StaticResource InputField}">
@@ -88,7 +89,6 @@
                 </Border>
             </VerticalStackLayout>
 
-            <!-- Registrar -->
             <Button Text="Registrar movimiento"
                     Command="{Binding RegistTransactionCommand}"
                     Style="{StaticResource ButtonPrimary}" />
