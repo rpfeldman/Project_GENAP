@@ -5,39 +5,76 @@
              xmlns:ic="clr-namespace:GENAP_MAUI.InnerComponents"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.TransactionCategoriesPage"
              x:DataType="vm:TransactionCategoriesPageViewModel">
-    
-    <ScrollView>
-        <VerticalStackLayout>
 
-            <CollectionView ItemsSource="{Binding Categories}">
-                <CollectionView.ItemTemplate>
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="16">
 
-                    <DataTemplate x:DataType="ic:CategoryDto">
-                        
-                        <HorizontalStackLayout>
-                            <Entry Text="{Binding CategoryName}"></Entry>
-
-                            <Button Text="Borrar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCategoryCommand}" CommandParameter="{Binding .}"></Button>
-                        </HorizontalStackLayout>
-                        
-                    </DataTemplate>
-                    
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-            <HorizontalStackLayout>
-                <Entry Text="{Binding NewCategory}"></Entry>
-
-                <Picker
-                    Title="Seleccionar color de la categoria"
-                    ItemsSource="{Binding GlobalResources.ColorList}"
-                    ItemDisplayBinding="{Binding DisplayName}"
-                    SelectedItem="{Binding PickedColor}"/>
-
-                <Button Text="Agregar" Command="{Binding AddCategoryCommand}"></Button>
-            </HorizontalStackLayout>
-
-            <Button Text="Guardar" Command="{Binding SaveCommand}"></Button>
+        <VerticalStackLayout Grid.Row="0" Spacing="4">
+            <Label Text="Categorías" Style="{StaticResource SubHeadline}" />
+            <Label Style="{StaticResource Caption}"
+                   HorizontalTextAlignment="Center"
+                   Text="Organizá tus movimientos. Tocá un nombre para editarlo." />
         </VerticalStackLayout>
-    </ScrollView>
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Categories}"
+                        ItemsLayout="VerticalList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="ic:CategoryDto">
+                    <Border Style="{StaticResource CategoryCard}" Margin="0,0,0,8">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+
+                            <Border Grid.Column="0"
+                                    Style="{StaticResource ColorDot}"
+                                    BackgroundColor="{Binding Color.HexColor}"
+                                    VerticalOptions="Center" />
+
+                            <Entry Grid.Column="1"
+                                   Style="{StaticResource InlineEntry}"
+                                   Text="{Binding CategoryName}"
+                                   VerticalOptions="Center" />
+
+                            <Button Grid.Column="2"
+                                    Style="{StaticResource IconButton}"
+                                    Text="🗑"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCategoryCommand}"
+                                    CommandParameter="{Binding .}"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="12">
+
+            <Border Style="{StaticResource CategoryCard}">
+                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                    <Entry Grid.Column="0"
+                           Style="{StaticResource InlineEntry}"
+                           Placeholder="Nueva categoría"
+                           Text="{Binding NewCategory}"
+                           VerticalOptions="Center" />
+
+                    <Picker Grid.Column="1"
+                            Title="Color"
+                            WidthRequest="80"
+                            ItemsSource="{Binding GlobalResources.ColorList}"
+                            ItemDisplayBinding="{Binding DisplayName}"
+                            SelectedItem="{Binding PickedColor}"
+                            VerticalOptions="Center" />
+
+                    <Button Grid.Column="2"
+                            Style="{StaticResource IconButton}"
+                            Text="+"
+                            TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}"
+                            Command="{Binding AddCategoryCommand}"
+                            VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <Button Text="Guardar cambios"
+                    Command="{Binding SaveCommand}"
+                    Style="{StaticResource ButtonPrimary}" />
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

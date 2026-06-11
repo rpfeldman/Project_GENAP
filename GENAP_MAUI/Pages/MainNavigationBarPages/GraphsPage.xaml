@@ -4,51 +4,90 @@
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:charts="clr-namespace:GENAP_MAUI.ContentViews.Graphs"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.GraphsPage"
-             x:DataType="vm:GraphsPageViewModel">
+             x:DataType="vm:GraphsPageViewModel"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
 
-	<ScrollView>
-		<VerticalStackLayout>
-            <Picker
-			Title="Seleccionar periodo de tiempo"
-			ItemsSource="{Binding GlobalResources.TimePeriodsList}"
-			ItemDisplayBinding="{Binding Value}"
-			SelectedItem="{Binding PickedTimePeriod}"/>
+    <Grid RowDefinitions="Auto,*">
 
-            <charts:BalanceDoughnutChart Expenses="{Binding Expenses}" Income="{Binding Income}"></charts:BalanceDoughnutChart>
+        <Border Grid.Row="0"
+                Style="{StaticResource InputField}"
+                Margin="20,16,20,8">
+            <Picker Title="Seleccionar período de tiempo"
+                    ItemsSource="{Binding GlobalResources.TimePeriodsList}"
+                    ItemDisplayBinding="{Binding Value}"
+                    SelectedItem="{Binding PickedTimePeriod}" />
+        </Border>
 
-            <VerticalStackLayout>
-                <Label Text="Proporcion gastos"></Label>
-                <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding ExpensesLog}"></charts:ProportionDoughnutChart>
+        <ScrollView Grid.Row="1" Padding="20,8,20,20">
+            <VerticalStackLayout Spacing="0">
+
+                <Label Text="Balance general" Style="{StaticResource SectionHeader}" />
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <Label Text="Ingresos vs. gastos" Style="{StaticResource ChartTitle}" />
+                        <charts:BalanceDoughnutChart Expenses="{Binding Expenses}" Income="{Binding Income}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <Label Text="Evolución del balance" Style="{StaticResource ChartTitle}" />
+                        <charts:BalanceLineChart Transactions="{Binding TransactionsLog}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <Label Text="Proporción global" Style="{StaticResource ChartTitle}" />
+                        <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding TransactionsLog}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Análisis de gastos" Style="{StaticResource SectionHeader}" />
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <Label Text="Proporción de gastos" Style="{StaticResource ChartTitle}" />
+                        <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding ExpensesLog}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <Label Text="Evolución de gastos" Style="{StaticResource ChartTitle}" />
+                        <charts:BasicLineChart Transactions="{Binding ExpensesLog}" LineColor="{StaticResource ExpenseRed}" />
+                    </VerticalStackLayout>
+                </Border>
+                
+                <Label Text="Análisis de ingresos" Style="{StaticResource SectionHeader}" />
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <Label Text="Proporción de ingresos" Style="{StaticResource ChartTitle}" />
+                        <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding IncomeLog}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <Label Text="Evolución de ingresos" Style="{StaticResource ChartTitle}" />
+                        <charts:BasicLineChart Transactions="{Binding IncomeLog}" LineColor="{StaticResource IncomeGreen}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Comparativas" Style="{StaticResource SectionHeader}" />
+
+                <Border Style="{StaticResource ChartCard}">
+                    <VerticalStackLayout>
+                        <Label Text="Ingresos vs. gastos en el tiempo" Style="{StaticResource ChartTitle}" />
+                        <charts:DoubleComparisonLineChart Transactions1="{Binding IncomeLog}" Color1="{StaticResource IncomeGreen}"
+                                                          Transactions2="{Binding ExpensesLog}" Color2="{StaticResource ExpenseRed}" />
+                    </VerticalStackLayout>
+                </Border>
+
             </VerticalStackLayout>
-
-            <VerticalStackLayout>
-                <Label Text="Proporcion ingresos"></Label>
-                <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding IncomeLog}"></charts:ProportionDoughnutChart>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout>
-                <Label Text="Proporcion global"></Label>
-                <charts:ProportionDoughnutChart Categories="{Binding Categories}" Transactions="{Binding TransactionsLog}"></charts:ProportionDoughnutChart>
-            </VerticalStackLayout>
-
-            <charts:BalanceLineChart Transactions="{Binding TransactionsLog}"></charts:BalanceLineChart>
-
-            <VerticalStackLayout>
-                <Label Text="Ingresos vs gastos"></Label>
-                <charts:DoubleComparisonLineChart Transactions1="{Binding IncomeLog}" Color1="Green" Transactions2="{Binding ExpensesLog}" Color2="Red"></charts:DoubleComparisonLineChart>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout>
-                <Label Text="Evolucion ingresos"></Label>
-                <charts:BasicLineChart Transactions="{Binding IncomeLog}" LineColor="Green"></charts:BasicLineChart>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout>
-                <Label Text="Evolucion gastos"></Label>
-                <charts:BasicLineChart Transactions="{Binding ExpensesLog}" LineColor="Red"></charts:BasicLineChart>
-            </VerticalStackLayout>
-
-
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
+    
 </ContentPage>
