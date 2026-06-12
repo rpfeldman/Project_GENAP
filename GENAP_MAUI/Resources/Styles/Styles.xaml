@@ -28,8 +28,30 @@
         </Setter>
     </Style>
 
+    <Style x:Key="StatusBadge" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="8,2" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="8" />
+        </Setter>
+    </Style>
+
+    <Style x:Key="TransactionCard" TargetType="Border" BasedOn="{StaticResource InputField}">
+        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="MinimumHeightRequest" Value="64" />
+    </Style>
+
+
     <Style TargetType="BoxView">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style x:Key="ButtonDestructiveGhost" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource ExpenseRed}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HeightRequest" Value="44" />
     </Style>
 
     <Style x:Key="IncomeChoice" TargetType="Button">
@@ -267,6 +289,18 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <Style x:Key="StatusBadgeText" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="TransactionMeta" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="12" />
     </Style>
 
     <Style x:Key="CurrencyPrefix" TargetType="Label">

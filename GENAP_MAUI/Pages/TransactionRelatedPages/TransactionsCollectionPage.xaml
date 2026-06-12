@@ -4,37 +4,127 @@
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionsCollectionPage"
-             x:DataType="vm:TransactionsCollectionPageViewModel">
+             x:DataType="vm:TransactionsCollectionPageViewModel"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
 
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="20" RowSpacing="12">
 
-    <Grid RowDefinitions="Auto, *, Auto">
+        <VerticalStackLayout Grid.Row="0" Spacing="4">
+            <Label Text="Movimientos" Style="{StaticResource SubHeadline}" />
+            <Label Style="{StaticResource Caption}"
+                   HorizontalTextAlignment="Center"
+                   Text="Tocá un movimiento para ver el detalle o editarlo." />
+        </VerticalStackLayout>
 
-        <Picker
-            Grid.Row="0"
-		    Title="Seleccionar periodo de tiempo"
-		    ItemsSource="{Binding GlobalResources.TimePeriodsList}"
-		    ItemDisplayBinding="{Binding Value}"
-		    SelectedItem="{Binding PickedTimePeriod}"/>
+        <Border Grid.Row="1" Style="{StaticResource InputField}">
+            <Picker Title="Seleccionar período de tiempo"
+                    ItemsSource="{Binding GlobalResources.TimePeriodsList}"
+                    ItemDisplayBinding="{Binding Value}"
+                    SelectedItem="{Binding PickedTimePeriod}" />
+        </Border>
 
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Transactions}">
-
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Transactions}"
+                        ItemsLayout="VerticalList">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:TransactionDto">
+                    <Border Style="{StaticResource TransactionCard}" Margin="0,0,0,8">
 
-                    <HorizontalStackLayout Padding="5" Spacing="10">
-                        <Label Text="{Binding Value, StringFormat='{0:N2}$'}"></Label>
-                        <Label Text="{Binding Depletion}"></Label>
-                        <Label Text="{Binding Category}"></Label>
-                        <Label Text="{Binding Date, StringFormat='{0:d}'}"></Label>
-                        <Button Text="Editar" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionsCollectionPageViewModel}}, Path=NavigateIntoTransactionCommand}" CommandParameter="{Binding TransactionId}"></Button>
-                    </HorizontalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionsCollectionPageViewModel}}, Path=NavigateIntoTransactionCommand}"
+                                CommandParameter="{Binding TransactionId}" />
+                        </Border.GestureRecognizers>
 
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12">
+
+                            <Border Grid.Column="0"
+                                    Style="{StaticResource ColorDot}"
+                                    VerticalOptions="Center">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border"
+                                                 Binding="{Binding Depletion}" Value="False">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource IncomeGreen}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border"
+                                                 Binding="{Binding Depletion}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource ExpenseRed}" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                            </Border>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="2"
+                                                 VerticalOptions="Center" Padding="0">
+                                <Label Text="{Binding Category}"
+                                       Style="{StaticResource FieldLabel}" />
+                                <Label Text="{Binding Date, StringFormat='{0:d}'}"
+                                       Style="{StaticResource TransactionMeta}" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="2" Spacing="4"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="End" Padding="0">
+
+                                <Label Text="{Binding Value, StringFormat='{0:N2}$'}"
+                                       FontAttributes="Bold"
+                                       FontSize="15"
+                                       HorizontalTextAlignment="End">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Depletion}" Value="False">
+                                            <Setter Property="TextColor" Value="{StaticResource IncomeGreen}" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Depletion}" Value="True">
+                                            <Setter Property="TextColor" Value="{StaticResource ExpenseRed}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                                <Border Style="{StaticResource StatusBadge}"
+                                        HorizontalOptions="End">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border"
+                                                     Binding="{Binding Depletion}" Value="False">
+                                            <Setter Property="Stroke" Value="{StaticResource IncomeGreen}" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border"
+                                                     Binding="{Binding Depletion}" Value="True">
+                                            <Setter Property="Stroke" Value="{StaticResource ExpenseRed}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+
+                                    <Label Style="{StaticResource StatusBadgeText}">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label"
+                                                         Binding="{Binding Depletion}" Value="False">
+                                                <Setter Property="Text" Value="Ingreso" />
+                                                <Setter Property="TextColor" Value="{StaticResource IncomeGreen}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label"
+                                                         Binding="{Binding Depletion}" Value="True">
+                                                <Setter Property="Text" Value="Pérdida" />
+                                                <Setter Property="TextColor" Value="{StaticResource ExpenseRed}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <Label Grid.Column="3"
+                                   Text="›"
+                                   FontSize="22"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-
         </CollectionView>
 
-        <Button Grid.Row="2" Text="Reiniciar datos" Command="{Binding RestartDataCommand}" />
-
+        <Button Grid.Row="3"
+                Text="Reiniciar datos"
+                Style="{StaticResource ButtonDestructiveGhost}"
+                Command="{Binding RestartDataCommand}" />
     </Grid>
 </ContentPage>
