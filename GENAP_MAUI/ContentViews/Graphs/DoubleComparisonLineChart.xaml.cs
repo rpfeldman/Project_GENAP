@@ -11,330 +11,371 @@ namespace GENAP_MAUI.ContentViews.Graphs;
 
 public partial class DoubleComparisonLineChart : ContentView
 {
-	private static readonly SKColor AxisTextColor = SKColor.Parse("#94A3B8");
-	private static readonly SKColor GridLineColor = SKColor.Parse("#263241");
+    private static readonly SKColor AxisTextColor = SKColor.Parse("#94A3B8");
+    private static readonly SKColor GridLineColor = SKColor.Parse("#263241");
 
-	private const int MinDaysVisible = 7;
+    private const int MinDaysVisible = 7;
+    private const double PixelsPerLabel = 80;
 
-	public static readonly BindableProperty Transactions1Property = BindableProperty.Create(
-		nameof(Transactions1),
-		typeof(List<TransactionDto>),
-		typeof(DoubleComparisonLineChart),
-		new List<TransactionDto>(),
-		propertyChanged: OnDataChanged);
+    public static readonly BindableProperty Transactions1Property = BindableProperty.Create(
+        nameof(Transactions1),
+        typeof(List<TransactionDto>),
+        typeof(DoubleComparisonLineChart),
+        new List<TransactionDto>(),
+        propertyChanged: OnDataChanged);
 
-	public List<TransactionDto> Transactions1
-	{
-		get => (List<TransactionDto>)GetValue(Transactions1Property);
-		set => SetValue(Transactions1Property, value);
-	}
+    public List<TransactionDto> Transactions1
+    {
+        get => (List<TransactionDto>)GetValue(Transactions1Property);
+        set => SetValue(Transactions1Property, value);
+    }
 
-	public static readonly BindableProperty Color1Property = BindableProperty.Create(
-		nameof(Color1),
-		typeof(Color),
-		typeof(DoubleComparisonLineChart),
-		Colors.White,
-		propertyChanged: OnDataChanged);
+    public static readonly BindableProperty Color1Property = BindableProperty.Create(
+        nameof(Color1),
+        typeof(Color),
+        typeof(DoubleComparisonLineChart),
+        Colors.White,
+        propertyChanged: OnDataChanged);
 
-	public Color Color1
-	{
-		get => (Color)GetValue(Color1Property);
-		set => SetValue(Color1Property, value);
-	}
+    public Color Color1
+    {
+        get => (Color)GetValue(Color1Property);
+        set => SetValue(Color1Property, value);
+    }
 
-	public static readonly BindableProperty Transactions2Property = BindableProperty.Create(
-		nameof(Transactions2),
-		typeof(List<TransactionDto>),
-		typeof(DoubleComparisonLineChart),
-		new List<TransactionDto>(),
-		propertyChanged: OnDataChanged);
+    public static readonly BindableProperty Transactions2Property = BindableProperty.Create(
+        nameof(Transactions2),
+        typeof(List<TransactionDto>),
+        typeof(DoubleComparisonLineChart),
+        new List<TransactionDto>(),
+        propertyChanged: OnDataChanged);
 
-	public List<TransactionDto> Transactions2
-	{
-		get => (List<TransactionDto>)GetValue(Transactions2Property);
-		set => SetValue(Transactions2Property, value);
-	}
+    public List<TransactionDto> Transactions2
+    {
+        get => (List<TransactionDto>)GetValue(Transactions2Property);
+        set => SetValue(Transactions2Property, value);
+    }
 
-	public static readonly BindableProperty Color2Property = BindableProperty.Create(
-		nameof(Color2),
-		typeof(Color),
-		typeof(DoubleComparisonLineChart),
-		Colors.White,
-		propertyChanged: OnDataChanged);
+    public static readonly BindableProperty Color2Property = BindableProperty.Create(
+        nameof(Color2),
+        typeof(Color),
+        typeof(DoubleComparisonLineChart),
+        Colors.White,
+        propertyChanged: OnDataChanged);
 
-	public Color Color2
-	{
-		get => (Color)GetValue(Color2Property);
-		set => SetValue(Color2Property, value);
-	}
+    public Color Color2
+    {
+        get => (Color)GetValue(Color2Property);
+        set => SetValue(Color2Property, value);
+    }
 
-	public ISeries[] LineSeriesCollection { get; private set; }
-	public ICartesianAxis[] XAxes { get; private set; }
-	public ICartesianAxis[] YAxes { get; }
+    public static readonly BindableProperty TitleProperty = BindableProperty.Create(
+        nameof(Title),
+        typeof(string),
+        typeof(DoubleComparisonLineChart),
+        string.Empty,
+        propertyChanged: OnTitleChanged);
 
-	public string DeltaText { get; private set; } = "0,00$";
-	public Color DeltaColor { get; private set; } = Colors.White;
-	public string DeltaArrow { get; private set; } = string.Empty;
+    public string Title
+    {
+        get => (string)GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
+    }
 
-	private DateOnly[] _dates = [];
+    public ISeries[] LineSeriesCollection { get; private set; }
+    public ICartesianAxis[] XAxes { get; private set; }
+    public ICartesianAxis[] YAxes { get; }
 
-	public DoubleComparisonLineChart()
-	{
-		LineSeriesCollection = [];
+    public string DeltaText { get; private set; } = "0,00$";
+    public Color DeltaColor { get; private set; } = Colors.White;
+    public string DeltaArrow { get; private set; } = string.Empty;
 
-		XAxes =
-		[
-			new Axis { IsVisible = false }
-		];
+    private DateOnly[] _dates = [];
+    private double _lastWidth;
 
-		YAxes =
-		[
-			new Axis
-			{
-				Labeler = value => $"{value:N0}$",
-				TextSize = 11,
-				LabelsPaint = new SolidColorPaint(AxisTextColor),
-				SeparatorsPaint = new SolidColorPaint(GridLineColor.WithAlpha(90))
-				{
-					StrokeThickness = 1
-				}
-			}
-		];
+    public DoubleComparisonLineChart()
+    {
+        LineSeriesCollection = [];
 
-		InitializeComponent();
-	}
+        XAxes =
+        [
+            new Axis { IsVisible = false }
+        ];
 
-	private static void OnDataChanged(BindableObject bindable, object oldValue, object newValue)
-	{
-		var control = (DoubleComparisonLineChart)bindable;
-		control.UpdateChart();
-	}
+        YAxes =
+        [
+            new Axis
+            {
+                Labeler = value => ChartFormat.CompactCurrency(value),
+                TextSize = 11,
+                LabelsPaint = new SolidColorPaint(AxisTextColor),
+                SeparatorsPaint = new SolidColorPaint(GridLineColor.WithAlpha(90))
+                {
+                    StrokeThickness = 1
+                }
+            }
+        ];
 
-	private void UpdateChart()
-	{
-		var hasAny1 = Transactions1 is not null && Transactions1.Count > 0;
-		var hasAny2 = Transactions2 is not null && Transactions2.Count > 0;
+        InitializeComponent();
+    }
 
-		if (!hasAny1 && !hasAny2)
-		{
-			_dates = [];
-			LineSeriesCollection = [];
-			XAxes = [new Axis { IsVisible = false }];
-			ResetDelta();
-			NotifyAll();
-			return;
-		}
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
 
-		var dailyTotal1 = hasAny1 ? BuildDailyTotal(Transactions1) : new Dictionary<DateOnly, decimal>();
-		var dailyTotal2 = hasAny2 ? BuildDailyTotal(Transactions2) : new Dictionary<DateOnly, decimal>();
+        if (width <= 0 || Math.Abs(width - _lastWidth) < 1) return;
+        _lastWidth = width;
 
-		var (from, to) = ComputeSharedRange(dailyTotal1, dailyTotal2);
-		_dates = BuildDateRange(from, to);
+        if (_dates.Length > 0)
+        {
+            XAxes = [BuildXAxis()];
+            OnPropertyChanged(nameof(XAxes));
+        }
+    }
 
-		var values1 = AccumulateOverRange(dailyTotal1, _dates);
-		var values2 = AccumulateOverRange(dailyTotal2, _dates);
+    private static void OnDataChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = (DoubleComparisonLineChart)bindable;
+        control.UpdateChart();
+    }
 
-		var sk1 = ToSkColor(Color1);
-		var sk2 = ToSkColor(Color2);
+    private static void OnTitleChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = (DoubleComparisonLineChart)bindable;
+        if (control.TitleLabel is null) return;
+        control.TitleLabel.Text = (string)newValue;
+        control.TitleLabel.IsVisible = !string.IsNullOrWhiteSpace((string)newValue);
+    }
 
-		LineSeriesCollection =
-		[
-			CreateLineSeries(values1, sk1),
-			CreateLineSeries(values2, sk2),
-			CreateEndMarker(values1, sk1),
-			CreateEndMarker(values2, sk2)
-		];
+    private void UpdateChart()
+    {
+        var hasAny1 = Transactions1 is not null && Transactions1.Count > 0;
+        var hasAny2 = Transactions2 is not null && Transactions2.Count > 0;
 
-		XAxes = [BuildXAxis()];
+        if (!hasAny1 && !hasAny2)
+        {
+            _dates = [];
+            LineSeriesCollection = [];
+            XAxes = [new Axis { IsVisible = false }];
+            ResetDelta();
+            NotifyAll();
+            return;
+        }
 
-		UpdateDelta(values1, values2);
-		NotifyAll();
-	}
+        var dailyTotal1 = hasAny1 ? BuildDailyTotal(Transactions1) : new Dictionary<DateOnly, decimal>();
+        var dailyTotal2 = hasAny2 ? BuildDailyTotal(Transactions2) : new Dictionary<DateOnly, decimal>();
 
-	private void NotifyAll()
-	{
-		OnPropertyChanged(nameof(LineSeriesCollection));
-		OnPropertyChanged(nameof(XAxes));
-		OnPropertyChanged(nameof(DeltaText));
-		OnPropertyChanged(nameof(DeltaColor));
-		OnPropertyChanged(nameof(DeltaArrow));
-	}
+        var (from, to) = ComputeSharedRange(dailyTotal1, dailyTotal2);
+        _dates = BuildDateRange(from, to);
 
-	private void ResetDelta()
-	{
-		DeltaText = "0,00$";
-		DeltaColor = Colors.White;
-		DeltaArrow = string.Empty;
-	}
+        var values1 = AccumulateOverRange(dailyTotal1, _dates);
+        var values2 = AccumulateOverRange(dailyTotal2, _dates);
 
-	private void UpdateDelta(double[] values1, double[] values2)
-	{
-		if (values1.Length == 0 || values2.Length == 0)
-		{
-			ResetDelta();
-			return;
-		}
+        var sk1 = ToSkColor(Color1);
+        var sk2 = ToSkColor(Color2);
 
-		var last1 = values1[^1];
-		var last2 = values2[^1];
-		var diff = last1 - last2;
+        LineSeriesCollection =
+        [
+            CreateLineSeries(values1, sk1),
+            CreateLineSeries(values2, sk2),
+            CreateEndMarker(values1, sk1),
+            CreateEndMarker(values2, sk2)
+        ];
 
-		DeltaText = $"{Math.Abs(diff).ToString("N2", CultureInfo.InvariantCulture)}$";
+        XAxes = [BuildXAxis()];
 
-		if (diff > 0)
-		{
-			DeltaArrow = "▲";
-			DeltaColor = Color1;
-		}
-		else if (diff < 0)
-		{
-			DeltaArrow = "▼";
-			DeltaColor = Color2;
-		}
-		else
-		{
-			DeltaArrow = "=";
-			DeltaColor = Colors.White;
-		}
-	}
+        UpdateDelta(values1, values2);
+        NotifyAll();
+    }
 
-	private static Dictionary<DateOnly, decimal> BuildDailyTotal(List<TransactionDto> transactions)
-	{
-		return transactions
-			.GroupBy(t => t.Date)
-			.ToDictionary(
-				g => g.Key,
-				g => g.Sum(t => t.Value));
-	}
+    private void NotifyAll()
+    {
+        OnPropertyChanged(nameof(LineSeriesCollection));
+        OnPropertyChanged(nameof(XAxes));
+        OnPropertyChanged(nameof(DeltaText));
+        OnPropertyChanged(nameof(DeltaColor));
+        OnPropertyChanged(nameof(DeltaArrow));
+    }
 
-	private static (DateOnly From, DateOnly To) ComputeSharedRange(
-		Dictionary<DateOnly, decimal> daily1,
-		Dictionary<DateOnly, decimal> daily2)
-	{
-		var allKeys = daily1.Keys.Concat(daily2.Keys).ToList();
-		var from = allKeys.Min();
-		var to = allKeys.Max();
+    private void ResetDelta()
+    {
+        DeltaText = "0,00$";
+        DeltaColor = Colors.White;
+        DeltaArrow = string.Empty;
+    }
 
-		if (to.DayNumber - from.DayNumber < MinDaysVisible - 1)
-		{
-			from = to.AddDays(-(MinDaysVisible - 1));
-		}
+    private void UpdateDelta(double[] values1, double[] values2)
+    {
+        if (values1.Length == 0 || values2.Length == 0)
+        {
+            ResetDelta();
+            return;
+        }
 
-		return (from, to);
-	}
+        var last1 = values1[^1];
+        var last2 = values2[^1];
+        var diff = last1 - last2;
 
-	private static DateOnly[] BuildDateRange(DateOnly from, DateOnly to)
-	{
-		var result = new List<DateOnly>();
-		for (var day = from; day <= to; day = day.AddDays(1))
-		{
-			result.Add(day);
-		}
-		return result.ToArray();
-	}
+        DeltaText = $"{Math.Abs(diff).ToString("N2", CultureInfo.InvariantCulture)}$";
 
-	private static double[] AccumulateOverRange(
-		Dictionary<DateOnly, decimal> dailyTotal,
-		DateOnly[] dates)
-	{
-		var result = new double[dates.Length];
-		decimal running = 0;
+        if (diff > 0)
+        {
+            DeltaArrow = "▲";
+            DeltaColor = Color1;
+        }
+        else if (diff < 0)
+        {
+            DeltaArrow = "▼";
+            DeltaColor = Color2;
+        }
+        else
+        {
+            DeltaArrow = "=";
+            DeltaColor = Colors.White;
+        }
+    }
 
-		for (var i = 0; i < dates.Length; i++)
-		{
-			if (dailyTotal.TryGetValue(dates[i], out var dayValue))
-			{
-				running += dayValue;
-			}
-			result[i] = (double)running;
-		}
+    private static Dictionary<DateOnly, decimal> BuildDailyTotal(List<TransactionDto> transactions)
+    {
+        return transactions
+            .GroupBy(t => t.Date)
+            .ToDictionary(
+                g => g.Key,
+                g => g.Sum(t => t.Value));
+    }
 
-		return result;
-	}
+    private static (DateOnly From, DateOnly To) ComputeSharedRange(
+        Dictionary<DateOnly, decimal> daily1,
+        Dictionary<DateOnly, decimal> daily2)
+    {
+        var allKeys = daily1.Keys.Concat(daily2.Keys).ToList();
+        var from = allKeys.Min();
+        var to = allKeys.Max();
 
-	private Axis BuildXAxis()
-	{
-		return new Axis
-		{
-			Labeler = value =>
-			{
-				var index = (int)Math.Round(value);
-				if (index < 0 || index >= _dates.Length) return string.Empty;
-				return _dates[index].ToString("dd/MM", CultureInfo.InvariantCulture);
-			},
-			TextSize = 11,
-			LabelsPaint = new SolidColorPaint(AxisTextColor),
-			MinStep = 1,
-			SeparatorsPaint = null
-		};
-	}
+        if (to.DayNumber - from.DayNumber < MinDaysVisible - 1)
+        {
+            from = to.AddDays(-(MinDaysVisible - 1));
+        }
 
-	private LineSeries<double> CreateLineSeries(double[] values, SKColor color)
-	{
-		return new LineSeries<double>
-		{
-			Values = values,
-			GeometrySize = 0,
-			LineSmoothness = 0.35,
-			Stroke = new SolidColorPaint(color) { StrokeThickness = 4 },
-			Fill = null,
-			GeometryFill = null,
-			GeometryStroke = null,
-			YToolTipLabelFormatter = point =>
-			{
-				var index = (int)Math.Round(point.Coordinate.SecondaryValue);
-				var dateLabel = index >= 0 && index < _dates.Length
-					? _dates[index].ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-					: string.Empty;
-				var valueLabel = point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.InvariantCulture);
-				return $"{dateLabel}\n{valueLabel}$";
-			}
-		};
-	}
+        return (from, to);
+    }
 
-	private LineSeries<ObservablePoint> CreateEndMarker(double[] values, SKColor color)
-	{
-		if (values.Length == 0)
-		{
-			return new LineSeries<ObservablePoint>
-			{
-				Values = Array.Empty<ObservablePoint>(),
-				IsHoverable = false
-			};
-		}
+    private static DateOnly[] BuildDateRange(DateOnly from, DateOnly to)
+    {
+        var result = new List<DateOnly>();
+        for (var day = from; day <= to; day = day.AddDays(1))
+        {
+            result.Add(day);
+        }
+        return result.ToArray();
+    }
 
-		var lastIndex = values.Length - 1;
-		var lastValue = values[lastIndex];
+    private static double[] AccumulateOverRange(
+        Dictionary<DateOnly, decimal> dailyTotal,
+        DateOnly[] dates)
+    {
+        var result = new double[dates.Length];
+        decimal running = 0;
 
-		return new LineSeries<ObservablePoint>
-		{
-			Values = [new ObservablePoint(lastIndex, lastValue)],
-			GeometrySize = 14,
-			Stroke = null,
-			Fill = null,
-			GeometryFill = new SolidColorPaint(color),
-			GeometryStroke = new SolidColorPaint(SKColors.White.WithAlpha(180))
-			{
-				StrokeThickness = 2
-			},
-			DataLabelsPaint = new SolidColorPaint(color)
-			{
-				SKTypeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold)
-			},
-			DataLabelsSize = 13,
-			DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top,
-			DataLabelsFormatter = point =>
-				$"{point.Coordinate.PrimaryValue.ToString("N0", CultureInfo.InvariantCulture)}$",
-			IsHoverable = false
-		};
-	}
+        for (var i = 0; i < dates.Length; i++)
+        {
+            if (dailyTotal.TryGetValue(dates[i], out var dayValue))
+            {
+                running += dayValue;
+            }
+            result[i] = (double)running;
+        }
 
-	private static SKColor ToSkColor(Color color)
-	{
-		return new SKColor(
-			(byte)(color.Red * 255),
-			(byte)(color.Green * 255),
-			(byte)(color.Blue * 255),
-			(byte)(color.Alpha * 255));
-	}
+        return result;
+    }
+
+    private Axis BuildXAxis()
+    {
+        var maxLabels = Math.Max(3, (int)(_lastWidth / PixelsPerLabel));
+        var step = Math.Max(1, (int)Math.Ceiling((double)_dates.Length / maxLabels));
+
+        return new Axis
+        {
+            Labeler = value =>
+            {
+                var index = (int)Math.Round(value);
+                if (index < 0 || index >= _dates.Length) return string.Empty;
+                return _dates[index].ToString("dd/MM", CultureInfo.InvariantCulture);
+            },
+            TextSize = 11,
+            LabelsPaint = new SolidColorPaint(AxisTextColor),
+            MinStep = step,
+            ForceStepToMin = true,
+            SeparatorsPaint = null
+        };
+    }
+
+    private LineSeries<double> CreateLineSeries(double[] values, SKColor color)
+    {
+        return new LineSeries<double>
+        {
+            Values = values,
+            GeometrySize = 0,
+            LineSmoothness = 0.35,
+            Stroke = new SolidColorPaint(color) { StrokeThickness = 4 },
+            Fill = null,
+            GeometryFill = null,
+            GeometryStroke = null,
+            YToolTipLabelFormatter = point =>
+            {
+                var index = (int)Math.Round(point.Coordinate.SecondaryValue);
+                var dateLabel = index >= 0 && index < _dates.Length
+                    ? _dates[index].ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                    : string.Empty;
+                var valueLabel = point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.InvariantCulture);
+                return $"{dateLabel}\n{valueLabel}$";
+            }
+        };
+    }
+
+    private LineSeries<ObservablePoint> CreateEndMarker(double[] values, SKColor color)
+    {
+        if (values.Length == 0)
+        {
+            return new LineSeries<ObservablePoint>
+            {
+                Values = Array.Empty<ObservablePoint>(),
+                IsHoverable = false
+            };
+        }
+
+        var lastIndex = values.Length - 1;
+        var lastValue = values[lastIndex];
+
+        return new LineSeries<ObservablePoint>
+        {
+            Values = [new ObservablePoint(lastIndex, lastValue)],
+            GeometrySize = 14,
+            Stroke = null,
+            Fill = null,
+            GeometryFill = new SolidColorPaint(color),
+            GeometryStroke = new SolidColorPaint(SKColors.White.WithAlpha(180))
+            {
+                StrokeThickness = 2
+            },
+            DataLabelsPaint = new SolidColorPaint(color)
+            {
+                SKTypeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold)
+            },
+            DataLabelsSize = 13,
+            DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top,
+            DataLabelsFormatter = point =>
+                ChartFormat.CompactCurrency(point.Coordinate.PrimaryValue),
+            IsHoverable = false
+        };
+    }
+
+    private static SKColor ToSkColor(Color color)
+    {
+        return new SKColor(
+            (byte)(color.Red * 255),
+            (byte)(color.Green * 255),
+            (byte)(color.Blue * 255),
+            (byte)(color.Alpha * 255));
+    }
 }

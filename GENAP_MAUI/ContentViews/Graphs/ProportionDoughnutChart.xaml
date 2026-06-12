@@ -5,22 +5,25 @@
              x:Class="GENAP_MAUI.ContentViews.Graphs.ProportionDoughnutChart"
              x:Name="Root">
 
-		<Grid HeightRequest="340">
-			<Label 
-                Text="{Binding CenterText, Source={x:Reference Root}}"
-                HorizontalOptions="Center" 
-                VerticalOptions="Center" 
-                HorizontalTextAlignment="Center"
-                FontSize="16" 
-                FontAttributes="Bold"
-                TextColor="White"
-                Margin="0,0,0,30"
-                InputTransparent="True" />
+    <VerticalStackLayout Spacing="8">
+        <Label x:Name="TitleLabel" Style="{StaticResource ChartTitle}" IsVisible="False" />
 
-			<lvc:PieChart 
-                Series="{Binding DoughnutSeries, Source={x:Reference Root}}" 
+        <Grid HeightRequest="340">
+            <Label Text="{Binding CenterText, Source={x:Reference Root}}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                   Margin="0,0,0,30"
+                   InputTransparent="True" />
+
+            <lvc:PieChart
+                Series="{Binding DoughnutSeries, Source={x:Reference Root}}"
                 LegendPosition="Bottom"
                 BackgroundColor="Transparent" />
-		</Grid>
+        </Grid>
+    </VerticalStackLayout>
 
 </ContentView>

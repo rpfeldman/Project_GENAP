@@ -5,16 +5,8 @@
              x:Class="GENAP_MAUI.ContentViews.Graphs.BasicLineChart"
              x:Name="Root">
 
-    <Border
-        Margin="8"
-        Padding="16"
-        BackgroundColor="#12171F"
-        Stroke="#1F2937"
-        StrokeThickness="1">
-
-        <Border.StrokeShape>
-            <RoundRectangle CornerRadius="18"/>
-        </Border.StrokeShape>
+    <VerticalStackLayout Spacing="8">
+        <Label x:Name="TitleLabel" Style="{StaticResource ChartTitle}" IsVisible="False" />
 
         <Grid HeightRequest="300">
             <lvc:CartesianChart
@@ -24,6 +16,6 @@
                 LegendPosition="Hidden"
                 BackgroundColor="Transparent" />
         </Grid>
-    </Border>
-    
+    </VerticalStackLayout>
+
 </ContentView>

@@ -5,40 +5,18 @@
              x:Class="GENAP_MAUI.ContentViews.Graphs.BalanceLineChart"
              x:Name="Root">
 
-    <Border
-        Margin="8"
-        Padding="16"
-        BackgroundColor="#12171F"
-        Stroke="#1F2937"
-        StrokeThickness="1">
+    <VerticalStackLayout Spacing="8">
+        <Label x:Name="TitleLabel" Style="{StaticResource ChartTitle}" IsVisible="False" />
 
-        <Border.StrokeShape>
-            <RoundRectangle CornerRadius="18"/>
-        </Border.StrokeShape>
-
-        <Grid RowDefinitions="Auto,*" RowSpacing="12">
-
-            <VerticalStackLayout Spacing="2">
-                <Label Text="Evolución del Balance"
-                       FontSize="18"
-                       FontAttributes="Bold"
-                       TextColor="#F8FAFC"/>
-
-                <Label Text="Seguimiento histórico del rendimiento"
-                       FontSize="12"
-                       TextColor="#94A3B8"/>
-            </VerticalStackLayout>
-
-            <Grid Grid.Row="1" HeightRequest="300">
-                <lvc:CartesianChart
-                    Series="{Binding LineSeriesCollection, Source={x:Reference Root}}"
-                    XAxes="{Binding XAxes, Source={x:Reference Root}}"
-                    YAxes="{Binding YAxes, Source={x:Reference Root}}"
-                    Sections="{Binding ZeroSection, Source={x:Reference Root}}"
-                    LegendPosition="Hidden"
-                    BackgroundColor="Transparent" />
-            </Grid>
-
+        <Grid HeightRequest="300">
+            <lvc:CartesianChart
+                Series="{Binding LineSeriesCollection, Source={x:Reference Root}}"
+                XAxes="{Binding XAxes, Source={x:Reference Root}}"
+                YAxes="{Binding YAxes, Source={x:Reference Root}}"
+                Sections="{Binding ZeroSection, Source={x:Reference Root}}"
+                LegendPosition="Hidden"
+                BackgroundColor="Transparent" />
         </Grid>
-    </Border>
+    </VerticalStackLayout>
+
 </ContentView>

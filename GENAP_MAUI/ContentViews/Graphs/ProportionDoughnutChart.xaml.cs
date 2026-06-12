@@ -12,90 +12,113 @@ namespace GENAP_MAUI.ContentViews.Graphs;
 
 public partial class ProportionDoughnutChart : ContentView
 {
-	private static readonly SKColor FallbackColor = SKColor.Parse("#94A3B8");
+    private static readonly SKColor FallbackColor = SKColor.Parse("#94A3B8");
 
-	public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(
-		nameof(Transactions),
-		typeof(List<TransactionDto>),
-		typeof(ProportionDoughnutChart),
-		new List<TransactionDto>(),
-		propertyChanged: OnDataChanged);
+    private const double MinLabelPercentage = 4;
 
-	public List<TransactionDto> Transactions
-	{
-		get => (List<TransactionDto>)GetValue(TransactionsProperty);
-		set => SetValue(TransactionsProperty, value);
-	}
+    public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(
+        nameof(Transactions),
+        typeof(List<TransactionDto>),
+        typeof(ProportionDoughnutChart),
+        new List<TransactionDto>(),
+        propertyChanged: OnDataChanged);
 
-	public static readonly BindableProperty CategoriesProperty = BindableProperty.Create(
-		nameof(Categories),
-		typeof(ObservableCollection<CategoryDto>),
-		typeof(ProportionDoughnutChart),
-		new ObservableCollection<CategoryDto>(),
-		propertyChanged: OnDataChanged);
+    public List<TransactionDto> Transactions
+    {
+        get => (List<TransactionDto>)GetValue(TransactionsProperty);
+        set => SetValue(TransactionsProperty, value);
+    }
 
-	public ObservableCollection<CategoryDto> Categories
-	{
-		get => (ObservableCollection<CategoryDto>)GetValue(CategoriesProperty);
-		set => SetValue(CategoriesProperty, value);
-	}
+    public static readonly BindableProperty CategoriesProperty = BindableProperty.Create(
+        nameof(Categories),
+        typeof(ObservableCollection<CategoryDto>),
+        typeof(ProportionDoughnutChart),
+        new ObservableCollection<CategoryDto>(),
+        propertyChanged: OnDataChanged);
 
-	public ISeries[] DoughnutSeries { get; private set; }
-	public string CenterText { get; private set; } = string.Empty;
+    public ObservableCollection<CategoryDto> Categories
+    {
+        get => (ObservableCollection<CategoryDto>)GetValue(CategoriesProperty);
+        set => SetValue(CategoriesProperty, value);
+    }
 
-	public ProportionDoughnutChart()
-	{
-		DoughnutSeries = [];
-		InitializeComponent();
-	}
+    public static readonly BindableProperty TitleProperty = BindableProperty.Create(
+        nameof(Title),
+        typeof(string),
+        typeof(ProportionDoughnutChart),
+        string.Empty,
+        propertyChanged: OnTitleChanged);
 
-	private static void OnDataChanged(BindableObject bindable, object oldValue, object newValue)
-	{
-		var control = (ProportionDoughnutChart)bindable;
-		control.UpdateChart();
-	}
+    public string Title
+    {
+        get => (string)GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
+    }
 
-	private void UpdateChart()
-	{
-		if (Transactions is null || Transactions.Count == 0)
-		{
-			DoughnutSeries = [];
-			CenterText = string.Empty;
-			NotifyAll();
-			return;
-		}
+    public ISeries[] DoughnutSeries { get; private set; }
+    public string CenterText { get; private set; } = string.Empty;
 
-		var grouped = Transactions
-			.GroupBy(t => t.Category)
-			.Select(g => new
-			{
-				Name = g.Key,
-				Total = g.Sum(t => t.Value)
-			})
-			.OrderByDescending(g => g.Total)
-			.ToList();
+    public ProportionDoughnutChart()
+    {
+        DoughnutSeries = [];
+        InitializeComponent();
+    }
 
-		var totalSum = grouped.Sum(g => g.Total);
-		var colorMap = BuildColorMap(Categories);
+    private static void OnDataChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = (ProportionDoughnutChart)bindable;
+        control.UpdateChart();
+    }
 
-		var series = new List<ISeries>();
-		foreach (var group in grouped)
-		{
-			var color = colorMap.TryGetValue(group.Name, out var c) ? c : FallbackColor;
-			series.Add(CreatePieSlice(group.Name, group.Total, totalSum, color));
-		}
+    private static void OnTitleChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = (ProportionDoughnutChart)bindable;
+        if (control.TitleLabel is null) return;
+        control.TitleLabel.Text = (string)newValue;
+        control.TitleLabel.IsVisible = !string.IsNullOrWhiteSpace((string)newValue);
+    }
 
-		DoughnutSeries = series.ToArray();
-		CenterText = $"Total\n{totalSum.ToString("N2", CultureInfo.InvariantCulture)}$";
+    private void UpdateChart()
+    {
+        if (Transactions is null || Transactions.Count == 0)
+        {
+            DoughnutSeries = [];
+            CenterText = string.Empty;
+            NotifyAll();
+            return;
+        }
 
-		NotifyAll();
-	}
+        var grouped = Transactions
+            .GroupBy(t => t.Category)
+            .Select(g => new
+            {
+                Name = g.Key,
+                Total = g.Sum(t => t.Value)
+            })
+            .OrderByDescending(g => g.Total)
+            .ToList();
 
-	private void NotifyAll()
-	{
-		OnPropertyChanged(nameof(DoughnutSeries));
-		OnPropertyChanged(nameof(CenterText));
-	}
+        var totalSum = grouped.Sum(g => g.Total);
+        var colorMap = BuildColorMap(Categories);
+
+        var series = new List<ISeries>();
+        foreach (var group in grouped)
+        {
+            var color = colorMap.TryGetValue(group.Name, out var c) ? c : FallbackColor;
+            series.Add(CreatePieSlice(group.Name, group.Total, totalSum, color));
+        }
+
+        DoughnutSeries = series.ToArray();
+        CenterText = $"Total\n{totalSum.ToString("N0", CultureInfo.InvariantCulture)}$";
+
+        NotifyAll();
+    }
+
+    private void NotifyAll()
+    {
+        OnPropertyChanged(nameof(DoughnutSeries));
+        OnPropertyChanged(nameof(CenterText));
+    }
 
     private static Dictionary<string, SKColor> BuildColorMap(ObservableCollection<CategoryDto> categories)
     {
@@ -123,25 +146,26 @@ public partial class ProportionDoughnutChart : ContentView
     }
 
     private static PieSeries<ObservableValue> CreatePieSlice(
-		string name,
-		decimal value,
-		decimal totalSum,
-		SKColor color)
-	{
-		var percentage = totalSum > 0 ? (double)(value / totalSum) * 100 : 0;
+        string name,
+        decimal value,
+        decimal totalSum,
+        SKColor color)
+    {
+        var percentage = totalSum > 0 ? (double)(value / totalSum) * 100 : 0;
+        var showLabel = percentage >= MinLabelPercentage;
 
-		return new PieSeries<ObservableValue>
-		{
-			Name = name,
-			Values = [new((double)value)],
-			InnerRadius = 80,
-			Fill = new SolidColorPaint(color),
-			DataLabelsPaint = new SolidColorPaint(SKColors.White),
-			DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
-			DataLabelsFormatter = point =>
-				$"{percentage.ToString("N1", CultureInfo.InvariantCulture)}%",
-			ToolTipLabelFormatter = point =>
-				$"{name}\n{point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.InvariantCulture)}$ ({percentage.ToString("N1", CultureInfo.InvariantCulture)}%)"
-		};
-	}
+        return new PieSeries<ObservableValue>
+        {
+            Name = name,
+            Values = [new((double)value)],
+            InnerRadius = 80,
+            Fill = new SolidColorPaint(color),
+            DataLabelsPaint = showLabel ? new SolidColorPaint(SKColors.White) : null,
+            DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
+            DataLabelsFormatter = point =>
+                $"{percentage.ToString("N1", CultureInfo.InvariantCulture)}%",
+            ToolTipLabelFormatter = point =>
+                $"{name}\n{point.Coordinate.PrimaryValue.ToString("N2", CultureInfo.InvariantCulture)}$ ({percentage.ToString("N1", CultureInfo.InvariantCulture)}%)"
+        };
+    }
 }

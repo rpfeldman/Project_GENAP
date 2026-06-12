@@ -5,28 +5,26 @@
              x:Class="GENAP_MAUI.ContentViews.Graphs.BalanceDoughnutChart"
              x:Name="Root">
 
-    <VerticalStackLayout>
-        <Label Text="Proporción Ingresos vs Gastos" FontSize="18" FontAttributes="Bold" Margin="10,0"/>
+    <VerticalStackLayout Spacing="8">
+        <Label x:Name="TitleLabel" Style="{StaticResource ChartTitle}" IsVisible="False" />
 
         <Grid HeightRequest="340">
-            <Label 
-                x:Name="BalanceLabel"
-                Text="Balance:&#10;0.00$"
-                HorizontalOptions="Center" 
-                VerticalOptions="Center" 
-                HorizontalTextAlignment="Center"
-                FontSize="16" 
-                FontAttributes="Bold"
-                Margin="0,0,0,30"
-                TextColor="White"
-                TranslationY="-1"
-                InputTransparent="True" />
+            <Label x:Name="BalanceLabel"
+                   Text="Balance:&#10;0$"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,0,0,30"
+                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                   TranslationY="-1"
+                   InputTransparent="True" />
 
-            <lvc:PieChart 
-                Series="{Binding DoughnutChart, Source={x:Reference Root}}" 
+            <lvc:PieChart
+                Series="{Binding DoughnutChart, Source={x:Reference Root}}"
                 LegendPosition="Bottom"
                 BackgroundColor="Transparent" />
-
         </Grid>
     </VerticalStackLayout>
 

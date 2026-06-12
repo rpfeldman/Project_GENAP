@@ -5,17 +5,19 @@
              x:Class="GENAP_MAUI.ContentViews.Graphs.DoubleComparisonLineChart"
              x:Name="Root">
 
+    <VerticalStackLayout Spacing="8">
+        <Label x:Name="TitleLabel" Style="{StaticResource ChartTitle}" IsVisible="False" />
 
-    <Border
-        Margin="8"
-        Padding="16"
-        BackgroundColor="#12171F"
-        Stroke="#1F2937"
-        StrokeThickness="1">
-
-        <Border.StrokeShape>
-            <RoundRectangle CornerRadius="18"/>
-        </Border.StrokeShape>
+        <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+            <Label Text="{Binding DeltaArrow, Source={x:Reference Root}}"
+                   TextColor="{Binding DeltaColor, Source={x:Reference Root}}"
+                   FontSize="14"
+                   FontAttributes="Bold" />
+            <Label Text="{Binding DeltaText, Source={x:Reference Root}}"
+                   TextColor="{Binding DeltaColor, Source={x:Reference Root}}"
+                   FontSize="14"
+                   FontAttributes="Bold" />
+        </HorizontalStackLayout>
 
         <Grid HeightRequest="300">
             <lvc:CartesianChart
@@ -25,7 +27,6 @@
                 LegendPosition="Hidden"
                 BackgroundColor="Transparent" />
         </Grid>
-    </Border>
-
+    </VerticalStackLayout>
 
 </ContentView>
