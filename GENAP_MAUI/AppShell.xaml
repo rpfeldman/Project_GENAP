@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:GENAP_MAUI"
     xmlns:pages="clr-namespace:GENAP_MAUI.Pages.MainNavigationBarPages"
+    xmlns:tpages="clr-namespace:GENAP_MAUI.Pages.TransactionRelatedPages"
     Title="GENAP_MAUI">
 
     <ShellContent
@@ -22,5 +23,8 @@
                   ContentTemplate="{DataTemplate pages:TransactionCategoriesPage}" />
     <ShellContent Route="{x:Static local:Routes.Graphs}"
                   ContentTemplate="{DataTemplate pages:GraphsPage}" />
+
+    <ShellContent Route="{x:Static local:Routes.TransactionsList}"
+              ContentTemplate="{DataTemplate tpages:TransactionsCollectionPage}" />
 
 </Shell>

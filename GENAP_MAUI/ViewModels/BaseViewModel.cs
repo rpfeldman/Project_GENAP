@@ -23,9 +23,15 @@ namespace GENAP_MAUI.ViewModels
         }
 
         [RelayCommand]
-        public async Task Navigate(string Route)
+        public async Task PushNavigate(string Route)
         {
             await Shell.Current.GoToAsync(Route, true);
+        }
+
+        [RelayCommand]
+        public async Task DirectNavigate(string Route)
+        {
+            await Shell.Current.GoToAsync($"//{Route}", true);
         }
     }
 }

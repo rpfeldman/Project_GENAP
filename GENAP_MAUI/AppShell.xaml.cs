@@ -10,7 +10,6 @@ namespace GENAP_MAUI
             InitializeComponent();
 
             Routing.RegisterRoute(Routes.TransactionMenu, typeof(TransactionPage));
-            Routing.RegisterRoute(Routes.TransactionsList, typeof(TransactionsCollectionPage));
         }
     }
 }

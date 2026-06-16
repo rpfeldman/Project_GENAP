@@ -10,4 +10,11 @@ public partial class TransactionsCollectionPage : ContentPage
 
 		BindingContext = vm;
 	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        (BindingContext as TransactionsCollectionPageViewModel)?.ReloadTransactions(GlobalResources.TimePeriodsEnum.Historical);
+    }
 }

@@ -65,7 +65,7 @@ namespace GENAP_MAUI.ViewModels
 
             await Shell.Current.DisplayAlertAsync("Eliminar", RestartDataSuccess ? "Se han reiniciado los datos" : "No se ha podido reiniciar los datos", "Aceptar");
 
-            await Navigate(Routes.Dashboard);
+            await DirectNavigate(Routes.Dashboard);
         }
 
         public async Task ReloadTransactions(GlobalResources.TimePeriodsEnum timePeriod)

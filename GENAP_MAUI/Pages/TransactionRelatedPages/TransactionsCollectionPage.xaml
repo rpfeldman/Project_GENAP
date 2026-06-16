@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
+             xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionsCollectionPage"
              x:DataType="vm:TransactionsCollectionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
@@ -126,5 +127,7 @@
                 Text="Reiniciar datos"
                 Style="{StaticResource ButtonDestructiveGhost}"
                 Command="{Binding RestartDataCommand}" />
+
+        <nav:BottomNavigationBar Grid.Row="0" Grid.RowSpan="4" />
     </Grid>
 </ContentPage>

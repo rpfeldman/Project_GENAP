@@ -60,7 +60,7 @@ namespace GENAP_MAUI.ViewModels
 
             await Shell.Current.DisplayAlertAsync("Eliminar", DeleteTransactionSuccess ? "Movimiento eliminado correctamente" : "No se ha podido eliminar el movimiento", "Aceptar");
 
-            await Navigate(Routes.TransactionsList);
+            await DirectNavigate(Routes.TransactionsList);
         }
 
         [RelayCommand(CanExecute = nameof(DeleteFixedTransactionCanExecute))]
@@ -71,7 +71,7 @@ namespace GENAP_MAUI.ViewModels
 
             await Shell.Current.DisplayAlertAsync("Eliminar", DeleteCollectionSuccess ? "Movimientos eliminado correctamente" : "No se ha podido eliminar los movimientos", "Aceptar");
 
-            await Navigate(Routes.TransactionsList);
+            await DirectNavigate(Routes.TransactionsList);
         }
 
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
