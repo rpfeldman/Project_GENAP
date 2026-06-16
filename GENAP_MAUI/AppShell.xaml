@@ -6,7 +6,8 @@
     xmlns:local="clr-namespace:GENAP_MAUI"
     xmlns:pages="clr-namespace:GENAP_MAUI.Pages.MainNavigationBarPages"
     xmlns:tpages="clr-namespace:GENAP_MAUI.Pages.TransactionRelatedPages"
-    Title="GENAP_MAUI">
+    Title="Tradeckr"
+    FlyoutBehavior="Disabled">
 
     <ShellContent
         Title="Home"
