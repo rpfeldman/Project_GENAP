@@ -51,6 +51,25 @@ public partial class BalanceDoughnutChart : ContentView
         set => SetValue(TitleProperty, value);
     }
 
+    // --- Empty state ---
+    public static readonly BindableProperty HasDataProperty = BindableProperty.Create(
+        nameof(HasData), typeof(bool), typeof(BalanceDoughnutChart), false);
+
+    public bool HasData
+    {
+        get => (bool)GetValue(HasDataProperty);
+        private set => SetValue(HasDataProperty, value);
+    }
+
+    public static readonly BindableProperty IsEmptyProperty = BindableProperty.Create(
+        nameof(IsEmpty), typeof(bool), typeof(BalanceDoughnutChart), true);
+
+    public bool IsEmpty
+    {
+        get => (bool)GetValue(IsEmptyProperty);
+        private set => SetValue(IsEmptyProperty, value);
+    }
+
     public ISeries[] DoughnutChart { get; }
 
     public BalanceDoughnutChart()
@@ -99,6 +118,11 @@ public partial class BalanceDoughnutChart : ContentView
 
     private void UpdateChart()
     {
+        // Vacío = no hay ni ingresos ni gastos cargados
+        var empty = Income == 0m && Expenses == 0m;
+        HasData = !empty;
+        IsEmpty = empty;
+
         var balance = Income - Expenses;
         BalanceLabel.Text = $"Balance:\n{balance:N0}$";
 

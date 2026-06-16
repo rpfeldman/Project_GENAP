@@ -8,7 +8,8 @@
     <VerticalStackLayout Spacing="8">
         <Label x:Name="TitleLabel" Style="{StaticResource ChartTitle}" IsVisible="False" />
 
-        <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+        <HorizontalStackLayout Spacing="6" HorizontalOptions="Center"
+                               IsVisible="{Binding HasData, Source={x:Reference Root}}">
             <Label Text="{Binding DeltaArrow, Source={x:Reference Root}}"
                    TextColor="{Binding DeltaColor, Source={x:Reference Root}}"
                    FontSize="14"
@@ -21,11 +22,20 @@
 
         <Grid HeightRequest="300">
             <lvc:CartesianChart
+                IsVisible="{Binding HasData, Source={x:Reference Root}}"
                 Series="{Binding LineSeriesCollection, Source={x:Reference Root}}"
                 XAxes="{Binding XAxes, Source={x:Reference Root}}"
                 YAxes="{Binding YAxes, Source={x:Reference Root}}"
                 LegendPosition="Hidden"
                 BackgroundColor="Transparent" />
+
+            <Label IsVisible="{Binding IsEmpty, Source={x:Reference Root}}"
+                   Text="Sin movimientos para comparar en este período"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   FontSize="14"
+                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
         </Grid>
     </VerticalStackLayout>
 

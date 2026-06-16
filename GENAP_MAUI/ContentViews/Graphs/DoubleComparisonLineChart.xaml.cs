@@ -82,6 +82,25 @@ public partial class DoubleComparisonLineChart : ContentView
         set => SetValue(TitleProperty, value);
     }
 
+    // --- Empty state ---
+    public static readonly BindableProperty HasDataProperty = BindableProperty.Create(
+        nameof(HasData), typeof(bool), typeof(DoubleComparisonLineChart), false);
+
+    public bool HasData
+    {
+        get => (bool)GetValue(HasDataProperty);
+        private set => SetValue(HasDataProperty, value);
+    }
+
+    public static readonly BindableProperty IsEmptyProperty = BindableProperty.Create(
+        nameof(IsEmpty), typeof(bool), typeof(DoubleComparisonLineChart), true);
+
+    public bool IsEmpty
+    {
+        get => (bool)GetValue(IsEmptyProperty);
+        private set => SetValue(IsEmptyProperty, value);
+    }
+
     public ISeries[] LineSeriesCollection { get; private set; }
     public ICartesianAxis[] XAxes { get; private set; }
     public ICartesianAxis[] YAxes { get; }
@@ -154,6 +173,9 @@ public partial class DoubleComparisonLineChart : ContentView
 
         if (!hasAny1 && !hasAny2)
         {
+            HasData = false;
+            IsEmpty = true;
+
             _dates = [];
             LineSeriesCollection = [];
             XAxes = [new Axis { IsVisible = false }];
@@ -161,6 +183,9 @@ public partial class DoubleComparisonLineChart : ContentView
             NotifyAll();
             return;
         }
+
+        HasData = true;
+        IsEmpty = false;
 
         var dailyTotal1 = hasAny1 ? BuildDailyTotal(Transactions1) : new Dictionary<DateOnly, decimal>();
         var dailyTotal2 = hasAny2 ? BuildDailyTotal(Transactions2) : new Dictionary<DateOnly, decimal>();

@@ -55,6 +55,25 @@ public partial class ProportionDoughnutChart : ContentView
         set => SetValue(TitleProperty, value);
     }
 
+    // --- Empty state ---
+    public static readonly BindableProperty HasDataProperty = BindableProperty.Create(
+        nameof(HasData), typeof(bool), typeof(ProportionDoughnutChart), false);
+
+    public bool HasData
+    {
+        get => (bool)GetValue(HasDataProperty);
+        private set => SetValue(HasDataProperty, value);
+    }
+
+    public static readonly BindableProperty IsEmptyProperty = BindableProperty.Create(
+        nameof(IsEmpty), typeof(bool), typeof(ProportionDoughnutChart), true);
+
+    public bool IsEmpty
+    {
+        get => (bool)GetValue(IsEmptyProperty);
+        private set => SetValue(IsEmptyProperty, value);
+    }
+
     public ISeries[] DoughnutSeries { get; private set; }
     public string CenterText { get; private set; } = string.Empty;
 
@@ -82,11 +101,17 @@ public partial class ProportionDoughnutChart : ContentView
     {
         if (Transactions is null || Transactions.Count == 0)
         {
+            HasData = false;
+            IsEmpty = true;
+
             DoughnutSeries = [];
             CenterText = string.Empty;
             NotifyAll();
             return;
         }
+
+        HasData = true;
+        IsEmpty = false;
 
         var grouped = Transactions
             .GroupBy(t => t.Category)
