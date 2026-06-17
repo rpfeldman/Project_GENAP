@@ -21,6 +21,7 @@ namespace GENAP_MAUI
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Symbols.ttf", "Symbols");
                 });
 
             // Global resources

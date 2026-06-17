@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace GENAP_MAUI
+{
+    public static class Symbols
+    {
+        public const string CategoriesIcon = "\ue241";
+        public const string RegistTransactionIcon = "\uf041";
+        public const string RegistTradeIcon = "\uef92";
+        public const string GraphsIcon = "\uf190";
+        public const string MainDashboardIcon = "\ue88a";
+        public const string SwapAppThemeIcon = "\ue891";
+        public const string DeleteIcon = "\ue872";
+        public const string AddIcon = "\ue145";
+    }
+}

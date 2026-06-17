@@ -32,7 +32,7 @@
 
                     <Button Grid.Column="1"
                             Style="{StaticResource IconButton}"
-                            Text="🌓"
+                            Text="{x:Static local:Symbols.SwapAppThemeIcon}"
                             Command="{Binding ChangeThemeCommand}"
                             VerticalOptions="Start" />
                 </Grid>

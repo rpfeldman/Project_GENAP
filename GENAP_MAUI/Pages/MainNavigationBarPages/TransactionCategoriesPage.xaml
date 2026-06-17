@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:ic="clr-namespace:GENAP_MAUI.InnerComponents"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
+             xmlns:local="clr-namespace:GENAP_MAUI"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.TransactionCategoriesPage"
              x:DataType="vm:TransactionCategoriesPageViewModel">
 
@@ -36,7 +37,7 @@
 
                             <Button Grid.Column="2"
                                     Style="{StaticResource IconButton}"
-                                    Text="🗑"
+                                    Text="{x:Static local:Symbols.DeleteIcon}"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCategoryCommand}"
                                     CommandParameter="{Binding .}"
                                     VerticalOptions="Center" />
@@ -66,7 +67,7 @@
 
                     <Button Grid.Column="2"
                             Style="{StaticResource IconButton}"
-                            Text="+"
+                            Text="{x:Static local:Symbols.AddIcon}"
                             TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}"
                             Command="{Binding AddCategoryCommand}"
                             VerticalOptions="Center" />
