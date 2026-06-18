@@ -8,16 +8,16 @@
              x:DataType="vm:TransactionsCollectionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
 
-    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="20" RowSpacing="12">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="4">
+        <VerticalStackLayout Grid.Row="0" Spacing="4" Padding="20,20,20,0">
             <Label Text="Movimientos" Style="{StaticResource SubHeadline}" />
             <Label Style="{StaticResource Caption}"
                    HorizontalTextAlignment="Center"
                    Text="Tocá un movimiento para ver el detalle o editarlo." />
         </VerticalStackLayout>
 
-        <Border Grid.Row="1" Style="{StaticResource InputField}">
+        <Border Grid.Row="1" Style="{StaticResource InputField}" Margin="20,16,20,8">
             <Picker Title="Seleccionar período de tiempo"
                     ItemsSource="{Binding GlobalResources.TimePeriodsList}"
                     ItemDisplayBinding="{Binding Value}"
@@ -26,10 +26,11 @@
 
         <CollectionView Grid.Row="2"
                         ItemsSource="{Binding Transactions}"
-                        ItemsLayout="VerticalList">
+                        ItemsLayout="VerticalList"
+                        Margin="20,0,20,0">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:TransactionDto">
-                    <Border Style="{StaticResource TransactionCard}" Margin="0,0,0,8">
+                    <Border Style="{StaticResource TransactionCard}" Margin="0,0,0,10">
 
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer
@@ -127,7 +128,7 @@
                 Text="Reiniciar datos"
                 Style="{StaticResource ButtonDestructiveGhost}"
                 Command="{Binding RestartDataCommand}"
-                Margin="0,0,0,100" />
+                Margin="20,8,20,100" />
 
         <nav:BottomNavigationBar Grid.Row="0" Grid.RowSpan="4" />
     </Grid>
