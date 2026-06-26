@@ -3,10 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3BB8CF25-951A-48FC-B73F-C90576E3AC8E}|..\\ConsoleTest\\ConsoleTest.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\consoletest\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\viewmodels\\registtransactionpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:viewmodels\\registtransactionpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740F01AE-8212-438F-9EC4-B08AF83A3E48}|..\\Components\\DataServices\\DataServices.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\dataservices\\dataregistrationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\viewmodels\\registtradetransactionpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:viewmodels\\registtradetransactionpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -16,12 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -41,27 +39,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DataRegistrationService.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataRegistrationService.cs",
-              "RelativeDocumentMoniker": "..\\Components\\DataServices\\DataRegistrationService.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\DataServices\\DataRegistrationService.cs",
-              "RelativeToolTip": "..\\Components\\DataServices\\DataRegistrationService.cs",
-              "ViewState": "AgIAAGMAAACA3bkw0tsqwHoAAAAAAAAAAAAAAA==",
+              "Title": "RegistTradeTransactionPageViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\RegistTradeTransactionPageViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\RegistTradeTransactionPageViewModel.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\RegistTradeTransactionPageViewModel.cs",
+              "RelativeToolTip": "ViewModels\\RegistTradeTransactionPageViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-26T16:08:48.134Z",
+              "WhenOpened": "2026-06-26T17:07:53.754Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\ConsoleTest\\Program.cs",
-              "RelativeDocumentMoniker": "..\\ConsoleTest\\Program.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\ConsoleTest\\Program.cs*",
-              "RelativeToolTip": "..\\ConsoleTest\\Program.cs*",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAwD0AAAB7AAAAAAAAAA==",
+              "Title": "RegistTransactionPageViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\RegistTransactionPageViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\RegistTransactionPageViewModel.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\RegistTransactionPageViewModel.cs",
+              "RelativeToolTip": "ViewModels\\RegistTransactionPageViewModel.cs",
+              "ViewState": "AgIAADMAAADA8iA9RVgwwEUAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-26T16:08:32.094Z",
+              "WhenOpened": "2026-06-26T17:07:50.004Z",
               "EditorCaption": ""
             }
           ]

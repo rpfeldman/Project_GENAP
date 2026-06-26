@@ -55,14 +55,14 @@ namespace GENAP_MAUI.ViewModels
             {
                 var ExpenseRegistrationTask = await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), "Trading");
 
-                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask ? "Gasto registrado con exito" : "Ocurrio un error al registrar el gasto\nGasto no registrado", DisplayAlertButton);
+                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask.Success ? "Gasto registrado con exito" : $"{ExpenseRegistrationTask.ErrorMessage}", DisplayAlertButton);
 
                 return;
             }
 
             var IncomeRegistrationTask = await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), "Trading");
 
-            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask ? "Ingreso registrado con exito" : "Ocurrio un error al registrar el Ingreso\nIngreso no registrado", DisplayAlertButton);
+            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask.Success ? "Ingreso registrado con exito" : $"{IncomeRegistrationTask.ErrorMessage}", DisplayAlertButton);
 
             return;
         }

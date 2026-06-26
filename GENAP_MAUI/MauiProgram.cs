@@ -5,6 +5,7 @@ using DataServices;
 using Repositories;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using LiveChartsCore.SkiaSharpView.Maui;
+using DomainModel;
 
 namespace GENAP_MAUI
 {
@@ -38,7 +39,7 @@ namespace GENAP_MAUI
 
             // Data services & the repository
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "TemporalTest.db");
-            builder.Services.AddSingleton<IStateStorage, EF_SQLite_StateStorage>(sp => { return new EF_SQLite_StateStorage(dbPath, [14, 2]); });
+            builder.Services.AddSingleton<IStateStorage<TransactionDto>, EF_SQLite_StateStorageRepo<TransactionDto>>(sp => { return new EF_SQLite_StateStorageRepo<TransactionDto>(dbPath); });
 
             builder.Services.AddSingleton<DataRegistrationService>();
             builder.Services.AddSingleton<DataProjectionService>();

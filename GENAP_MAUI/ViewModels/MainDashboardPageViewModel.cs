@@ -38,6 +38,8 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public async Task Load()
         {
+            // TO-DO regist somewhere if any of the operation results fail
+
             var today = DateOnly.FromDateTime(DateTime.Today);
 
             var GetMonthExpensesTask = _dataProjectionService.GetAllByMonthAsync(today.Month, today.Year, true);
@@ -46,9 +48,18 @@ namespace GENAP_MAUI.ViewModels
 
             var Transactions = await Task.WhenAll(GetMonthExpensesTask, GetMonthIncomeTask, GetMonthTransactionsTask);
 
-            MonthExpenses = DataProjectionService.GetSummedTransactions(Transactions[0]);
-            MonthIncome = DataProjectionService.GetSummedTransactions(Transactions[1]);
-            MonthTransactions = Transactions[2];
+            if (Transactions[0].Success)
+            {
+                MonthExpenses = DataProjectionService.GetSummedTransactions(Transactions[0].Result!);
+            }
+            if (Transactions[1].Success)
+            {
+                MonthIncome = DataProjectionService.GetSummedTransactions(Transactions[1].Result!);
+            }
+            if (Transactions[2].Success)
+            {
+                MonthTransactions = Transactions[2].Result!;
+            }
         }
     }
 }

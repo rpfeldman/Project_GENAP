@@ -69,16 +69,16 @@ namespace GENAP_MAUI.ViewModels
 
             if (Depletion)
             {
-                var ExpenseRegistrationTask = IsFixed ? await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), FixedTransactionDuration, Category.CategoryName) : await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.CategoryName);
+                var ExpenseRegistrationTask = IsFixed ? await _RegistrationService.RegistFixedExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.CategoryName, FixedTransactionDuration) : await _RegistrationService.RegistExpenseAsync(Value, DateOnly.FromDateTime(PickedDate), Category.CategoryName);
 
-                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask ? "Gasto registrado con exito" : "Ocurrio un error al registrar el gasto\nGasto no registrado", DisplayAlertButton);
+                await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, ExpenseRegistrationTask.Success ? "Gasto registrado con exito" : $"{ExpenseRegistrationTask.ErrorMessage}", DisplayAlertButton);
 
                 return;
             }
 
-            var IncomeRegistrationTask = IsFixed ? await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), FixedTransactionDuration, Category.CategoryName) : await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.CategoryName);
+            var IncomeRegistrationTask = IsFixed ? await _RegistrationService.RegistFixedIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.CategoryName, FixedTransactionDuration) : await _RegistrationService.RegistIncomeAsync(Value, DateOnly.FromDateTime(PickedDate), Category.CategoryName);
 
-            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask ? "Ingreso registrado con exito" : "Ocurrio un error al registrar el Ingreso\nIngreso no registrado", DisplayAlertButton);
+            await Shell.Current.DisplayAlertAsync(DisplayAlertTitle, IncomeRegistrationTask.Success ? "Ingreso registrado con exito" : $"{IncomeRegistrationTask.ErrorMessage}", DisplayAlertButton);
 
 			return;
         }

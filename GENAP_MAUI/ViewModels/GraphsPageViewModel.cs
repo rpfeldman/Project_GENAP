@@ -79,9 +79,20 @@ namespace GENAP_MAUI.ViewModels
 
 			var TaskResults = await Task.WhenAll(GetExpensesTask, GetIncomeTask, GetTransactionsTask);
 
-            ExpensesLog = [.. TaskResults[0]];
-			IncomeLog = [.. TaskResults[1]];
-			TransactionsLog = [.. TaskResults[2]];
+			if (TaskResults[0].Success)
+			{
+                ExpensesLog = TaskResults[0].Result!;
+            }
+			if (TaskResults[1].Success)
+			{
+                IncomeLog = TaskResults[1].Result!;
+            }
+			if (TaskResults[2].Success)
+			{
+				TransactionsLog = TaskResults[2].Result!;
+			}
+
+			// TO-DO regist somewhere if any of the operation results fail
 
             Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);
             Income = DataProjectionService.GetSummedTransactions(IncomeLog);
@@ -91,14 +102,14 @@ namespace GENAP_MAUI.ViewModels
 
 		public async Task ReFillGraphs(GlobalResources.TimePeriodsEnum timePeriod)
 		{
-            Task<List<TransactionDto>>? GetExpensesTask = null;
-			Task<List<TransactionDto>>? GetIncomeTask = null;
-			Task<List<TransactionDto>>? GetTransactionsTask = null;
+            Task<OperationResult<List<TransactionDto>>>? GetExpensesTask = null;
+            Task<OperationResult<List<TransactionDto>>>? GetIncomeTask = null;
+            Task<OperationResult<List<TransactionDto>>>? GetTransactionsTask = null;
 			var today = DateOnly.FromDateTime(DateTime.Today);
-			Task<List<TransactionDto>>[] Predicates = [];
+			Task<OperationResult<List<TransactionDto>>>[] Predicates = [];
 
 
-			void SetTasksPointers(Task<List<TransactionDto>> getExpensesTask, Task<List<TransactionDto>> getIncomeTask, Task<List<TransactionDto>> getTransactionsTask) 
+			void SetTasksPointers(Task<OperationResult<List<TransactionDto>>> getExpensesTask, Task<OperationResult<List<TransactionDto>>> getIncomeTask, Task<OperationResult<List<TransactionDto>>> getTransactionsTask) 
 			{
 				GetExpensesTask = getExpensesTask;
 				GetIncomeTask = getIncomeTask;
@@ -209,11 +220,20 @@ namespace GENAP_MAUI.ViewModels
 
 			var TaskResults = await Task.WhenAll(GetExpensesTask ?? throw new InvalidOperationException($"{nameof(GetExpensesTask)} doesn't point to a valid task"), GetIncomeTask ?? throw new InvalidOperationException($"{nameof(GetIncomeTask)} doesn't point to a valid task"), GetTransactionsTask ?? throw new InvalidOperationException($"{nameof(GetTransactionsTask)} doesn't point to a valid task"));
 
-			ExpensesLog = [.. TaskResults[0]];
-			IncomeLog = [.. TaskResults[1]];
-			TransactionsLog = [.. TaskResults[2]];
+            if (TaskResults[0].Success)
+            {
+                ExpensesLog = TaskResults[0].Result!;
+            }
+            if (TaskResults[1].Success)
+            {
+                IncomeLog = TaskResults[1].Result!;
+            }
+            if (TaskResults[2].Success)
+            {
+                TransactionsLog = TaskResults[2].Result!;
+            }
 
-			Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);
+            Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);
 			Income = DataProjectionService.GetSummedTransactions(IncomeLog);
 
 			return;
