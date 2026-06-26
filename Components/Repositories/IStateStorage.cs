@@ -11,7 +11,7 @@ namespace Repositories
         public Task<OperationResult> SaveAsync(TEntity Entity);
         public Task<OperationResult> SaveRangeAsync(TEntity[] Entities);
         public Task<OperationResult> DeleteAsync(int Id);
-        public Task<OperationResult> DeleteFromRangeAsync(Expression<Func<TEntity, bool>> predicate);
+        public Task<OperationResult<int>> DeleteFromRangeAsync(Expression<Func<TEntity, bool>> predicate);
         public Task<OperationResult> UpdateAsync(TEntity NewEntity);
         public Task<OperationResult> UpdateRange(Expression<Func<TEntity, bool>> predicate); // Later on I'll see what to do with this
         public Task<OperationResult> ClearStorageAsync();

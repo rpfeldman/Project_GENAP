@@ -14,8 +14,6 @@ namespace ConsoleTest
         {
             EF_SQLite_StateStorageRepo<TransactionDto> repo = new("Test.db");
             var today = DateOnly.FromDateTime(DateTime.Today);
-
-            
         }
     }
 }

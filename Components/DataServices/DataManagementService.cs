@@ -8,118 +8,90 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace DataServices
 {
-    public class DataManagementService(IStateStorage StateStorage)
+    public class DataManagementService(IStateStorage<TransactionDto> StateStorage)
     {
-        private IStateStorage _StateStorage = StateStorage;
-
-        public async Task<bool> UpdateTransactionAsync(int TransactionId, decimal? value = null, DateOnly? date = null, string? category = null, bool? depletion = null)
+        private IStateStorage<TransactionDto> _StateStorage = StateStorage;
+        public async Task<OperationResult> UpdateTransactionAsync(int TransactionId, decimal? value = null, DateOnly? date = null, string? category = null, bool? depletion = null)
         {
-            try
+            if (value < 1m || value > 1000000000m)
             {
-                var OldTransaction = await _StateStorage.GetTransactionAsync(TransactionId);
-                var NewTransaction = new TransactionDto() { TransactionId = TransactionId, Value = value ?? OldTransaction!.Value, Date = date ?? OldTransaction!.Date, Category = category ?? OldTransaction!.Category, Depletion = depletion ?? OldTransaction!.Depletion };
+                return OperationResult.FaultedOperation($"{nameof(value)} must be in the range of 1 to 1,000,000,000");
+            }
+            if (category is not null && category.IsWhiteSpace())
+            {
+                return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
+            }
 
-                return await _StateStorage.UpdateAsync(TransactionId, NewTransaction);
-            }
-            catch (Exception)
+            var GetEntityOperation = await _StateStorage.GetEntityAsync(TransactionId);
+
+            if (!GetEntityOperation.HasValue)
             {
-                return false;
-            }
+                return OperationResult.FaultedOperation($"Unable to find a transaction with the following id: {TransactionId}");
+            } 
+            TransactionDto Transaction = GetEntityOperation.Value!;
+
+            Transaction.Category = category ?? Transaction.Category;
+            Transaction.Value = value ?? Transaction.Value;
+            Transaction.Date = date ?? Transaction.Date;
+            Transaction.Depletion = depletion ?? Transaction.Depletion;
+
+            return await _StateStorage.UpdateAsync(Transaction);
         }
 
-       public async Task<bool> RenameCategoryAsync(string OldName, string NewName)
+        public async Task<OperationResult> RenameCategoryAsync() // TO - DO
        {
-            try
-            {
-                return await _StateStorage.UpdateRangeByCategory(OldName, NewName);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            throw new NotImplementedException();
        }
 
-        public async Task<bool> RemoveTransactionAsync(int TransactionId)
+        public async Task<OperationResult> RemoveTransactionAsync(int TransactionId)
         {
-            try
-            {
-                return await _StateStorage.DeleteAsync(TransactionId);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return await _StateStorage.DeleteAsync(TransactionId);
         }
 
-        public async Task<bool> RemoveFixedTransactionAsync(int CollectionId, int FromDuration)
+        public async Task<OperationResult> RemoveFixedTransactionAsync(int CollectionId, int FromDuration)
         {
-            try
+            var DeleteFromRangeOperation = await _StateStorage.DeleteFromRangeAsync(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId && (t as FixedTransactionDto)!.Duration <= FromDuration);
+
+            if (DeleteFromRangeOperation.Success)
             {
-                return await _StateStorage.DeleteFromRangeAsync(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId && (t as FixedTransactionDto)!.Duration <= FromDuration);
+                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation($"Delete failed: no transactions matched in fixed transaction collection (CollectionId: {CollectionId}, FromDuration: {FromDuration}) — 0 rows affected"); };
+
+                return OperationResult.SuccessfulOperation();
             }
-            catch (Exception)
-            {
-                return false;
-            }
+
+            return OperationResult.FaultedOperation(DeleteFromRangeOperation.ErrorMessage);
         }
-        public async Task<bool> RemoveFixedTransactionAsync(int CollectionId)
+        public async Task<OperationResult> RemoveFixedTransactionAsync(int CollectionId)
         {
-            try
+            var DeleteFromRangeOperation = await _StateStorage.DeleteFromRangeAsync(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId);
+
+            if (DeleteFromRangeOperation.Success)
             {
-                return await _StateStorage.DeleteFromRangeAsync(t => t is FixedTransactionDto && (t as FixedTransactionDto)!.FixedTransactionId == CollectionId);
+                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation($"Delete failed: no fixed transaction collection matched CollectionId {CollectionId} (0 rows affected)"); }
+                ;
+
+                return OperationResult.SuccessfulOperation();
             }
-            catch (Exception)
-            {
-                return false;
-            }
+
+            return OperationResult.FaultedOperation(DeleteFromRangeOperation.ErrorMessage);
         }
 
-        public async Task<bool> RemoveExpensesAsync()
+        public async Task<OperationResult> RemoveFromCategoryAsync(string category)
         {
-            try
-            {
-                return await _StateStorage.DeleteFromRangeAsync(t => t.Depletion == true);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+            var DeleteFromRangeOperation = await _StateStorage.DeleteFromRangeAsync(t => t.Category == category);
 
-        public async Task<bool> RemoveIncomeAsync()
-        {
-            try
+            if (DeleteFromRangeOperation.Success)
             {
-                return await _StateStorage.DeleteFromRangeAsync(t => t.Depletion == false);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+                if (DeleteFromRangeOperation.Result < 1) { return OperationResult.FaultedOperation($"Delete failed: no transaction collection matched category '{category}' (0 rows affected)"); };
 
-        public async Task<bool> RemoveFromCategoryAsync(string category)
-        {
-            try
-            {
-                return await _StateStorage.DeleteFromRangeAsync(t => t.Category == category);
+                return OperationResult.SuccessfulOperation();
             }
-            catch (Exception)
-            { 
-                return false;
-            }
-        }
 
-        public async Task<bool> RestartDataAsync()
+            return OperationResult.FaultedOperation(DeleteFromRangeOperation.ErrorMessage);
+        }
+        public async Task<OperationResult> RestartDataAsync()
         {
-            try
-            {
-                return await _StateStorage.ClearStorageAsync();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return await _StateStorage.ClearStorageAsync();
         }
     }
 }

@@ -77,26 +77,26 @@ namespace Repositories
             }
         }
 
-        public async Task<OperationResult> DeleteFromRangeAsync(Expression<Func<T, bool>> predicate)
+        public async Task<OperationResult<int>> DeleteFromRangeAsync(Expression<Func<T, bool>> predicate)
         {
             try
             {
                 _Table.RemoveRange(await _Table.Where(predicate).ToArrayAsync());
-                await Context.SaveChangesAsync();
+                var AffectedRows = await Context.SaveChangesAsync();
 
-                return OperationResult.SuccessfulOperation();
+                return OperationResult<int>.SuccessfulOperation(AffectedRows);
             }
             catch (SqliteException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<int>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
             }
             catch (DbUpdateException)
             {
-                return OperationResult.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<int>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
             }
             catch (TimeoutException)
             {
-                return OperationResult.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<int>.FaultedOperation("The operation took too long. Please try again");
             }
         }
 
@@ -234,7 +234,7 @@ namespace Repositories
             {
                 _Table.Update(NewEntity);
 
-                await Context.SaveChangesAsync();
+                int x = await Context.SaveChangesAsync();
 
                 return OperationResult.SuccessfulOperation();
             }
