@@ -68,5 +68,19 @@ namespace DomainModel
         {
             return new Option<T>(false, default);
         }
+
+        public void Match(Action none, Action<T> some)
+        {
+            if (HasValue)
+            {
+                some.Invoke(Value!);
+                return;
+            }
+            else
+            {
+                none.Invoke();
+                return;
+            }
+        }
     }
 }
