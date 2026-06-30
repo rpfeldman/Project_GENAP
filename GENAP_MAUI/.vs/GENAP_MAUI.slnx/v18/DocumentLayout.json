@@ -16,7 +16,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -35,18 +35,14 @@
               "Name": "ST:1948313171:0:{81164725-9a96-4ece-a4cb-440d8fd285e5}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "EF_SQLite_StateStorage.cs",
               "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
               "RelativeDocumentMoniker": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs*",
-              "RelativeToolTip": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs*",
-              "ViewState": "AgIAACUAAAAAAAAAAAAWwD0AAAAPAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
+              "RelativeToolTip": "..\\Components\\Repositories\\EF_SQLite_StateStorage.cs",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAjwJAAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-29T16:29:08.446Z",
               "EditorCaption": ""

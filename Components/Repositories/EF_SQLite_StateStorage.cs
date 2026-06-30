@@ -56,7 +56,7 @@ namespace Repositories
 
             if (Entity is null)
             {
-                return OperationResult.FaultedOperation("Unexistent entity");
+                return OperationResult.FaultedOperation($"Unexistent {typeof(T).Name}");
             }
 
             try
@@ -169,12 +169,12 @@ namespace Repositories
 
             if (Entity is null)
             {
-                return OperationResult.FaultedOperation("Entity can't be null");
+                return OperationResult.FaultedOperation($"{typeof(T).Name} can't be null");
             }
 
             if (await context.Set<T>().AnyAsync(e => e.Id == Entity.Id))
             {
-                return OperationResult.FaultedOperation("There's alredy an entity with the same Id");
+                return OperationResult.FaultedOperation($"Another {typeof(T).Name} with the same Id was found");
             }
 
             try
@@ -208,12 +208,12 @@ namespace Repositories
                 {
                     if (entity is null)
                     {
-                        return OperationResult<int>.FaultedOperation("Entity can't be null");
+                        return OperationResult<int>.FaultedOperation($"{typeof(T).Name} can't be null");
                     }
 
                     if (await context.Set<T>().AnyAsync(e => e.Id == entity.Id))
                     {
-                        return OperationResult<int>.FaultedOperation("There's alredy an entity with the same Id");
+                        return OperationResult<int>.FaultedOperation($"Another {typeof(T).Name} with the same Id was found");
                     }
 
                     await context.Set<T>().AddAsync(entity);
@@ -244,7 +244,7 @@ namespace Repositories
 
             if (!await context.Set<T>().AnyAsync(e => e.Id == NewEntity.Id))
             {
-                return OperationResult.FaultedOperation("Unexistent entity");
+                return OperationResult.FaultedOperation($"Unexistent {typeof(T).Name}");
             }
 
             try
