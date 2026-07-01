@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 using System.Text;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Repositories
 {
@@ -242,18 +243,17 @@ namespace Repositories
         {
             using var context = new StateStorageDbContext(Options);
 
-            if (!await context.Set<T>().AnyAsync(e => e.Id == NewEntity.Id))
-            {
-                return OperationResult.FaultedOperation($"Unexistent {typeof(T).Name}");
-            }
-
             try
             {
                 context.Set<T>().Update(NewEntity);
 
                 int x = await context.SaveChangesAsync();
+                if(x == 1)
+                {
+                    return OperationResult.SuccessfulOperation();
+                }
 
-                return OperationResult.SuccessfulOperation();
+                return OperationResult.FaultedOperation($"No records were updated. Please verify that the entity with ID { NewEntity.Id} exists");
             }
             catch (SqliteException)
             {

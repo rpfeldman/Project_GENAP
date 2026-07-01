@@ -24,13 +24,13 @@ namespace DataServices
                 return OperationResult.FaultedOperation($"{nameof(category)} must have a content");
             }
 
-            var GetEntityOperation = await _StateStorage.GetEntityAsync(TransactionId);
+            var getTransactionOperation = await _StateStorage.GetEntityAsync(TransactionId);
 
-            if (!GetEntityOperation.HasValue)
+            if (!getTransactionOperation.HasValue)
             {
                 return OperationResult.FaultedOperation($"Unable to find a transaction with the following id: {TransactionId}");
             } 
-            TransactionDto Transaction = GetEntityOperation.Value!;
+            TransactionDto Transaction = getTransactionOperation.Value!;
 
             Transaction.Category = category ?? Transaction.Category;
             Transaction.Value = value ?? Transaction.Value;
