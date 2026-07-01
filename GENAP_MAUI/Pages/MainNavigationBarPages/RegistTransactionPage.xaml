@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
-             xmlns:ic="clr-namespace:GENAP_MAUI.InnerComponents"
+             xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.RegistTransactionPage"
              x:DataType="vm:RegistTransactionPageViewModel"
@@ -38,8 +38,8 @@
                     <Label Text="Categoría" Style="{StaticResource FieldLabel}" />
                     <Border Style="{StaticResource InputField}">
                         <Picker Title="Seleccionar categoría"
-                                ItemsSource="{Binding GlobalResources.GlobalCategories}"
-                                ItemDisplayBinding="{Binding CategoryName, x:DataType=ic:CategoryDto}"
+                                ItemsSource="{Binding Categories}"
+                                ItemDisplayBinding="{Binding Name, x:DataType=model:CategoryDto}"
                                 SelectedItem="{Binding Category}" />
                     </Border>
                 </VerticalStackLayout>

@@ -18,7 +18,7 @@ public partial class TransactionCategoriesPage : ContentPage
 
         if (BindingContext is TransactionCategoriesPageViewModel vm)
         {
-            vm.ReLoadCommand.Execute(false);
+            //vm.ReLoadCommand.Execute(false);
         }
     }
 }

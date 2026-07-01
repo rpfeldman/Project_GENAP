@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
-             xmlns:ic="clr-namespace:GENAP_MAUI.InnerComponents"
+             xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
              xmlns:local="clr-namespace:GENAP_MAUI"
              x:Class="GENAP_MAUI.Pages.MainNavigationBarPages.TransactionCategoriesPage"
@@ -22,18 +22,18 @@
                         ItemsLayout="VerticalList"
                         Margin="20,0,20,0">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="ic:CategoryDto">
+                <DataTemplate x:DataType="model:CategoryDto">
                     <Border Style="{StaticResource CategoryCard}" Margin="0,0,0,8">
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
 
                             <Border Grid.Column="0"
                                     Style="{StaticResource ColorDot}"
-                                    BackgroundColor="{Binding Color.HexColor}"
+                                    BackgroundColor="{Binding HexColor}"
                                     VerticalOptions="Center" />
 
                             <Entry Grid.Column="1"
                                    Style="{StaticResource InlineEntry}"
-                                   Text="{Binding CategoryName}"
+                                   Text="{Binding Name}"
                                    VerticalOptions="Center" />
 
                             <Button Grid.Column="2"

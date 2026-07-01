@@ -153,14 +153,12 @@ public partial class ProportionDoughnutChart : ContentView
 
         foreach (var cat in categories)
         {
-            if (string.IsNullOrWhiteSpace(cat.CategoryName)) continue;
-            if (cat.Color is null) continue;
-            if (string.IsNullOrWhiteSpace(cat.Color.HexColor)) continue;
+            if (string.IsNullOrWhiteSpace(cat.Name)) continue;
+            if (string.IsNullOrWhiteSpace(cat.HexColor)) continue;
 
             try
             {
-                var hex = cat.Color.HexColor;
-                result[cat.CategoryName] = SKColor.Parse(hex);
+                result[cat.Name] = SKColor.Parse(cat.HexColor);
             }
             catch
             {

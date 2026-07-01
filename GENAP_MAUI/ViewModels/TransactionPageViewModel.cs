@@ -1,13 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using DomainModel;
+using CommunityToolkit.Mvvm.Input;
 using DataServices;
+using DomainModel;
 using GENAP_MAUI.InnerComponents;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.EntityFrameworkCore.Update.Internal;
+using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
@@ -16,15 +17,12 @@ namespace GENAP_MAUI.ViewModels
     {
         private DataProjectionService _dataProjectionService;
         private DataManagementService _dataManagementService;
-
-        public GlobalResources GlobalResources { get; }
-        public TransactionPageViewModel(DataProjectionService dataProjectionService, DataManagementService dataManagementService, GlobalResources globalResources)
+        private CategoryPersistenceService _categoryPersistenceService;
+        public TransactionPageViewModel(DataProjectionService dataProjectionService, DataManagementService dataManagementService, CategoryPersistenceService categoryPersistenceService)
         {
             _dataProjectionService = dataProjectionService;
             _dataManagementService = dataManagementService;
-            GlobalResources = globalResources;
-
-            PickedCategory = GlobalResources.GlobalCategories.First();
+            _categoryPersistenceService = categoryPersistenceService;
         }
 
         [ObservableProperty]
@@ -35,14 +33,18 @@ namespace GENAP_MAUI.ViewModels
         public partial TransactionDto Transaction { get; set; } = new();
 
         [ObservableProperty]
-        public partial DateTime PickedDate { get; set; } 
+        public partial DateTime PickedDate { get; set; }
 
         [ObservableProperty]
-        public partial CategoryDto PickedCategory { get; set; }
+        public partial CategoryDto PickedCategory { get; set; } = new();
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(UpdateTransactionCommand))]
         public partial decimal PickedValue { get; set; }
+
+
+        [ObservableProperty]
+        public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
 
         async partial void OnTransactionIdChanged(int value)
         {
@@ -52,9 +54,18 @@ namespace GENAP_MAUI.ViewModels
             (
                 some: (t) => Transaction = t,
                 none: async () => { await Shell.Current.DisplayAlertAsync("Error", "Transaccion inexistente", "Aceptar"); await DirectNavigate(Routes.TransactionsList); }
-            ); 
+            );
 
-            PickedCategory = GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).Count() > 0 ? GlobalResources.GlobalCategories.Where(c => c.CategoryName == Transaction.Category).First() : new CategoryDto(Transaction.Category, GlobalResources.Colors.Values.First(), default);
+            var getCategoriesOperation = await _categoryPersistenceService.GetCategories();
+
+            if (!getCategoriesOperation.Success)
+            {
+                await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.ErrorMessage, "Aceptar");
+                return;
+            }
+
+            Categories = new(getCategoriesOperation.Result!);
+            PickedCategory = getCategoriesOperation.Result!.Where(c => c.Name == Transaction.Category).First();
             PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
             PickedValue = Transaction.Value;
         }
@@ -83,7 +94,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(UpdateTransactionCanExecute))]
         public async Task UpdateTransaction()
         {
-            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, PickedValue, DateOnly.FromDateTime(PickedDate), PickedCategory.CategoryName, Transaction.Depletion);
+            var updateTransactionOperation = await _dataManagementService.UpdateTransactionAsync(TransactionId, PickedValue, DateOnly.FromDateTime(PickedDate), PickedCategory.Name, Transaction.Depletion);
 
             await Shell.Current.DisplayAlertAsync("Editar", updateTransactionOperation.Success ? "Se ha guardado el movimiento correctamente" : updateTransactionOperation.ErrorMessage, "Aceptar");
         }

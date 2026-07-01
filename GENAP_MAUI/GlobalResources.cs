@@ -10,9 +10,6 @@ namespace GENAP_MAUI
 {
     public sealed class GlobalResources
     {
-        public ObservableCollection<CategoryDto> GlobalCategories { get; set; } = new();
-
-
         // TimePeriod is split in 3: the enum (type-safe id), the display name (what the user sees), and the logic (per consumption point)
         // To add one: extend the enum, map its display name, handle its logic where consumed.
         public enum TimePeriodsEnum { Historical, HistoricalToday, Month, ThirtyDays, ThreeMonths, Semester, Year, Today }; 
@@ -46,21 +43,6 @@ namespace GENAP_MAUI
             };
 
             ColorList = [.. Colors.Values];
-
-            // This is temporary
-            GlobalCategories =
-            [
-                new CategoryDto("Indumentaria", Colors[ColorsEnum.Aqua], 0),
-
-                new CategoryDto("Comida", Colors[ColorsEnum.Yellow], 1),
-
-                new CategoryDto("Social", Colors[ColorsEnum.Green], 2),
-
-                new CategoryDto("Gaming", Colors[ColorsEnum.Purple], 3),
-
-                new CategoryDto("Suscripciones", Colors[ColorsEnum.Coral], 4),
-            ];
-
 
             TimePeriods = new()
             {

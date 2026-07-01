@@ -20,14 +20,14 @@ namespace GENAP_MAUI.ViewModels
 	public sealed partial class GraphsPageViewModel : BaseViewModel
 	{
 		private DataProjectionService _dataProjectionService;
+		private CategoryPersistenceService _categoryPersistenceService;
 		public GlobalResources GlobalResources { get; }
 
-		public GraphsPageViewModel(DataProjectionService dataProjectionService, GlobalResources globalResources)
+		public GraphsPageViewModel(DataProjectionService dataProjectionService, CategoryPersistenceService categoryPersistenceService, GlobalResources globalResources)
 		{
 			_dataProjectionService = dataProjectionService;
 			GlobalResources = globalResources;
-
-			Categories = new(GlobalResources.GlobalCategories);
+			_categoryPersistenceService = categoryPersistenceService;
 
 			PickedTimePeriod = GlobalResources.TimePeriods.First();
 		}
@@ -36,7 +36,7 @@ namespace GENAP_MAUI.ViewModels
 		public partial KeyValuePair<GlobalResources.TimePeriodsEnum, string> PickedTimePeriod { get; set;  }
 
 		[ObservableProperty]
-		public partial ObservableCollection<CategoryDto> Categories { get; set; }
+		public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
 
         [ObservableProperty]
         public partial List<TransactionDto> ExpensesLog { get; set; } = [];
@@ -62,7 +62,12 @@ namespace GENAP_MAUI.ViewModels
 		[RelayCommand]
         public async Task FillGraphs()
         {
-            Categories = new(GlobalResources.GlobalCategories);
+			var getCategoriesOperation = await _categoryPersistenceService.GetCategories();
+
+			if (getCategoriesOperation.Success)
+			{
+				Categories = new(getCategoriesOperation.Result!);
+			}else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.ErrorMessage, "Aceptar"); }
 
             var GetExpensesTask = _dataProjectionService.GetAllAsync(true);
 			var GetIncomeTask = _dataProjectionService.GetAllAsync(false);

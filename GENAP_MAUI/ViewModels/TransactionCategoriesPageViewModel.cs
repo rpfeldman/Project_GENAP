@@ -17,6 +17,7 @@ namespace GENAP_MAUI.ViewModels
 {
     public sealed partial class TransactionCategoriesPageViewModel : BaseViewModel
     {
+        /*
         private DataManagementService _dataManagementService;
 
         public GlobalResources GlobalResources { get; }
@@ -75,7 +76,6 @@ namespace GENAP_MAUI.ViewModels
                     {
                         await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.ErrorMessage, "Aceptar");
                     }
-                    */
                 }
             }
 
@@ -100,5 +100,6 @@ namespace GENAP_MAUI.ViewModels
         }
         private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && Categories.Where(c => c.CategoryName == NewCategory).Count() == 0;
         private bool SaveCanExecute() => Categories.Count > 0;
+      */
     }
 }
