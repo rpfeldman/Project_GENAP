@@ -21,7 +21,20 @@ namespace GENAP_MAUI
 
             try
             {
+                CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current.Services.GetRequiredService<CategoryPersistenceService>();
 
+                var anyCategoryOperation = await categoryPersistenService.HasCategories();
+
+                // TO - DO: Apply a log system
+                if (!anyCategoryOperation.Success)
+                {
+                    System.Diagnostics.Debug.WriteLine(anyCategoryOperation.ErrorMessage);
+                }
+
+                if (!anyCategoryOperation.Result)
+                {
+                    System.Diagnostics.Debug.WriteLine("no hay categorias xd");
+                }
             }
             catch (Exception x)
             {

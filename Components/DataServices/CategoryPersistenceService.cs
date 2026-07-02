@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Principal;
 using System.Text;
+using System.Xml.Linq;
 
 namespace DataServices
 {
@@ -71,5 +72,39 @@ namespace DataServices
             return getCategoriesOperation;
         }
 
+        public async Task<OperationResult> AddCategoriesAsync(CategoryDto[] categories)
+        {
+            foreach (var category in categories)
+            {
+                if (string.IsNullOrWhiteSpace(category.Name))
+                {
+                    return OperationResult.FaultedOperation($"{nameof(category.Name)} must have a content");
+                }
+                if (string.IsNullOrWhiteSpace(category.HexColor))
+                {
+                    return OperationResult.FaultedOperation($"{nameof(category.HexColor)} must have a content");
+                }
+            }
+
+            var saveRangeOperation = await _StateStorage.SaveRangeAsync(categories);
+
+            if (saveRangeOperation.Success)
+            {
+                if (saveRangeOperation.Result != categories.Length)
+                {
+                    return OperationResult.FaultedOperation("Some categories couldn't be saved. A few were and others weren't. Please review and try again");
+                }
+
+                return OperationResult.SuccessfulOperation();
+            }
+            return OperationResult.FaultedOperation(saveRangeOperation.ErrorMessage);
+        }
+
+        public async Task<OperationResult<bool>> HasCategories()
+        {
+            var anyCategoryOperation = await _StateStorage.AnyAsync();
+
+            return anyCategoryOperation;
+        }  
     }
 }

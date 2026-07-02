@@ -21,29 +21,24 @@ namespace GENAP_MAUI
 
         public enum ColorsEnum { SteelBlue, Yellow, Green, Purple, Aqua, Coral, Red, Emerald, Cyan, Indigo, Magenta } 
 
-        public Dictionary<ColorsEnum, ColorDto> Colors { get; }
+        public static Dictionary<ColorsEnum, ColorDto> Colors { get; } = new()
+        {
+            { ColorsEnum.SteelBlue, new ColorDto("#466C87", "Azul plateado") },
+            { ColorsEnum.Yellow, new ColorDto("#F1C40F", "Amarillo") },
+            { ColorsEnum.Green, new ColorDto("#2ECC71", "Verde") },
+            { ColorsEnum.Purple, new ColorDto("#9B59B6", "Morado") },
+            { ColorsEnum.Aqua, new ColorDto("#1ABC9C", "Verde agua") },
+            { ColorsEnum.Coral, new ColorDto("#E67E22", "Naranja") },
+            { ColorsEnum.Red, new ColorDto("#E74C3C", "Rojo") },
+            { ColorsEnum.Emerald, new ColorDto("#16A085", "Verde esmeralda") },
+            { ColorsEnum.Cyan, new ColorDto("#00BCD4", "Celeste") },
+            { ColorsEnum.Indigo, new ColorDto("#5C6BC0", "Lavanda") },
+            { ColorsEnum.Magenta, new ColorDto("#E84393", "Magenta") },
+        };
 
-        public List <ColorDto> ColorList { get; }
-
+        public static List<ColorDto> ColorList { get; } = [.. Colors.Values];
         public GlobalResources()
         {
-            Colors = new()
-            {
-                { ColorsEnum.SteelBlue, new ColorDto("#466C87", "Azul plateado") },
-                { ColorsEnum.Yellow, new ColorDto("#F1C40F", "Amarillo") },
-                { ColorsEnum.Green, new ColorDto("#2ECC71", "Verde") },
-                { ColorsEnum.Purple, new ColorDto("#9B59B6", "Morado") },
-                { ColorsEnum.Aqua, new ColorDto("#1ABC9C", "Verde agua") },
-                { ColorsEnum.Coral, new ColorDto("#E67E22", "Naranja") },
-                { ColorsEnum.Red, new ColorDto("#E74C3C", "Rojo") },
-                { ColorsEnum.Emerald, new ColorDto("#16A085", "Verde esmeralda") },
-                { ColorsEnum.Cyan, new ColorDto("#00BCD4", "Celeste") },
-                { ColorsEnum.Indigo, new ColorDto("#5C6BC0", "Lavanda") },
-                { ColorsEnum.Magenta, new ColorDto("#E84393", "Magenta") },
-            };
-
-            ColorList = [.. Colors.Values];
-
             TimePeriods = new()
             {
                 {TimePeriodsEnum.Historical, "Historico"},
