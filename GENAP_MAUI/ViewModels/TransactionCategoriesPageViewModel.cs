@@ -17,22 +17,18 @@ namespace GENAP_MAUI.ViewModels
 {
     public sealed partial class TransactionCategoriesPageViewModel : BaseViewModel
     {
-        /*
         private DataManagementService _dataManagementService;
-
-        public GlobalResources GlobalResources { get; }
-
-        public TransactionCategoriesPageViewModel(GlobalResources globalResources, DataManagementService dataManagementService)
+        private CategoryPersistenceService _categoryPersistenceService;
+        public TransactionCategoriesPageViewModel(CategoryPersistenceService categoryPersistenceService, DataManagementService dataManagementService)
         {
             _dataManagementService = dataManagementService;
-            GlobalResources = globalResources;
+            _categoryPersistenceService = categoryPersistenceService;
 
-            Categories = new(GlobalResources.GlobalCategories.Select(c => new CategoryDto(c.CategoryName, c.Color, c.Id)));
             PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
         }
 
         [ObservableProperty]
-        public partial ObservableCollection<CategoryDto> Categories { get; set; }
+        public partial ObservableCollection<CategoryDto> Categories { get; set; } = new();
 
         [ObservableProperty]
         public partial ColorDto PickedColor { get; set; } 
@@ -51,7 +47,7 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(AddCategoryCanExecute))]
         public async Task AddCategory()
         {
-            Categories.Add(new CategoryDto(NewCategory, PickedColor, GlobalResources.GlobalCategories.Count));
+            Categories.Add(new CategoryDto { Name = NewCategory, HexColor = PickedColor.HexColor });
 
 			SaveCommand.NotifyCanExecuteChanged();
             NewCategory = string.Empty;
@@ -60,46 +56,26 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand(CanExecute = nameof(SaveCanExecute))]
         public async Task Save()
         {
-            foreach (var item in Categories)
+            foreach (var category in Categories)
             {
-                CategoryDto? oldCategory = GlobalResources.GlobalCategories.Where(c => c.Id == item.Id).FirstOrDefault();
-
-                if (oldCategory is not null && oldCategory.CategoryName != item.CategoryName)
-                {
-                    var OldName = oldCategory.CategoryName;
-                    var NewName = item.CategoryName;
-
-                    var renameCategoryOperation = await _dataManagementService.RenameCategoryAsync(OldName, NewName);
-
-                    /*
-                    if (!renameCategoryOperation.Success)
-                    {
-                        await Shell.Current.DisplayAlertAsync("Error", renameCategoryOperation.ErrorMessage, "Aceptar");
-                    }
-                }
+                
             }
-
-            GlobalResources.GlobalCategories.Clear();
-
-            foreach (var item in Categories)
-            {
-                GlobalResources.GlobalCategories.Add(item);
-            }
-
-            NewCategory = string.Empty;
-
-            await Shell.Current.DisplayAlertAsync("Categorias", "Se guardaron las categorias", "Aceptar");
         }
 
         [RelayCommand]
-        public void ReLoad()
+        public async Task ReLoad()
         {
-            Categories = new(GlobalResources.GlobalCategories.Select(c => new CategoryDto(c.CategoryName, c.Color, c.Id)));
             PickedColor = GlobalResources.Colors[ColorsEnum.SteelBlue];
             NewCategory = string.Empty;
+
+            var getCategoryOperation = await _categoryPersistenceService.GetCategoriesAsync();
+            if (getCategoryOperation.Success)
+            {
+                Categories = new(getCategoryOperation.Result!);
+            }
+            else { await Shell.Current.DisplayAlertAsync("Error", getCategoryOperation.ErrorMessage, "Aceptar"); }
         }
-        private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && Categories.Where(c => c.CategoryName == NewCategory).Count() == 0;
+        private bool AddCategoryCanExecute() => !string.IsNullOrWhiteSpace(NewCategory) && !Categories.Any(c => c.Name == NewCategory) && PickedColor is not null;
         private bool SaveCanExecute() => Categories.Count > 0;
-      */
     }
 }

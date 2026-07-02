@@ -61,7 +61,7 @@
                     <Picker Grid.Column="1"
                             Title="Color"
                             WidthRequest="80"
-                            ItemsSource="{Binding GlobalResources.ColorList}"
+                            ItemsSource="{x:Static local:GlobalResources.ColorList}"
                             ItemDisplayBinding="{Binding DisplayName}"
                             SelectedItem="{Binding PickedColor}"
                             VerticalOptions="Center" />
