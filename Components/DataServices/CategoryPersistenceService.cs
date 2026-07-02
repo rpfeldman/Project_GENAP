@@ -9,9 +9,16 @@ using System.Text;
 
 namespace DataServices
 {
-    public sealed class CategoryPersistenceService(IStateStorage<CategoryDto> stateStorage) // I implemented the category management service as a single class because it's much simpler than the Transaction service and doesn't need a multi-class structure.
+    public sealed class CategoryPersistenceService // I implemented the category management service as a single class because it's much simpler than the Transaction service and doesn't need a multi-class structure.
     {
-        private IStateStorage<CategoryDto> _StateStorage = stateStorage;
+        private IStateStorage<CategoryDto> _StateStorage;
+
+        public CategoryPersistenceService(IStateStorage<CategoryDto> stateStorage)
+        {
+            _StateStorage = stateStorage;
+
+
+        }
 
         public async Task<OperationResult> AddCategory(string name, string hexcolor)
         {
@@ -58,7 +65,19 @@ namespace DataServices
         }
         public async Task<OperationResult<List<CategoryDto>>> GetCategories()
         {
-            return await _StateStorage.GetAllAsync();
+            var getCategoriesOperation = await _StateStorage.GetAllAsync();
+
+            if (getCategoriesOperation.Success)
+            {
+                if(getCategoriesOperation.Result!.Count == 0)
+                {
+                    return OperationResult<List<CategoryDto>>.FaultedOperation("There's no categories available. At least one is required.");
+                }
+
+                return getCategoriesOperation;
+            }
+
+            return getCategoriesOperation;
         }
     }
 }

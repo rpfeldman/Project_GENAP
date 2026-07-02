@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DataServices;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GENAP_MAUI
 {
@@ -12,6 +13,20 @@ namespace GENAP_MAUI
         protected override Window CreateWindow(IActivationState? activationState)
         {
             return new Window(new AppShell());
+        }
+
+        protected override async void OnStart()
+        {
+            base.OnStart();
+
+            try
+            {
+
+            }
+            catch (Exception x)
+            {
+                System.Diagnostics.Debug.WriteLine($"Seed failed: {x.Message}");
+            }
         }
     }
 }

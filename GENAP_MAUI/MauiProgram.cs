@@ -39,6 +39,7 @@ namespace GENAP_MAUI
 
             // Data services & the repository
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "Test.db");
+
             builder.Services.AddSingleton<IStateStorage<TransactionDto>, EF_SQLite_StateStorageRepo<TransactionDto>>(sp => { return new EF_SQLite_StateStorageRepo<TransactionDto>(dbPath); });
 
             builder.Services.AddSingleton<DataRegistrationService>();

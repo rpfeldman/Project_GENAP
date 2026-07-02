@@ -116,7 +116,7 @@ namespace Repositories
             }
             catch (SqliteException)
             {
-                return OperationResult<List<T>>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<List<T>>.FaultedOperation($"An error occurred while trying to connect to the storage system. Please try again");
             }
             catch (DbUpdateException)
             {
@@ -291,6 +291,53 @@ namespace Repositories
             catch (TimeoutException)
             {
                 return OperationResult<int>.FaultedOperation("The operation took too long. Please try again");
+            }
+        }
+
+        public async Task<OperationResult<bool>> AnyAsync()
+        {
+            using var context = new StateStorageDbContext(Options);
+
+            try
+            {
+                var anyOperation = await context.Set<T>().AnyAsync();
+
+                return OperationResult<bool>.SuccessfulOperation(anyOperation);
+            }
+            catch (SqliteException)
+            {
+                return OperationResult<bool>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult<bool>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult<bool>.FaultedOperation("The operation took too long. Please try again");
+            }
+        }
+        public async Task<OperationResult<bool>> AnyAsync(Expression<Func<T, bool>> Predicate)
+        {
+            using var context = new StateStorageDbContext(Options);
+
+            try
+            {
+                var anyOperation = await context.Set<T>().AnyAsync(Predicate);
+
+                return OperationResult<bool>.SuccessfulOperation(anyOperation);
+            }
+            catch (SqliteException)
+            {
+                return OperationResult<bool>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+            }
+            catch (DbUpdateException)
+            {
+                return OperationResult<bool>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+            }
+            catch (TimeoutException)
+            {
+                return OperationResult<bool>.FaultedOperation("The operation took too long. Please try again");
             }
         }
     }
