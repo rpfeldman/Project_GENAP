@@ -14,12 +14,10 @@ using System.Text;
 
 namespace GENAP_MAUI.ViewModels
 {
-    public sealed partial class RegistTransactionPageViewModel(GlobalResources globalResources, DataRegistrationService dataRegistrationService, CategoryPersistenceService categoryPersistenceService) : BaseViewModel
+    public sealed partial class RegistTransactionPageViewModel(DataRegistrationService dataRegistrationService, CategoryPersistenceService categoryPersistenceService) : BaseViewModel
     {
         private DataRegistrationService _RegistrationService = dataRegistrationService;
         private CategoryPersistenceService _CategoryPersistenceService = categoryPersistenceService;
-
-        public GlobalResources GlobalResources { get; set; } = globalResources;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistTransactionCommand))]
@@ -99,13 +97,13 @@ namespace GENAP_MAUI.ViewModels
             PickedValue = "0";
             PickedDate = DateTime.Today;
 
-            var getCategoryOperation = await _CategoryPersistenceService.GetCategoriesAsync();
-            if (getCategoryOperation.Success)
+            var getCategoriesOperation = await _CategoryPersistenceService.GetCategoriesAsync();
+            if (getCategoriesOperation.Success)
             {
-                Categories = new(getCategoryOperation.Result!);
-                Category = getCategoryOperation.Result!.First();
+                Categories = new(getCategoriesOperation.Result!);
+                Category = getCategoriesOperation.Result!.First();
             }
-            else { await Shell.Current.DisplayAlertAsync("Error", getCategoryOperation.ErrorMessage, "Aceptar"); }
+            else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.ErrorMessage, "Aceptar"); }
         }
 
         [RelayCommand] void SetIncome() => Depletion = false;
