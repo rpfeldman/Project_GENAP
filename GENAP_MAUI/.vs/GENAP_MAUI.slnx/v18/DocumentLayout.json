@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\viewmodels\\registtransactionpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:viewmodels\\registtransactionpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\pages\\mainnavigationbarpages\\registtransactionpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:pages\\mainnavigationbarpages\\registtransactionpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\colorsconst.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:colorsconst.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,28 +38,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RegistTransactionPage.xaml",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\RegistTransactionPage.xaml",
-              "RelativeDocumentMoniker": "Pages\\MainNavigationBarPages\\RegistTransactionPage.xaml",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\Pages\\MainNavigationBarPages\\RegistTransactionPage.xaml",
-              "RelativeToolTip": "Pages\\MainNavigationBarPages\\RegistTransactionPage.xaml",
-              "ViewState": "AgIAAB0AAAAAcPBpTh7lvwAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-07-07T14:20:08.972Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "RegistTransactionPageViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\RegistTransactionPageViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\RegistTransactionPageViewModel.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\RegistTransactionPageViewModel.cs",
-              "RelativeToolTip": "ViewModels\\RegistTransactionPageViewModel.cs",
-              "ViewState": "AgIAAE8AAAAw/YFy284jwGQAAAAvAAAAAAAAAA==",
+              "Title": "ColorsConst.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ColorsConst.cs",
+              "RelativeDocumentMoniker": "ColorsConst.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ColorsConst.cs",
+              "RelativeToolTip": "ColorsConst.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:19:26.112Z",
+              "WhenOpened": "2026-07-07T14:43:31.11Z",
               "EditorCaption": ""
             }
           ]

@@ -14,6 +14,10 @@ public partial class ProportionDoughnutChart : ContentView
 {
     private static readonly SKColor FallbackColor = SKColor.Parse("#94A3B8");
 
+    private static readonly SKColor TradingColor = SKColor.Parse(ColorsConst.TradingColor);
+
+    private const string TradingCategoryName = "Trading";
+
     private const double MinLabelPercentage = 4;
 
     public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(
@@ -129,7 +133,7 @@ public partial class ProportionDoughnutChart : ContentView
         var series = new List<ISeries>();
         foreach (var group in grouped)
         {
-            var color = colorMap.TryGetValue(group.Name, out var c) ? c : FallbackColor;
+            var color = ResolveColor(group.Name, colorMap);
             series.Add(CreatePieSlice(group.Name, group.Total, totalSum, color));
         }
 
@@ -137,6 +141,14 @@ public partial class ProportionDoughnutChart : ContentView
         CenterText = $"Total\n{totalSum.ToString("N0", CultureInfo.InvariantCulture)}$";
 
         NotifyAll();
+    }
+
+    private static SKColor ResolveColor(string categoryName, Dictionary<string, SKColor> colorMap)
+    {
+        if (categoryName == TradingCategoryName)
+            return TradingColor;
+
+        return colorMap.TryGetValue(categoryName, out var color) ? color : FallbackColor;
     }
 
     private void NotifyAll()
