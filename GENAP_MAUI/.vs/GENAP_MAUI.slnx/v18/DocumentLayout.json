@@ -3,8 +3,15 @@
   "WorkspaceRootPath": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\viewmodels\\graphspageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:viewmodels\\graphspageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCDC75DB-0116-9FCC-5B7F-79AACF97E8C5}|..\\Components\\Repositories\\Repositories.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\components\\repositories\\repositories.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|c:\\users\\ramga\\source\\repos\\project_genap\\genap_maui\\genap_maui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{260B7660-9E84-DE5B-0C2B-4AA08570860F}|GENAP_MAUI.csproj|solutionrelative:genap_maui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,14 +42,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "GraphsPageViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\GraphsPageViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\GraphsPageViewModel.cs",
-              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\ViewModels\\GraphsPageViewModel.cs*",
-              "RelativeToolTip": "ViewModels\\GraphsPageViewModel.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAQAAAAAAAAAA==",
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "MauiProgram.cs",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\MauiProgram.cs",
+              "RelativeToolTip": "MauiProgram.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-09T17:07:18.823Z",
+              "WhenOpened": "2026-07-09T17:16:10.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Repositories",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\Repositories.csproj",
+              "RelativeDocumentMoniker": "..\\Components\\Repositories\\Repositories.csproj",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\Components\\Repositories\\Repositories.csproj",
+              "RelativeToolTip": "..\\Components\\Repositories\\Repositories.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-07-09T17:13:59.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GENAP_MAUI",
+              "DocumentMoniker": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\GENAP_MAUI.csproj",
+              "RelativeDocumentMoniker": "GENAP_MAUI.csproj",
+              "ToolTip": "C:\\Users\\ramga\\source\\repos\\Project_GENAP\\GENAP_MAUI\\GENAP_MAUI.csproj",
+              "RelativeToolTip": "GENAP_MAUI.csproj",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAFIAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-07-09T17:11:21.105Z",
               "EditorCaption": ""
             }
           ]

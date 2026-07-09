@@ -6,6 +6,7 @@ using Repositories;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using LiveChartsCore.SkiaSharpView.Maui;
 using DomainModel;
+using SQLitePCL;
 
 namespace GENAP_MAUI
 {
@@ -13,6 +14,8 @@ namespace GENAP_MAUI
     {
         public static MauiApp CreateMauiApp()
         {
+            Batteries_V2.Init();
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseSkiaSharp()
