@@ -30,6 +30,7 @@
     <Color x:Key="IncomeGreen">#2ECC71</Color>
     <Color x:Key="ExpenseRed">#E74C3C</Color>
 
+    <Color x:Key="DangerRed">#DC2626</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>

@@ -57,17 +57,6 @@ namespace GENAP_MAUI.ViewModels
 
             await Shell.Current.GoToAsync(Routes.TransactionMenu, parameters: NavProperty);
         }
-
-        [RelayCommand]
-        public async Task RestartData()
-        {
-            var restartDataOperation = await _dataManagementService.RestartDataAsync();
-
-            await Shell.Current.DisplayAlertAsync("Eliminar", restartDataOperation.Success ? "Se han reiniciado los datos" : restartDataOperation.ErrorMessage, "Aceptar");
-
-            await DirectNavigate(Routes.Dashboard);
-        }
-
         public async Task ReloadTransactions(GlobalResources.TimePeriodsEnum timePeriod)
         {
             Task<OperationResult<List<TransactionDto>>>? getTransactionsTask;

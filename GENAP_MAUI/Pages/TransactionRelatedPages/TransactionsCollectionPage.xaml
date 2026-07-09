@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:GENAP_MAUI.ViewModels"
              xmlns:model="clr-namespace:DomainModel;assembly=DomainModel"
              xmlns:nav="clr-namespace:GENAP_MAUI.ContentViews.Navigation"
+             xmlns:local="clr-namespace:GENAP_MAUI"
              x:Class="GENAP_MAUI.Pages.TransactionRelatedPages.TransactionsCollectionPage"
              x:DataType="vm:TransactionsCollectionPageViewModel"
              BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
@@ -127,7 +128,8 @@
         <Button Grid.Row="3"
                 Text="Reiniciar datos"
                 Style="{StaticResource ButtonDestructiveGhost}"
-                Command="{Binding RestartDataCommand}"
+                Command="{Binding PushNavigateCommand}"
+                CommandParameter="{x:Static local:Routes.ClearStorageConfirmation}"
                 Margin="20,8,20,100" />
 
         <nav:BottomNavigationBar Grid.Row="0" Grid.RowSpan="4" />

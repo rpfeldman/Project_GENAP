@@ -327,6 +327,21 @@
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
     </Style>
 
+    <Style x:Key="WarningIconLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="Symbols" />
+        <Setter Property="FontSize" Value="64" />
+        <Setter Property="TextColor" Value="{StaticResource DangerRed}" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="WarningHeadline" TargetType="Label" BasedOn="{StaticResource Headline}">
+        <Setter Property="TextColor" Value="{StaticResource DangerRed}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+    
+    
+
     <Style x:Key="StatusBadgeText" TargetType="Label">
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="11" />
@@ -390,6 +405,12 @@
         <Setter Property="FontSize" Value="20" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="Margin" Value="4,8,0,4" />
+    </Style>
+
+    <Style x:Key="DangerCard" TargetType="Border" BasedOn="{StaticResource InputField}">
+        <Setter Property="Stroke" Value="{StaticResource DangerRed}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Padding" Value="20" />
     </Style>
 
     <Style x:Key="InputFieldBrand" TargetType="Border" BasedOn="{StaticResource InputField}">
