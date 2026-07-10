@@ -16,7 +16,7 @@ public partial class ProportionDoughnutChart : ContentView
 
     private static readonly SKColor TradingColor = SKColor.Parse(ColorsConst.TradingColor);
 
-    private const string TradingCategoryName = "Trading";
+    private const string TradingCategoryName = DefaultCategories.TradingCategoryName;
 
     private const double MinLabelPercentage = 4;
 

@@ -35,5 +35,7 @@ namespace GENAP_MAUI
 
             new CategoryDto() {Name = "Emergencias", HexColor=GlobalResources.Colors[GlobalResources.ColorsEnum.Red].HexColor},
         ];
+
+        public const string TradingCategoryName = "Trading";
     }
 }

@@ -65,9 +65,29 @@ namespace GENAP_MAUI.ViewModels
             }
 
             Categories = new(getCategoriesOperation.Result!);
-            PickedCategory = getCategoriesOperation.Result!.Where(c => c.Name == Transaction.Category).First();
             PickedDate = Transaction.Date.ToDateTime(TimeOnly.MinValue);
             PickedValue = Transaction.Value;
+
+            if (Transaction.Category == DefaultCategories.TradingCategoryName) 
+            {
+                var tradingCategory = new CategoryDto() { Name = DefaultCategories.TradingCategoryName, HexColor = ColorsConst.TradingColor };
+
+                Categories.Add(tradingCategory); 
+                PickedCategory = tradingCategory;
+                return;
+            }
+
+            CategoryDto? transactionCategory = getCategoriesOperation.Result!.Where(c => c.Name == Transaction.Category).FirstOrDefault();
+            
+            if(transactionCategory is not null)
+            {
+                PickedCategory = transactionCategory;
+                return;
+            }
+
+            var deletedCategory = new CategoryDto() { Name = Transaction.Category, HexColor = GlobalResources.Colors[GlobalResources.ColorsEnum.SteelBlue].HexColor };
+            Categories.Add(deletedCategory);
+            PickedCategory = deletedCategory;
         }
 
         [RelayCommand]
