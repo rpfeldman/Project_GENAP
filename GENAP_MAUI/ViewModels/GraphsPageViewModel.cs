@@ -27,7 +27,7 @@ namespace GENAP_MAUI.ViewModels
 			GlobalResources = globalResources;
 			_categoryPersistenceService = categoryPersistenceService;
 
-			PickedTimePeriod = GlobalResources.TimePeriods.First();
+			PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
 		}
 
 		[ObservableProperty]
@@ -60,7 +60,9 @@ namespace GENAP_MAUI.ViewModels
 		[RelayCommand]
         public async Task FillGraphs()
         {
-			var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
+            PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
+
+            var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
 
 			if (getCategoriesOperation.Success)
 			{
