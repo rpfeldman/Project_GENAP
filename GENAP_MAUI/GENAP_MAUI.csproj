@@ -28,13 +28,13 @@
 		<MauiXamlInflator>SourceGen</MauiXamlInflator>
 
 		<!-- Display name -->
-		<ApplicationTitle>GENAP_MAUI</ApplicationTitle>
+		<ApplicationTitle>Tradeckr</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.genap_maui</ApplicationId>
+		<ApplicationId>com.feldman.tradeckr</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>0.0.1</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
@@ -52,7 +52,7 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" BaseSize="512,512" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#8C55FF" BaseSize="300,300" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
