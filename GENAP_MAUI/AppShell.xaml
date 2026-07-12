@@ -9,17 +9,12 @@
     Title="Tradeckr"
     FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    <ShellContent Route="{x:Static local:Routes.Dashboard}"
+                  ContentTemplate="{DataTemplate pages:MainDashboardPage}" />
     <ShellContent Route="{x:Static local:Routes.DefaultTransaction}"
                   ContentTemplate="{DataTemplate pages:RegistTransactionPage}" />
     <ShellContent Route="{x:Static local:Routes.TradingTransactions}"
                   ContentTemplate="{DataTemplate pages:RegistTradeTransactionPage}" />
-    <ShellContent Route="{x:Static local:Routes.Dashboard}"
-                  ContentTemplate="{DataTemplate pages:MainDashboardPage}" />
     <ShellContent Route="{x:Static local:Routes.Categories}"
                   ContentTemplate="{DataTemplate pages:TransactionCategoriesPage}" />
     <ShellContent Route="{x:Static local:Routes.Graphs}"
