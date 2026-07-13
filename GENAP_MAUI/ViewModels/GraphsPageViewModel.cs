@@ -195,6 +195,14 @@ namespace GENAP_MAUI.ViewModels
 		[RelayCommand]
 		public async Task ReLoad()
 		{
+            var getCategoriesOperation = await _categoryPersistenceService.GetCategoriesAsync();
+
+            if (getCategoriesOperation.Success)
+            {
+                Categories = new(getCategoriesOperation.Result!);
+            }
+            else { await Shell.Current.DisplayAlertAsync("Error", getCategoriesOperation.ErrorMessage, "Aceptar"); }
+
             PickedTimePeriod = GlobalResources.TimePeriods.Where(d => d.Key == GlobalResources.TimePeriodsEnum.Month).First();
 
 			await ReFillGraphs(PickedTimePeriod.Key);
