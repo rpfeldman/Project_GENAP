@@ -14,16 +14,16 @@ namespace DataServices
     public sealed class CategoryPersistenceService(IStateStorage<CategoryDto> stateStorage) // I implemented the category management service as a single class because it's much simpler than the Transaction service and doesn't need a multi-class structure.
     {
         private IStateStorage<CategoryDto> _StateStorage = stateStorage;
-        public async Task<OperationResult<List<CategoryDto>>> GetCategoriesAsync()
+        public async Task<OperationResult<IEnumerable<CategoryDto>>> GetCategoriesAsync()
         {
             var anyCategoriesOperation = await _StateStorage.AnyAsync();
             if (!anyCategoriesOperation.Success)
             {
-                return OperationResult<List<CategoryDto>>.FaultedOperation(anyCategoriesOperation.ErrorMessage);
+                return OperationResult<IEnumerable<CategoryDto>>.FaultedOperation(anyCategoriesOperation.ErrorMessage);
             }
             if (!anyCategoriesOperation.Result)
             {
-                return OperationResult<List<CategoryDto>>.FaultedOperation("There's no categories available. At least one is required.");
+                return OperationResult<IEnumerable<CategoryDto>>.FaultedOperation("There's no categories available. At least one is required.");
             }
 
             var getCategoriesOperation = await _StateStorage.GetAllAsync();

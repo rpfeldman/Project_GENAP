@@ -13,4 +13,9 @@
     <ProjectReference Include="..\Components\Repositories\Repositories.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="SourceGear.sqlite3" Version="3.53.3" />
+    <PackageReference Include="SQLitePCLRaw.config.e_sqlite3" Version="3.0.3" />
+  </ItemGroup>
+
 </Project>

@@ -41,7 +41,7 @@ namespace GENAP_MAUI.ViewModels
         }
         public async Task ReloadTransactions(GlobalResources.TimePeriodsEnum timePeriod)
         {
-            Task<OperationResult<List<TransactionDto>>>? getTransactionsTask;
+            Task<OperationResult<IEnumerable<TransactionDto>>>? getTransactionsTask;
             var today = DateOnly.FromDateTime(DateTime.Today);
 
             switch (timePeriod)

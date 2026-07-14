@@ -25,7 +25,7 @@ namespace GENAP_MAUI.ViewModels
         public partial decimal MonthIncome { get; set; }
 
         [ObservableProperty]
-        public partial List<TransactionDto> MonthTransactions { get; set; }
+        public partial TransactionDto[] MonthTransactions { get; set; }
 
         public string Month { get { return GlobalResources.Months[DateTime.Today.Month]; } }
 
@@ -58,7 +58,7 @@ namespace GENAP_MAUI.ViewModels
 
             if (Transactions[2].Success)
             {
-                MonthTransactions = Transactions[2].Result!;
+                MonthTransactions = [.. Transactions[2].Result!];
             } else { await Shell.Current.DisplayAlertAsync("Error", Transactions[2].ErrorMessage, "Aceptar"); }
         }
     }

@@ -20,7 +20,7 @@ namespace Repositories
         public Task<OperationResult<bool>> AnyAsync(Expression<Func<TEntity, bool>> Predicate);
         public Task<OperationResult> ClearStorageAsync();
         public Task<Option<TEntity>> GetEntityAsync(int Id);
-        public Task<OperationResult<List<TEntity>>> GetEntitiesAsync(Expression<Func<TEntity, bool>> Predicate);
-        public Task<OperationResult<List<TEntity>>> GetAllAsync();
+        public Task<OperationResult<IEnumerable<TEntity>>> GetEntitiesAsync(Expression<Func<TEntity, bool>> Predicate);
+        public Task<OperationResult<IEnumerable<TEntity>>> GetAllAsync();
     }
 }

@@ -55,14 +55,14 @@ namespace GENAP_MAUI.ViewModels
         }
 		public async Task ReFillGraphs(GlobalResources.TimePeriodsEnum timePeriod)
 		{
-            Task<OperationResult<List<TransactionDto>>>? GetExpensesTask = null;
-            Task<OperationResult<List<TransactionDto>>>? GetIncomeTask = null;
-            Task<OperationResult<List<TransactionDto>>>? GetTransactionsTask = null;
+            Task<OperationResult<IEnumerable<TransactionDto>>>? GetExpensesTask = null;
+            Task<OperationResult<IEnumerable<TransactionDto>>>? GetIncomeTask = null;
+            Task<OperationResult<IEnumerable<TransactionDto>>>? GetTransactionsTask = null;
 			var today = DateOnly.FromDateTime(DateTime.Today);
-			Task<OperationResult<List<TransactionDto>>>[] Predicates = [];
+			Task<OperationResult<IEnumerable<TransactionDto>>>[] Predicates = [];
 
 
-			void SetTasksPointers(Task<OperationResult<List<TransactionDto>>> getExpensesTask, Task<OperationResult<List<TransactionDto>>> getIncomeTask, Task<OperationResult<List<TransactionDto>>> getTransactionsTask) 
+			void SetTasksPointers(Task<OperationResult<IEnumerable<TransactionDto>>> getExpensesTask, Task<OperationResult<IEnumerable<TransactionDto>>> getIncomeTask, Task<OperationResult<IEnumerable<TransactionDto>>> getTransactionsTask) 
 			{
 				GetExpensesTask = getExpensesTask;
 				GetIncomeTask = getIncomeTask;
@@ -175,15 +175,15 @@ namespace GENAP_MAUI.ViewModels
 
             if (TaskResults[0].Success)
             {
-                ExpensesLog = TaskResults[0].Result!;
+                ExpensesLog = [.. TaskResults[0].Result!];
             }
             if (TaskResults[1].Success)
             {
-                IncomeLog = TaskResults[1].Result!;
+                IncomeLog = [.. TaskResults[1].Result!];
             }
             if (TaskResults[2].Success)
             {
-                TransactionsLog = TaskResults[2].Result!;
+                TransactionsLog = [.. TaskResults[2].Result!];
             }
 
             Expenses = DataProjectionService.GetSummedTransactions(ExpensesLog);

@@ -137,47 +137,50 @@ namespace Repositories
             }
         }
 
-        public async Task<OperationResult<List<T>>> GetAllAsync()
+        public async Task<OperationResult<IEnumerable<T>>> GetAllAsync()
         {
             using var context = new StateStorageDbContext(Options);
 
             try
             {
-                return OperationResult<List<T>>.SuccessfulOperation(await context.Set<T>().AsNoTracking().ToListAsync());
+                var result = await context.Set<T>().AsNoTracking().ToListAsync(); // I wanted to use 'IAsyncEnumerable' to create a 1-to-1 data stream. But since we're using SQLite with a small amount of data, I felt it was a bit over-engineering.
+                return OperationResult<IEnumerable<T>>.SuccessfulOperation(result);
             }
             catch (SqliteException)
             {
-                return OperationResult<List<T>>.FaultedOperation($"An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation($"An error occurred while trying to connect to the storage system. Please try again");
             }
             catch (DbUpdateException)
             {
-                return OperationResult<List<T>>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
             }
             catch (TimeoutException)
             {
-                return OperationResult<List<T>>.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation("The operation took too long. Please try again");
             }
         }
 
-        public async Task<OperationResult<List<T>>> GetEntitiesAsync(Expression<Func<T, bool>> Predicate)
+        public async Task<OperationResult<IEnumerable<T>>> GetEntitiesAsync(Expression<Func<T, bool>> Predicate)
         {
             using var context = new StateStorageDbContext(Options);
 
             try
             {
-                return OperationResult<List<T>>.SuccessfulOperation(await context.Set<T>().AsNoTracking().Where(Predicate).ToListAsync());
+                var result = await context.Set<T>().AsNoTracking().Where(Predicate).ToListAsync();
+
+                return OperationResult<IEnumerable<T>>.SuccessfulOperation(result);
             }
             catch (SqliteException)
             {
-                return OperationResult<List<T>>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation("An error occurred while trying to connect to the storage system. Please try again");
             }
             catch (DbUpdateException)
             {
-                return OperationResult<List<T>>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation("An error occurred while trying to save the changes. Please try again");
             }
             catch (TimeoutException)
             {
-                return OperationResult<List<T>>.FaultedOperation("The operation took too long. Please try again");
+                return OperationResult<IEnumerable<T>>.FaultedOperation("The operation took too long. Please try again");
             }
         }
 

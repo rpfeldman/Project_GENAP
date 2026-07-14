@@ -68,7 +68,7 @@ namespace DataServices
 
             if (updateRangeOperation.Success)
             {
-                if (updateRangeOperation.Result != transactions.Count)
+                if (updateRangeOperation.Result != transactions.Count())
                 {
                     return OperationResult.FaultedOperation("Some movements couldn't be renamed. A few were renamed and others weren't. Please review and try again");
                 }
