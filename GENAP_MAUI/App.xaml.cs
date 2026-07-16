@@ -21,7 +21,7 @@ namespace GENAP_MAUI
 
             try
             {
-                CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current.Services.GetRequiredService<CategoryPersistenceService>();
+                CategoryPersistenceService categoryPersistenService = IPlatformApplication.Current!.Services.GetRequiredService<CategoryPersistenceService>();
 
                 var anyCategoryOperation = await categoryPersistenService.HasCategories();
 
@@ -40,6 +40,8 @@ namespace GENAP_MAUI
                         System.Diagnostics.Debug.WriteLine(setDefaultCategoriesOperation.InnerError?.ErrorMessage);
                     }
                 }
+
+                Application.Current?.UserAppTheme = Preferences.Get(PreferenceKeys.UserThemeKey, true) ? AppTheme.Dark : AppTheme.Light;
             }
             catch (Exception x)
             {

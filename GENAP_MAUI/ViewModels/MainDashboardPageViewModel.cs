@@ -32,7 +32,10 @@ namespace GENAP_MAUI.ViewModels
         [RelayCommand]
         public void ChangeTheme()
         {
-            Application.Current?.UserAppTheme = Application.Current.UserAppTheme == AppTheme.Dark ? AppTheme.Light : AppTheme.Dark;
+            bool IsDarkTheme = Application.Current?.UserAppTheme == AppTheme.Dark;
+            Application.Current?.UserAppTheme = IsDarkTheme ? AppTheme.Light : AppTheme.Dark;
+
+            Preferences.Set(PreferenceKeys.UserThemeKey, !IsDarkTheme);
         }
         
         [RelayCommand]
