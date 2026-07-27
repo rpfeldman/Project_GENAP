@@ -10,9 +10,9 @@
 		<VerticalStackLayout>
 			<Picker
 				Title="Seleccionar periodo de tiempo"
-				ItemsSource="{Binding TimePeriods}"
+				ItemsSource="{Binding TimePeriodsList}"
 				ItemDisplayBinding="{Binding Value}"
-				SelectedItem="{Binding Period}"/>
+				SelectedItem="{Binding PickedTimePeriod}"/>
 
 			<Label Text="{Binding Period}"></Label>
 			
